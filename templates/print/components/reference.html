@@ -1,0 +1,47 @@
+<li class="reference-item">
+    {% if reference.norma_abnt_formatada %}
+        {{ reference.norma_abnt_formatada }}
+    {% else %}
+        {% if reference.autor %}
+            {{ reference.autor | join("; ") }}.
+        {% elif reference.autor_entidade %}
+            {{ reference.autor_entidade }}.
+        {% endif %}
+
+        <strong>
+            {{ reference.titulo }}
+        </strong>
+
+        {% if reference.subtitulo %}
+            : {{ reference.subtitulo }}
+        {% endif %}.
+
+        {% if reference.edicao %}
+            {{ reference.edicao }}.
+        {% endif %}
+
+        {% if reference.local %}
+            {{ reference.local }}
+        {% endif %}
+
+        {% if reference.editora %}
+            : {{ reference.editora }}
+        {% endif %}
+
+        {% if reference.ano %}
+            , {{ reference.ano }}
+        {% endif %}.
+
+        {% if reference.doi %}
+            DOI: {{ reference.doi }}.
+        {% endif %}
+
+        {% if reference.url %}
+            Disponível em: {{ reference.url }}.
+        {% endif %}
+
+        {% if reference.data_acesso %}
+            Acesso em: {{ reference.data_acesso }}.
+        {% endif %}
+    {% endif %}
+</li>

@@ -1,0 +1,89 @@
+<article class="answer-card">
+    <header class="answer-card__header">
+        <strong>
+            Questão
+            {{ answer.question_number or answer.question_id }}
+        </strong>
+
+        <span class="answer-card__result">
+            Resposta:
+            {{ answer.resposta }}
+        </span>
+    </header>
+
+    {% if answer.comentario %}
+        <div class="answer-section">
+            <h5>
+                Comentário
+            </h5>
+
+            <p>
+                {{ answer.comentario }}
+            </p>
+        </div>
+    {% endif %}
+
+    {% if answer.fundamento %}
+        <div class="answer-section">
+            <h5>
+                Fundamento
+            </h5>
+
+            <p>
+                {{ answer.fundamento }}
+            </p>
+        </div>
+    {% endif %}
+
+    {% if answer.resolucao %}
+        <div class="answer-section">
+            <h5>
+                Resolução
+            </h5>
+
+            <p>
+                {{ answer.resolucao }}
+            </p>
+        </div>
+    {% endif %}
+
+    {% if answer.analise_alternativas %}
+        <div class="answer-section">
+            <h5>
+                Análise das alternativas
+            </h5>
+
+            <ul class="answer-alternatives">
+                {% for analysis in answer.analise_alternativas %}
+                    <li>
+                        <strong>
+                            {{ analysis.alternativa_id }}
+                        </strong>
+
+                        {% if analysis.correta %}
+                            <span class="answer-correct">
+                                correta
+                            </span>
+                        {% else %}
+                            <span class="answer-wrong">
+                                incorreta
+                            </span>
+                        {% endif %}
+
+                        — {{ analysis.comentario }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if answer.erro_provavel %}
+        <div class="answer-error">
+            <strong>
+                Erro provável:
+            </strong>
+
+            {{ answer.erro_provavel }}
+        </div>
+    {% endif %}
+</article>

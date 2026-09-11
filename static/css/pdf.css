@@ -1,0 +1,1964 @@
+:root {
+    --ink: #192334;
+    --ink-soft: #435068;
+    --muted: #68768b;
+
+    --line: #d9e0e8;
+    --line-strong: #bcc8d6;
+
+    --primary: #195ec8;
+    --primary-dark: #174c9d;
+    --primary-soft: #eef5ff;
+
+    --concept: #2868c7;
+    --concept-soft: #eef5ff;
+
+    --example: #278159;
+    --example-soft: #edf9f3;
+
+    --attention: #a86b0b;
+    --attention-soft: #fff7df;
+
+    --danger: #bb3f4c;
+    --danger-soft: #fff0f2;
+
+    --memorize: #7049ae;
+    --memorize-soft: #f5efff;
+
+    --gray-soft: #f5f7fa;
+    --gray-strong: #e9edf2;
+
+    --exercise: #285d9f;
+    --exercise-soft: #f1f6fc;
+
+    --answer: #287451;
+    --answer-soft: #eff9f4;
+}
+
+
+/* ============================================================
+   PÁGINAS
+   ============================================================ */
+
+@page {
+    size: A4;
+
+    margin:
+        19mm
+        17mm
+        20mm
+        17mm;
+
+    @top-left {
+        content: "Fácil Digital+";
+
+        color: #69768a;
+
+        font-family:
+            "DejaVu Sans",
+            Arial,
+            sans-serif;
+
+        font-size: 7.5pt;
+        font-weight: 700;
+    }
+
+    @top-right {
+        content: string(current-subject);
+
+        color: #69768a;
+
+        font-family:
+            "DejaVu Sans",
+            Arial,
+            sans-serif;
+
+        font-size: 7.2pt;
+    }
+
+    @bottom-left {
+        content: "Apostila de Estudo";
+
+        color: #8a95a5;
+
+        font-family:
+            "DejaVu Sans",
+            Arial,
+            sans-serif;
+
+        font-size: 6.8pt;
+    }
+
+    @bottom-right {
+        content:
+            "Página "
+            counter(page)
+            " de "
+            counter(pages);
+
+        color: #69768a;
+
+        font-family:
+            "DejaVu Sans",
+            Arial,
+            sans-serif;
+
+        font-size: 7.2pt;
+    }
+}
+
+
+@page cover {
+    margin: 0;
+
+    @top-left {
+        content: none;
+    }
+
+    @top-right {
+        content: none;
+    }
+
+    @bottom-left {
+        content: none;
+    }
+
+    @bottom-right {
+        content: none;
+    }
+}
+
+
+@page title {
+    margin:
+        22mm
+        22mm
+        18mm;
+
+    @top-left {
+        content: none;
+    }
+
+    @top-right {
+        content: none;
+    }
+
+    @bottom-left {
+        content: none;
+    }
+
+    @bottom-right {
+        content: none;
+    }
+}
+
+
+@page front {
+    margin:
+        22mm
+        20mm
+        20mm;
+
+    @top-left {
+        content: none;
+    }
+
+    @top-right {
+        content: none;
+    }
+}
+
+
+@page toc {
+    margin:
+        20mm
+        18mm
+        20mm;
+
+    @top-left {
+        content: none;
+    }
+
+    @top-right {
+        content: none;
+    }
+}
+
+
+@page subject-open {
+    margin:
+        18mm
+        20mm
+        18mm
+        28mm;
+
+    @top-left {
+        content: none;
+    }
+
+    @top-right {
+        content: none;
+    }
+}
+
+
+@page end {
+    margin:
+        25mm;
+
+    @top-left {
+        content: none;
+    }
+
+    @top-right {
+        content: none;
+    }
+
+    @bottom-left {
+        content: none;
+    }
+
+    @bottom-right {
+        content: none;
+    }
+}
+
+
+/* ============================================================
+   BASE TIPOGRÁFICA
+   ============================================================ */
+
+html {
+    font-family:
+        "DejaVu Sans",
+        Arial,
+        sans-serif;
+
+    font-size: 10pt;
+}
+
+body {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-family:
+        "DejaVu Sans",
+        Arial,
+        sans-serif;
+
+    line-height: 1.58;
+
+    hyphens: auto;
+}
+
+p {
+    widows: 3;
+    orphans: 3;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    color: var(--ink);
+
+    font-family:
+        "DejaVu Sans",
+        Arial,
+        sans-serif;
+
+    line-height: 1.22;
+
+    break-after: avoid;
+
+    orphans: 3;
+    widows: 3;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* ============================================================
+   CAPA
+   ============================================================ */
+
+.cover-page {
+    page: cover;
+
+    width: 210mm;
+    height: 297mm;
+
+    break-after: page;
+
+    overflow: hidden;
+}
+
+.cover-image {
+    display: block;
+
+    width: 210mm;
+    height: 297mm;
+}
+
+.cover-image--cover {
+    object-fit: cover;
+}
+
+.cover-image--contain {
+    object-fit: contain;
+}
+
+
+/* ============================================================
+   PÁGINA DE ROSTO
+   ============================================================ */
+
+.title-page {
+    page: title;
+
+    display: flex;
+    flex-direction: column;
+
+    min-height: 255mm;
+
+    break-after: page;
+}
+
+.title-page__brand {
+    color: var(--primary);
+
+    font-size: 9pt;
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+
+    text-transform: uppercase;
+}
+
+.title-page__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    justify-content: center;
+
+    max-width: 155mm;
+
+    margin:
+        0
+        auto;
+
+    text-align: center;
+}
+
+.title-page__eyebrow {
+    color: var(--primary);
+
+    font-size: 8pt;
+    font-weight: 800;
+
+    letter-spacing: 0.17em;
+
+    text-transform: uppercase;
+}
+
+.title-page h1 {
+    margin:
+        8mm
+        0
+        4mm;
+
+    font-size: 26pt;
+
+    letter-spacing: -0.035em;
+
+    bookmark-level: none;
+}
+
+.title-page h2 {
+    margin: 0;
+
+    color: var(--ink-soft);
+
+    font-size: 14pt;
+    font-weight: 500;
+
+    bookmark-level: none;
+}
+
+.title-rule {
+    width: 28mm;
+    height: 1.2mm;
+
+    margin:
+        9mm
+        auto;
+
+    background: var(--primary);
+}
+
+.title-metadata {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap:
+        4mm
+        8mm;
+
+    width: 100%;
+
+    margin:
+        7mm
+        0
+        0;
+
+    text-align: left;
+}
+
+.title-metadata > div {
+    border-top:
+        0.35mm solid var(--line);
+
+    padding-top: 2.2mm;
+}
+
+.title-metadata dt {
+    color: var(--muted);
+
+    font-size: 7pt;
+    font-weight: 700;
+
+    letter-spacing: 0.06em;
+
+    text-transform: uppercase;
+}
+
+.title-metadata dd {
+    margin:
+        1.3mm
+        0
+        0;
+
+    font-size: 9pt;
+    font-weight: 600;
+}
+
+.title-page__footer {
+    color: var(--muted);
+
+    font-size: 8pt;
+
+    text-align: center;
+}
+
+
+/* ============================================================
+   ELEMENTOS INICIAIS
+   ============================================================ */
+
+.front-page {
+    page: front;
+
+    break-after: page;
+}
+
+.front-heading {
+    margin-bottom: 10mm;
+}
+
+.front-heading > span {
+    color: var(--primary);
+
+    font-size: 7pt;
+    font-weight: 800;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+}
+
+.front-heading h1 {
+    margin:
+        2mm
+        0
+        0;
+
+    font-size: 22pt;
+
+    letter-spacing: -0.025em;
+
+    bookmark-level: none;
+}
+
+.front-text {
+    white-space: pre-line;
+
+    font-size: 10pt;
+
+    line-height: 1.7;
+
+    text-align: justify;
+}
+
+.legal-box {
+    margin-top: 14mm;
+
+    border:
+        0.3mm solid var(--line);
+
+    border-left:
+        1.2mm solid var(--ink-soft);
+
+    border-radius: 1.5mm;
+
+    padding: 4mm;
+
+    background: var(--gray-soft);
+
+    color: var(--ink-soft);
+
+    font-size: 8.5pt;
+
+    white-space: pre-line;
+}
+
+.legal-box__title {
+    margin-bottom: 2mm;
+
+    color: var(--ink);
+
+    font-size: 8pt;
+    font-weight: 800;
+
+    letter-spacing: 0.06em;
+
+    text-transform: uppercase;
+}
+
+
+/* ============================================================
+   SUMÁRIO COM PAGINAÇÃO REAL
+   ============================================================ */
+
+.toc-page {
+    page: toc;
+
+    break-after: page;
+}
+
+.toc {
+    display: block;
+
+    margin-top: 8mm;
+}
+
+.toc__item {
+    display: grid;
+
+    grid-template-columns:
+        25mm
+        1fr
+        auto;
+
+    align-items: baseline;
+
+    gap: 2.5mm;
+
+    padding:
+        1.8mm
+        0;
+
+    border-bottom:
+        0.2mm solid #edf0f4;
+
+    break-inside: avoid;
+}
+
+.toc__item::after {
+    content:
+        leader(".")
+        " "
+        target-counter(
+            attr(href),
+            page
+        );
+
+    min-width: 14mm;
+
+    color: var(--ink-soft);
+
+    font-size: 8pt;
+
+    text-align: right;
+}
+
+.toc__number {
+    color: var(--primary);
+
+    font-size: 7.8pt;
+    font-weight: 700;
+}
+
+.toc__title {
+    font-size: 9pt;
+}
+
+.toc__item--materia {
+    margin-top: 3mm;
+
+    border-bottom:
+        0.35mm solid var(--line-strong);
+}
+
+.toc__item--materia
+.toc__number,
+.toc__item--materia
+.toc__title {
+    font-weight: 800;
+}
+
+.toc__item--level-1 {
+    padding-left: 5mm;
+}
+
+.toc__item--level-2 {
+    padding-left: 10mm;
+}
+
+.toc__item--level-3,
+.toc__item--level-4 {
+    padding-left: 15mm;
+
+    color: var(--muted);
+}
+
+
+/* ============================================================
+   ABERTURA DE MATÉRIA
+   ============================================================ */
+
+.subject-opening {
+    page: subject-open;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    min-height: 250mm;
+
+    break-before: page;
+    break-after: page;
+}
+
+.subject-opening__stripe {
+    position: absolute;
+
+    top: -18mm;
+    bottom: -18mm;
+    left: -28mm;
+
+    width: 10mm;
+
+    background: var(--primary);
+}
+
+.subject-opening__content {
+    width: 100%;
+}
+
+.subject-opening__eyebrow {
+    color: var(--primary);
+
+    font-size: 8pt;
+    font-weight: 800;
+
+    letter-spacing: 0.18em;
+
+    text-transform: uppercase;
+}
+
+.subject-opening__code {
+    display: inline-block;
+
+    margin-top: 8mm;
+
+    border-radius: 1.5mm;
+
+    padding:
+        1.5mm
+        2.8mm;
+
+    background: var(--primary-soft);
+
+    color: var(--primary);
+
+    font-size: 7.5pt;
+    font-weight: 800;
+}
+
+.subject-opening__title {
+    margin:
+        5mm
+        0
+        3mm;
+
+    max-width: 145mm;
+
+    font-size: 29pt;
+
+    letter-spacing: -0.045em;
+
+    string-set:
+        current-subject
+        content();
+
+    bookmark-level: 1;
+}
+
+.subject-opening h2 {
+    max-width: 140mm;
+
+    margin: 0;
+
+    color: var(--ink-soft);
+
+    font-size: 14pt;
+    font-weight: 500;
+
+    bookmark-level: none;
+}
+
+.subject-opening p {
+    max-width: 140mm;
+
+    margin-top: 8mm;
+
+    color: var(--muted);
+
+    font-size: 10pt;
+
+    line-height: 1.65;
+}
+
+.subject-opening__stats {
+    display: flex;
+
+    gap: 6mm;
+
+    margin-top: 10mm;
+}
+
+.subject-opening__stats > div {
+    min-width: 35mm;
+
+    border-top:
+        0.5mm solid var(--line);
+
+    padding-top: 3mm;
+}
+
+.subject-opening__stats strong {
+    display: block;
+
+    color: var(--primary);
+
+    font-size: 15pt;
+}
+
+.subject-opening__stats span {
+    color: var(--muted);
+
+    font-size: 7.5pt;
+}
+
+
+/* ============================================================
+   TÓPICOS E SUBTÓPICOS
+   ============================================================ */
+
+.content-section {
+    margin-bottom: 7mm;
+}
+
+.content-section__header {
+    display: grid;
+
+    grid-template-columns:
+        auto
+        1fr;
+
+    align-items: flex-start;
+
+    gap: 4mm;
+
+    margin:
+        7mm
+        0
+        5mm;
+
+    padding-bottom: 3mm;
+
+    border-bottom:
+        0.35mm solid var(--line);
+
+    break-after: avoid;
+}
+
+.content-section--level-1
+.content-section__header {
+    margin-top: 10mm;
+
+    border-bottom:
+        0.75mm solid var(--primary);
+}
+
+.content-section__number {
+    display: grid;
+    place-items: center;
+
+    min-width: 12mm;
+    min-height: 9mm;
+
+    border-radius: 1.5mm;
+
+    padding:
+        1mm
+        1.8mm;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-size: 7.5pt;
+    font-weight: 800;
+}
+
+.content-section--level-2
+.content-section__number {
+    background: #5278a8;
+}
+
+.content-section--level-3
+.content-section__number,
+.content-section--level-4
+.content-section__number {
+    border:
+        0.3mm solid var(--line-strong);
+
+    background: white;
+
+    color: var(--ink-soft);
+}
+
+.content-section__heading h2 {
+    margin: 0;
+
+    font-size: 17pt;
+
+    bookmark-level: 2;
+}
+
+.content-section__heading h3 {
+    margin: 0;
+
+    font-size: 14pt;
+
+    bookmark-level: 3;
+}
+
+.content-section__heading h4 {
+    margin: 0;
+
+    font-size: 12pt;
+
+    bookmark-level: 4;
+}
+
+.content-section__heading h5 {
+    margin: 0;
+
+    font-size: 10.5pt;
+
+    bookmark-level: 5;
+}
+
+.content-section__heading p {
+    margin:
+        1.5mm
+        0
+        0;
+
+    color: var(--muted);
+
+    font-size: 8.3pt;
+}
+
+
+/* ============================================================
+   TEXTO NORMAL
+   ============================================================ */
+
+.content-section__body {
+    font-size: 10pt;
+}
+
+.content-paragraph {
+    margin:
+        0
+        0
+        4mm;
+
+    line-height: 1.66;
+
+    text-align: justify;
+}
+
+.content-heading {
+    margin:
+        7mm
+        0
+        3mm;
+
+    color: var(--ink);
+
+    font-size: 12pt;
+}
+
+.content-subheading,
+.inline-heading {
+    margin:
+        5mm
+        0
+        2mm;
+
+    color: var(--ink-soft);
+
+    font-size: 10.5pt;
+}
+
+.content-quote {
+    margin:
+        5mm
+        7mm;
+
+    border-left:
+        1mm solid #8795a9;
+
+    padding:
+        3mm
+        4mm;
+
+    background: var(--gray-soft);
+
+    color: var(--ink-soft);
+
+    font-family:
+        "DejaVu Serif",
+        Georgia,
+        serif;
+
+    font-size: 9.2pt;
+
+    font-style: italic;
+}
+
+.content-caption {
+    margin:
+        1.5mm
+        0
+        4mm;
+
+    color: var(--muted);
+
+    font-size: 7.5pt;
+
+    text-align: center;
+}
+
+
+/* ============================================================
+   CAIXAS DIDÁTICAS
+   ============================================================ */
+
+.didactic-box {
+    margin:
+        5mm
+        0;
+
+    border:
+        0.3mm solid var(--line);
+
+    border-left-width: 1.3mm;
+
+    border-radius: 1.8mm;
+
+    padding:
+        4mm
+        4.5mm;
+
+    break-inside: avoid;
+}
+
+.didactic-box__label {
+    margin-bottom: 2mm;
+
+    font-size: 7.5pt;
+    font-weight: 800;
+
+    letter-spacing: 0.07em;
+
+    text-transform: uppercase;
+}
+
+.didactic-box__text {
+    font-size: 9.4pt;
+
+    line-height: 1.58;
+
+    white-space: pre-line;
+}
+
+.didactic-box--concept,
+.didactic-box--definition {
+    border-left-color: var(--concept);
+
+    background: var(--concept-soft);
+}
+
+.didactic-box--concept
+.didactic-box__label,
+.didactic-box--definition
+.didactic-box__label {
+    color: var(--concept);
+}
+
+.didactic-box--example,
+.didactic-box--case-study,
+.didactic-box--practice {
+    border-left-color: var(--example);
+
+    background: var(--example-soft);
+}
+
+.didactic-box--example
+.didactic-box__label,
+.didactic-box--case-study
+.didactic-box__label,
+.didactic-box--practice
+.didactic-box__label {
+    color: var(--example);
+}
+
+.didactic-box--attention {
+    border-left-color: var(--attention);
+
+    background: var(--attention-soft);
+}
+
+.didactic-box--attention
+.didactic-box__label {
+    color: var(--attention);
+}
+
+.didactic-box--danger {
+    border-left-color: var(--danger);
+
+    background: var(--danger-soft);
+}
+
+.didactic-box--danger
+.didactic-box__label {
+    color: var(--danger);
+}
+
+.didactic-box--memorize,
+.didactic-box--reasoning {
+    border-left-color: var(--memorize);
+
+    background: var(--memorize-soft);
+}
+
+.didactic-box--memorize
+.didactic-box__label,
+.didactic-box--reasoning
+.didactic-box__label {
+    color: var(--memorize);
+}
+
+
+/* ============================================================
+   DETALHES
+   ============================================================ */
+
+.detail-list,
+.formula-variables {
+    display: grid;
+
+    gap: 1.2mm;
+
+    margin:
+        3mm
+        0
+        0;
+}
+
+.detail-list > div,
+.formula-variables > div {
+    display: grid;
+
+    grid-template-columns:
+        34mm
+        1fr;
+
+    gap: 3mm;
+
+    font-size: 8.2pt;
+}
+
+.detail-list dt,
+.formula-variables dt {
+    font-weight: 700;
+}
+
+.detail-list dd,
+.formula-variables dd {
+    margin: 0;
+}
+
+
+/* ============================================================
+   LISTAS
+   ============================================================ */
+
+.content-list {
+    margin:
+        4mm
+        0;
+}
+
+.content-list h5 {
+    margin:
+        0
+        0
+        2mm;
+
+    font-size: 9.5pt;
+}
+
+.content-list ul,
+.content-list ol {
+    margin:
+        2mm
+        0
+        2mm
+        5mm;
+
+    padding-left: 5mm;
+}
+
+.content-list li {
+    margin:
+        1.5mm
+        0;
+
+    padding-left: 1mm;
+}
+
+
+/* ============================================================
+   TABELAS
+   ============================================================ */
+
+.table-block {
+    margin:
+        5mm
+        0;
+
+    break-inside: avoid;
+}
+
+.table-block__title {
+    margin-bottom: 2mm;
+
+    color: var(--ink);
+
+    font-size: 8.5pt;
+    font-weight: 800;
+}
+
+.table-scroll {
+    width: 100%;
+}
+
+.table-block table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 7.9pt;
+}
+
+.table-block th,
+.table-block td {
+    border:
+        0.25mm solid #ccd5df;
+
+    padding:
+        2.1mm
+        2.4mm;
+
+    vertical-align: top;
+}
+
+.table-block th {
+    background: #edf2f7;
+
+    color: #344157;
+
+    font-weight: 800;
+
+    text-align: left;
+}
+
+.table-block tbody tr:nth-child(even) {
+    background: #fafbfd;
+}
+
+.table-block__note {
+    margin-top: 1.5mm;
+
+    color: var(--muted);
+
+    font-size: 7pt;
+}
+
+
+/* ============================================================
+   FÓRMULAS
+   ============================================================ */
+
+.formula-block {
+    margin:
+        5mm
+        0;
+
+    border:
+        0.3mm solid #d4dce7;
+
+    border-radius: 1.8mm;
+
+    padding: 4mm;
+
+    background: #fafbfd;
+
+    break-inside: avoid;
+}
+
+.formula-block__title {
+    color: var(--ink-soft);
+
+    font-size: 8pt;
+    font-weight: 800;
+}
+
+.formula-block__formula {
+    margin:
+        4mm
+        0;
+
+    border-radius: 1.5mm;
+
+    padding: 3mm;
+
+    background: #eef2f6;
+
+    font-family:
+        "DejaVu Sans Mono",
+        "Courier New",
+        monospace;
+
+    font-size: 11pt;
+
+    text-align: center;
+}
+
+.formula-block p {
+    font-size: 8.8pt;
+}
+
+.formula-block__units {
+    margin-top: 2mm;
+
+    color: var(--muted);
+
+    font-size: 7.5pt;
+}
+
+
+/* ============================================================
+   CÓDIGO
+   ============================================================ */
+
+.code-block {
+    margin:
+        5mm
+        0;
+
+    break-inside: avoid;
+}
+
+.code-block__title {
+    margin-bottom: 2mm;
+
+    font-size: 8pt;
+    font-weight: 800;
+}
+
+.code-block__language {
+    display: inline-block;
+
+    margin-bottom: 1mm;
+
+    color: var(--muted);
+
+    font-size: 7pt;
+}
+
+.code-block pre {
+    margin: 0;
+
+    border-radius: 1.8mm;
+
+    padding: 4mm;
+
+    background: #182130;
+
+    color: #edf2f7;
+
+    font-family:
+        "DejaVu Sans Mono",
+        "Courier New",
+        monospace;
+
+    font-size: 7.8pt;
+
+    line-height: 1.5;
+
+    white-space: pre-wrap;
+}
+
+
+/* ============================================================
+   RECURSOS VISUAIS
+   ============================================================ */
+
+.visual-block {
+    margin:
+        5mm
+        0;
+
+    break-inside: avoid;
+}
+
+.visual-block__placeholder {
+    display: grid;
+
+    justify-items: center;
+
+    gap: 1.5mm;
+
+    border:
+        0.5mm dashed #b4c0cf;
+
+    border-radius: 1.8mm;
+
+    padding:
+        10mm
+        5mm;
+
+    background: #f7f9fb;
+
+    color: var(--muted);
+
+    text-align: center;
+}
+
+.visual-block__placeholder strong {
+    color: var(--ink-soft);
+}
+
+.visual-block__placeholder span {
+    font-size: 7.4pt;
+}
+
+.visual-block__warning {
+    color: var(--danger) !important;
+
+    font-weight: 800;
+}
+
+.visual-block figcaption {
+    margin-top: 2mm;
+
+    color: var(--muted);
+
+    font-size: 7.3pt;
+
+    text-align: center;
+}
+
+
+/* ============================================================
+   EXERCÍCIOS
+   ============================================================ */
+
+.exercise-chapter,
+.answer-chapter,
+.reference-chapter {
+    break-before: page;
+}
+
+.major-chapter {
+    break-before: page;
+}
+
+.chapter-heading {
+    margin-bottom: 9mm;
+
+    padding-bottom: 4mm;
+
+    border-bottom:
+        0.7mm solid var(--line-strong);
+}
+
+.chapter-heading > span {
+    color: var(--primary);
+
+    font-size: 7pt;
+    font-weight: 800;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+}
+
+.chapter-heading h1 {
+    margin:
+        2mm
+        0
+        1mm;
+
+    font-size: 21pt;
+
+    bookmark-level: 1;
+}
+
+.chapter-heading p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 8.5pt;
+}
+
+.chapter-heading--exercise {
+    border-bottom-color: var(--exercise);
+}
+
+.chapter-heading--exercise > span {
+    color: var(--exercise);
+}
+
+.question-card {
+    position: relative;
+
+    margin:
+        6mm
+        0;
+
+    border:
+        0.3mm solid #cad5e1;
+
+    border-top:
+        1mm solid var(--exercise);
+
+    border-radius: 1.8mm;
+
+    padding:
+        4.5mm
+        4.5mm
+        4mm;
+
+    background: white;
+
+    break-inside: avoid;
+}
+
+.question-card__header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 4mm;
+
+    margin-bottom: 3mm;
+}
+
+.question-card__number {
+    color: var(--exercise);
+
+    font-size: 9pt;
+    font-weight: 800;
+}
+
+.question-card__badges {
+    display: flex;
+
+    gap: 1.5mm;
+}
+
+.question-card__badges span {
+    border-radius: 999px;
+
+    padding:
+        1mm
+        2mm;
+
+    background: var(--exercise-soft);
+
+    color: var(--exercise);
+
+    font-size: 6.5pt;
+    font-weight: 700;
+
+    text-transform: capitalize;
+}
+
+.question-card__statement {
+    color: var(--ink);
+
+    font-size: 9.5pt;
+
+    line-height: 1.6;
+}
+
+.question-resources {
+    margin-top: 3mm;
+
+    border-radius: 1mm;
+
+    padding: 2mm;
+
+    background: var(--gray-soft);
+
+    color: var(--muted);
+
+    font-size: 7.2pt;
+}
+
+.alternatives {
+    display: grid;
+
+    gap: 2mm;
+
+    margin:
+        4mm
+        0
+        0;
+
+    padding: 0;
+
+    list-style: none;
+}
+
+.alternatives li {
+    display: grid;
+
+    grid-template-columns:
+        7.5mm
+        1fr;
+
+    gap: 2mm;
+
+    align-items: flex-start;
+
+    padding:
+        1.3mm
+        0;
+}
+
+.alternative-id {
+    display: grid;
+    place-items: center;
+
+    width: 6.8mm;
+    height: 6.8mm;
+
+    border:
+        0.3mm solid #aebdce;
+
+    border-radius: 50%;
+
+    color: #4c5d73;
+
+    font-size: 7pt;
+    font-weight: 800;
+}
+
+
+/* ============================================================
+   GABARITOS
+   ============================================================ */
+
+.chapter-heading--answer {
+    border-bottom-color: var(--answer);
+}
+
+.chapter-heading--answer > span {
+    color: var(--answer);
+}
+
+.answer-card {
+    margin:
+        5mm
+        0;
+
+    border:
+        0.3mm solid #c9dfd3;
+
+    border-left:
+        1.2mm solid var(--answer);
+
+    border-radius: 1.8mm;
+
+    padding: 4mm;
+
+    background: var(--answer-soft);
+
+    break-inside: avoid;
+}
+
+.answer-card__header {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 4mm;
+
+    margin-bottom: 3mm;
+
+    padding-bottom: 2mm;
+
+    border-bottom:
+        0.25mm solid #c7ddd1;
+}
+
+.answer-card__header strong {
+    color: var(--ink);
+
+    font-size: 9pt;
+}
+
+.answer-card__result {
+    color: var(--answer);
+
+    font-size: 9pt;
+    font-weight: 800;
+}
+
+.answer-section {
+    margin-top: 3mm;
+}
+
+.answer-section h5 {
+    margin:
+        0
+        0
+        1mm;
+
+    color: var(--answer);
+
+    font-size: 7.5pt;
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+
+    text-transform: uppercase;
+}
+
+.answer-section p {
+    margin: 0;
+
+    font-size: 8.5pt;
+
+    line-height: 1.55;
+}
+
+.answer-alternatives {
+    display: grid;
+
+    gap: 1.5mm;
+
+    margin:
+        0;
+
+    padding-left: 5mm;
+
+    font-size: 8pt;
+}
+
+.answer-correct {
+    color: var(--answer);
+
+    font-weight: 800;
+}
+
+.answer-wrong {
+    color: var(--danger);
+
+    font-weight: 700;
+}
+
+.answer-error {
+    margin-top: 3mm;
+
+    border-left:
+        0.8mm solid var(--attention);
+
+    padding:
+        2.5mm
+        3mm;
+
+    background: var(--attention-soft);
+
+    color: #73500f;
+
+    font-size: 8pt;
+}
+
+
+/* ============================================================
+   DIVISÓRIAS INTERNAS
+   ============================================================ */
+
+.subject-divider {
+    margin:
+        9mm
+        0
+        4mm;
+
+    border-bottom:
+        0.4mm solid var(--line);
+
+    padding-bottom: 2mm;
+
+    color: var(--ink-soft);
+
+    font-size: 8.5pt;
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+
+    text-transform: uppercase;
+
+    break-after: avoid;
+}
+
+.subject-divider--exercise {
+    color: var(--exercise);
+}
+
+.subject-divider--answer {
+    color: var(--answer);
+}
+
+
+/* ============================================================
+   REFERÊNCIAS
+   ============================================================ */
+
+.reference-list {
+    display: grid;
+
+    gap: 4mm;
+
+    margin:
+        7mm
+        0
+        0;
+
+    padding-left: 7mm;
+}
+
+.reference-item {
+    padding-left: 2mm;
+
+    color: #323e52;
+
+    font-size: 8.3pt;
+
+    line-height: 1.48;
+
+    text-align: left;
+
+    break-inside: avoid;
+}
+
+
+/* ============================================================
+   OUTROS
+   ============================================================ */
+
+.logical-separator {
+    margin:
+        7mm
+        0;
+
+    border: 0;
+
+    border-top:
+        0.3mm solid var(--line);
+}
+
+.editorial-note {
+    display: none;
+}
+
+.empty-section {
+    display: grid;
+
+    gap: 1mm;
+
+    margin:
+        4mm
+        0;
+
+    border:
+        0.4mm dashed #d4aa50;
+
+    border-radius: 1.5mm;
+
+    padding: 4mm;
+
+    background: #fff9e7;
+
+    color: #72531a;
+
+    font-size: 8pt;
+}
+
+
+/* ============================================================
+   PÁGINA FINAL
+   ============================================================ */
+
+.end-page {
+    page: end;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 247mm;
+
+    break-before: page;
+
+    text-align: center;
+}
+
+.end-page__mark {
+    display: grid;
+    place-items: center;
+
+    width: 19mm;
+    height: 19mm;
+
+    border-radius: 4mm;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-size: 11pt;
+    font-weight: 900;
+}
+
+.end-page__brand {
+    margin-top: 5mm;
+
+    color: var(--primary);
+
+    font-size: 8pt;
+    font-weight: 800;
+
+    letter-spacing: 0.15em;
+}
+
+.end-page h1 {
+    margin:
+        7mm
+        0
+        2mm;
+
+    font-size: 25pt;
+
+    bookmark-level: none;
+}
+
+.end-page p {
+    max-width: 100mm;
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 9pt;
+}
+
+.end-page__site {
+    margin-top: 10mm;
+
+    color: var(--ink-soft);
+
+    font-size: 8pt;
+}
+
+
+/* ============================================================
+   CONTROLE DE QUEBRAS
+   ============================================================ */
+
+table,
+figure,
+.question-card,
+.answer-card,
+.didactic-box,
+.formula-block,
+.code-block {
+    break-inside: avoid;
+}
+
+.content-section__header,
+.chapter-heading,
+.subject-divider {
+    break-after: avoid;
+}
+
+.content-paragraph {
+    widows: 3;
+    orphans: 3;
+}

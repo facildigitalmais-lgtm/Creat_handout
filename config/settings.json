@@ -1,0 +1,18 @@
+{
+  "app_name": "Fácil Digital+ — Montador de Apostilas",
+  "app_version": "0.1.0",
+  "host": "0.0.0.0",
+  "port": 8000,
+  "debug": true,
+  "library_dir": "biblioteca",
+  "schema_file": "schemas/apostila-subject.schema.json",
+  "prompt_template_file": "prompts/converter-apostila-para-json.txt",
+  "projects_dir": "projetos",
+  "uploads_dir": "uploads",
+  "temp_dir": "temp",
+  "output_dir": "output",
+  "editor": {
+    "nome": "Fácil Digital Mais",
+    "site": "facildigitalmais.com"
+  }
+}

@@ -1,0 +1,51 @@
+<article class="question-card">
+    <header class="question-card__header">
+        <span class="question-card__number">
+            Questão {{ question.numero }}
+        </span>
+
+        <div class="question-card__badges">
+            {% if question.dificuldade %}
+                <span>
+                    {{ question.dificuldade | replace("_", " ") }}
+                </span>
+            {% endif %}
+
+            {% if question.tipo %}
+                <span>
+                    {{ question.tipo | replace("_", " ") }}
+                </span>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="question-card__statement">
+        {{ question.enunciado }}
+    </div>
+
+    {% if question.recursos %}
+        <div class="question-resources">
+            <strong>
+                Recursos relacionados:
+            </strong>
+
+            {{ question.recursos | join(", ") }}
+        </div>
+    {% endif %}
+
+    {% if question.alternativas %}
+        <ol class="alternatives">
+            {% for alternative in question.alternativas %}
+                <li>
+                    <span class="alternative-id">
+                        {{ alternative.id }}
+                    </span>
+
+                    <span>
+                        {{ alternative.texto }}
+                    </span>
+                </li>
+            {% endfor %}
+        </ol>
+    {% endif %}
+</article>

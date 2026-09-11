@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <title>
+        {{ documento.dados.titulo }}
+    </title>
+</head>
+
+<body>
+    {% if documento.pdf_cover_url %}
+        <section class="cover-page">
+            <img
+                src="{{ documento.pdf_cover_url }}"
+                alt="Capa da apostila"
+                class="cover-image cover-image--{{ documento.editorial.cover_mode or 'cover' }}"
+            >
+        </section>
+    {% endif %}
+
+    <section class="title-page">
+        <div class="title-page__brand">
+            {{ documento.dados.editora or "Fácil Digital+" }}
+        </div>
+
+        <div class="title-page__body">
+            <div class="title-page__eyebrow">
+                APOSTILA DE ESTUDO
+            </div>
+
+            <h1>
+                {{ documento.dados.titulo }}
+            </h1>
+
+            {% if documento.dados.cargo %}
+                <h2>
+                    {{ documento.dados.cargo }}
+                </h2>
+            {% endif %}
+
+            <div class="title-rule"></div>
+
+            <dl class="title-metadata">
+                {% if documento.dados.concurso %}
+                    <div>
+                        <dt>
+                            Concurso
+                        </dt>
+
+                        <dd>
+                            {{ documento.dados.concurso }}
+                        </dd>
+                    </div>
+                {% endif %}
+
+                {% if documento.dados.orgao %}
+                    <div>
+                        <dt>
+                            Órgão
+                        </dt>
+
+                        <dd>
+                            {{ documento.dados.orgao }}
+                        </dd>
+                    </div>
+                {% endif %}
+
+                {% if documento.dados.banca %}
+                    <div>
+                        <dt>
+                            Banca
+                        </dt>
+
+                        <dd>
+                            {{ documento.dados.banca }}
+                        </dd>
+                    </div>
+                {% endif %}
+
+                {% if documento.dados.ano %}
+                    <div>
+                        <dt>
+                            Ano
+                        </dt>
+
+                        <dd>
+                            {{ documento.dados.ano }}
+                        </dd>
+                    </div>
+                {% endif %}
+
+                {% if documento.dados.edicao %}
+                    <div>
+                        <dt>
+                            Edição
+                        </dt>
+
+                        <dd>
+                            {{ documento.dados.edicao }}
+                        </dd>
+                    </div>
+                {% endif %}
+            </dl>
+        </div>
+
+        <footer class="title-page__footer">
+            {% if documento.dados.site %}
+                {{ documento.dados.site }}
+            {% endif %}
+        </footer>
+    </section>
+
+    {% if documento.dados.pagina_rosto or documento.dados.aviso_legal %}
+        <section class="front-page">
+            <header class="front-heading">
+                <span>
+                    SOBRE ESTE MATERIAL
+                </span>
+
+                <h1>
+                    Apresentação
+                </h1>
+            </header>
+
+            {% if documento.dados.pagina_rosto %}
+                <div class="front-text">
+                    {{ documento.dados.pagina_rosto }}
+                </div>
+            {% endif %}
+
+            {% if documento.dados.aviso_legal %}
+                <aside class="legal-box">
+                    <div class="legal-box__title">
+                        Aviso editorial
+                    </div>
+
+                    <div>
+                        {{ documento.dados.aviso_legal }}
+                    </div>
+                </aside>
+            {% endif %}
+        </section>
+    {% endif %}
+
+    <section class="toc-page">
+        <header class="front-heading">
+            <span>
+                ORGANIZAÇÃO DA APOSTILA
+            </span>
+
+            <h1>
+                Sumário
+            </h1>
+        </header>
+
+        <nav class="toc">
+            {% for item in documento.sumario %}
+                <a
+                    href="#{{ item.anchor }}"
+                    class="
+                        toc__item
+                        toc__item--{{ item.tipo }}
+                        toc__item--level-{{ item.nivel }}
+                    "
+                >
+                    <span class="toc__number">
+                        {% if item.tipo == "materia" %}
+                            Parte {{ item.numero }}
+                        {% else %}
+                            {{ item.numero }}
+                        {% endif %}
+                    </span>
+
+                    <span class="toc__title">
+                        {{ item.titulo }}
+                    </span>
+                </a>
+            {% endfor %}
+        </nav>
+    </section>
+
+    {% for materia in documento.materias %}
+        <section
+            class="subject-opening"
+            id="{{ materia.anchor }}"
+        >
+            <div class="subject-opening__stripe"></div>
+
+            <div class="subject-opening__content">
+                <div class="subject-opening__eyebrow">
+                    PARTE {{ materia.ordem }}
+                </div>
+
+                {% if materia.codigo_materia %}
+                    <div class="subject-opening__code">
+                        MATÉRIA {{ materia.codigo_materia }}
+                    </div>
+                {% endif %}
+
+                <h1 class="subject-opening__title">
+                    {{ materia.materia }}
+                </h1>
+
+                {% if materia.subtitulo %}
+                    <h2>
+                        {{ materia.subtitulo }}
+                    </h2>
+                {% endif %}
+
+                {% if materia.descricao %}
+                    <p>
+                        {{ materia.descricao }}
+                    </p>
+                {% endif %}
+
+                <div class="subject-opening__stats">
+                    <div>
+                        <strong>
+                            {{ materia.total_secoes }}
+                        </strong>
+
+                        <span>
+                            seções
+                        </span>
+                    </div>
+
+                    <div>
+                        <strong>
+                            {{ materia.total_blocos }}
+                        </strong>
+
+                        <span>
+                            blocos didáticos
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% for section in materia.secoes %}
+            <section
+                class="
+                    content-section
+                    content-section--level-{{ section.nivel }}
+                "
+                id="{{ section.anchor }}"
+            >
+                <header class="content-section__header">
+                    <span class="content-section__number">
+                        {{ section.numero }}
+                    </span>
+
+                    <div class="content-section__heading">
+                        {% if section.nivel <= 1 %}
+                            <h2>
+                                {{ section.titulo }}
+                            </h2>
+                        {% elif section.nivel == 2 %}
+                            <h3>
+                                {{ section.titulo }}
+                            </h3>
+                        {% elif section.nivel == 3 %}
+                            <h4>
+                                {{ section.titulo }}
+                            </h4>
+                        {% else %}
+                            <h5>
+                                {{ section.titulo }}
+                            </h5>
+                        {% endif %}
+
+                        {% if section.descricao %}
+                            <p>
+                                {{ section.descricao }}
+                            </p>
+                        {% endif %}
+                    </div>
+                </header>
+
+                <div class="content-section__body">
+                    {% for block in section.blocos %}
+                        {% include "print/components/block.html" %}
+                    {% endfor %}
+
+                    {% if not section.blocos %}
+                        <aside class="empty-section">
+                            <strong>
+                                Seção sem conteúdo visível.
+                            </strong>
+
+                            <span>
+                                O tópico está presente no mapa da matéria,
+                                mas não possui bloco destinado ao aluno.
+                            </span>
+                        </aside>
+                    {% endif %}
+                </div>
+            </section>
+        {% endfor %}
+
+        {% if materia.exercicios %}
+            <section class="exercise-chapter">
+                <header class="chapter-heading chapter-heading--exercise">
+                    <span>
+                        PRÁTICA E RECUPERAÇÃO ATIVA
+                    </span>
+
+                    <h1>
+                        Exercícios de fixação
+                    </h1>
+
+                    <p>
+                        {{ materia.materia }}
+                    </p>
+                </header>
+
+                {% for question in materia.exercicios %}
+                    {% include "print/components/question.html" %}
+                {% endfor %}
+            </section>
+        {% endif %}
+
+        {% if materia.gabaritos %}
+            <section class="answer-chapter">
+                <header class="chapter-heading chapter-heading--answer">
+                    <span>
+                        FEEDBACK E CORREÇÃO
+                    </span>
+
+                    <h1>
+                        Gabarito comentado
+                    </h1>
+
+                    <p>
+                        {{ materia.materia }}
+                    </p>
+                </header>
+
+                {% for answer in materia.gabaritos %}
+                    {% include "print/components/answer.html" %}
+                {% endfor %}
+            </section>
+        {% endif %}
+
+        {% if materia.referencias %}
+            <section class="reference-chapter">
+                <header class="chapter-heading">
+                    <span>
+                        FONTES CONSULTADAS
+                    </span>
+
+                    <h1>
+                        Referências
+                    </h1>
+
+                    <p>
+                        {{ materia.materia }}
+                    </p>
+                </header>
+
+                <ol class="reference-list">
+                    {% for reference in materia.referencias %}
+                        {% include "print/components/reference.html" %}
+                    {% endfor %}
+                </ol>
+            </section>
+        {% endif %}
+    {% endfor %}
+
+    {% if documento.exercicios_finais %}
+        <section class="exercise-chapter major-chapter">
+            <header class="chapter-heading chapter-heading--exercise">
+                <span>
+                    PARTE PRÁTICA
+                </span>
+
+                <h1>
+                    Exercícios
+                </h1>
+
+                <p>
+                    Questões consolidadas das matérias selecionadas.
+                </p>
+            </header>
+
+            {% for question in documento.exercicios_finais %}
+                <div class="subject-divider subject-divider--exercise">
+                    {{ question.materia }}
+                </div>
+
+                {% include "print/components/question.html" %}
+            {% endfor %}
+        </section>
+    {% endif %}
+
+    {% if documento.gabaritos_finais %}
+        <section class="answer-chapter major-chapter">
+            <header class="chapter-heading chapter-heading--answer">
+                <span>
+                    CORREÇÃO COMENTADA
+                </span>
+
+                <h1>
+                    Gabarito comentado
+                </h1>
+            </header>
+
+            {% for answer in documento.gabaritos_finais %}
+                <div class="subject-divider subject-divider--answer">
+                    {{ answer.materia }}
+                </div>
+
+                {% include "print/components/answer.html" %}
+            {% endfor %}
+        </section>
+    {% endif %}
+
+    {% if documento.referencias_finais %}
+        <section class="reference-chapter major-chapter">
+            <header class="chapter-heading">
+                <span>
+                    FONTES E REFERÊNCIAS
+                </span>
+
+                <h1>
+                    Referências
+                </h1>
+
+                <p>
+                    Referências consolidadas das matérias desta apostila.
+                </p>
+            </header>
+
+            <ol class="reference-list">
+                {% for reference in documento.referencias_finais %}
+                    {% include "print/components/reference.html" %}
+                {% endfor %}
+            </ol>
+        </section>
+    {% endif %}
+
+    <section class="end-page">
+        <div class="end-page__mark">
+            FD+
+        </div>
+
+        <div class="end-page__brand">
+            FÁCIL DIGITAL+
+        </div>
+
+        <h1>
+            Bons estudos!
+        </h1>
+
+        <p>
+            Material organizado para estudo progressivo,
+            prática e revisão.
+        </p>
+
+        {% if documento.dados.site %}
+            <div class="end-page__site">
+                {{ documento.dados.site }}
+            </div>
+        {% endif %}
+    </section>
+</body>
+</html>

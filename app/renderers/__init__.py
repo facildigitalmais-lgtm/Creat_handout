@@ -1,0 +1,1 @@
+"""Renderizadores e normalizadores editoriais."""

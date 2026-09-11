@@ -1,0 +1,263 @@
+{% extends "base.html" %}
+
+{% block title %}
+Biblioteca — {{ app_name }}
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div>
+        <p class="eyebrow">
+            BIBLIOTECA DE CONTEÚDO
+        </p>
+
+        <h1>
+            Montador de Apostilas
+        </h1>
+
+        <p class="hero__description">
+            A aplicação carregou e validou os módulos JSON encontrados
+            na biblioteca local.
+        </p>
+    </div>
+
+    <div class="hero__actions">
+        <button
+            id="reload-library"
+            class="button button--primary"
+            type="button"
+        >
+            Recarregar biblioteca
+        </button>
+    </div>
+</section>
+
+<section class="stats-grid">
+    <article class="stat-card">
+        <span class="stat-card__label">
+            Arquivos
+        </span>
+
+        <strong class="stat-card__value">
+            {{ catalogo.estatisticas.arquivos }}
+        </strong>
+    </article>
+
+    <article class="stat-card stat-card--success">
+        <span class="stat-card__label">
+            Válidos
+        </span>
+
+        <strong class="stat-card__value">
+            {{ catalogo.estatisticas.validos }}
+        </strong>
+    </article>
+
+    <article class="stat-card stat-card--danger">
+        <span class="stat-card__label">
+            Inválidos
+        </span>
+
+        <strong class="stat-card__value">
+            {{ catalogo.estatisticas.invalidos }}
+        </strong>
+    </article>
+
+    <article class="stat-card">
+        <span class="stat-card__label">
+            Matérias
+        </span>
+
+        <strong class="stat-card__value">
+            {{ catalogo.estatisticas.materias }}
+        </strong>
+    </article>
+</section>
+
+<section class="panel">
+    <div class="panel__header">
+        <div>
+            <h2>
+                Conteúdo disponível
+            </h2>
+
+            <p>
+                Os arquivos são agrupados pela matéria identificada
+                no próprio JSON ou, como fallback, pelo nome do arquivo.
+            </p>
+        </div>
+
+        <div
+            id="reload-status"
+            class="status-message"
+            aria-live="polite"
+        ></div>
+    </div>
+
+    {% if grupos %}
+
+        <div class="matter-list">
+
+            {% for grupo in grupos %}
+
+                <details
+                    class="matter-card"
+                    {% if loop.first %}open{% endif %}
+                >
+                    <summary class="matter-card__summary">
+                        <div>
+                            <span class="matter-card__code">
+                                {% if grupo.codigo_materia %}
+                                    {{ grupo.codigo_materia }}
+                                {% else %}
+                                    —
+                                {% endif %}
+                            </span>
+
+                            <strong>
+                                {{ grupo.materia }}
+                            </strong>
+                        </div>
+
+                        <div class="matter-card__stats">
+                            <span>
+                                {{ grupo.modulos|length }}
+                                assunto(s)
+                            </span>
+
+                            {% if grupo.invalidos %}
+                                <span class="badge badge--danger">
+                                    {{ grupo.invalidos }} inválido(s)
+                                </span>
+                            {% else %}
+                                <span class="badge badge--success">
+                                    OK
+                                </span>
+                            {% endif %}
+                        </div>
+                    </summary>
+
+                    <div class="module-table-wrapper">
+                        <table class="module-table">
+                            <thead>
+                                <tr>
+                                    <th>Assunto</th>
+                                    <th>Arquivo</th>
+                                    <th>Seções</th>
+                                    <th>Blocos</th>
+                                    <th>Questões</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for modulo in grupo.modulos %}
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                {{ modulo.assunto }}
+                                            </strong>
+
+                                            {% if modulo.id_modulo %}
+                                                <small class="module-id">
+                                                    {{ modulo.id_modulo }}
+                                                </small>
+                                            {% endif %}
+                                        </td>
+
+                                        <td class="file-name">
+                                            {{ modulo.arquivo }}
+                                        </td>
+
+                                        <td>
+                                            {{ modulo.total_secoes }}
+                                        </td>
+
+                                        <td>
+                                            {{ modulo.total_blocos }}
+                                        </td>
+
+                                        <td>
+                                            {{ modulo.total_exercicios }}
+                                        </td>
+
+                                        <td>
+                                            {% if modulo.valido %}
+                                                <span class="badge badge--success">
+                                                    Válido
+                                                </span>
+                                            {% else %}
+                                                <span class="badge badge--danger">
+                                                    Inválido
+                                                </span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+
+                                    {% if modulo.erros %}
+                                        <tr class="validation-row">
+                                            <td colspan="6">
+                                                <details class="validation-details">
+                                                    <summary>
+                                                        Ver
+                                                        {{ modulo.erros|length }}
+                                                        problema(s)
+                                                    </summary>
+
+                                                    <ul>
+                                                        {% for erro in modulo.erros %}
+                                                            <li>
+                                                                {{ erro }}
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </details>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+            <div class="empty-state__icon">
+                JSON
+            </div>
+
+            <h3>
+                Nenhum módulo encontrado
+            </h3>
+
+            <p>
+                Coloque arquivos JSON dentro da pasta
+                <code>biblioteca/</code> e clique em
+                <strong>Recarregar biblioteca</strong>.
+            </p>
+        </div>
+
+    {% endif %}
+</section>
+
+<section class="panel panel--compact">
+    <h2>
+        Próxima etapa
+    </h2>
+
+    <p>
+        Depois que a biblioteca estiver carregando corretamente,
+        adicionaremos o cadastro de projetos de apostila, seleção de
+        matérias e assuntos, upload da capa e ordenação do conteúdo.
+    </p>
+</section>
+
+{% endblock %}

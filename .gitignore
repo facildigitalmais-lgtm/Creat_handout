@@ -1,0 +1,54 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Ambiente virtual
+.venv/
+venv/
+env/
+
+# IDE / SO
+.idea/
+.DS_Store
+Thumbs.db
+
+# Variáveis locais
+.env
+.env.*
+
+# Cache de ferramentas
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Logs
+logs/*.log
+
+# Arquivos temporários
+temp/html/*
+temp/pdf/*
+
+# Uploads de usuário
+uploads/capas/*
+
+# Projetos gerados localmente
+projetos/*
+
+# Saída final
+output/*
+
+# Biblioteca de arquivos inválidos/quarentena
+biblioteca/_invalidos/*
+
+# Mantém diretórios vazios quando necessário
+!logs/.gitkeep
+!temp/html/.gitkeep
+!temp/pdf/.gitkeep
+!uploads/capas/.gitkeep
+!projetos/.gitkeep
+!output/.gitkeep
+!biblioteca/_invalidos/.gitkeep

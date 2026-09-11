@@ -1,0 +1,1211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://facildigitalmais.local/schemas/apostila-subject.schema.json",
+  "title": "Matéria completa para composição de apostilas",
+  "description": "Contrato JSON de uma matéria completa contendo tópicos, conteúdo didático, exercícios, gabaritos, fontes, recursos e referências.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "document_type",
+    "cabecalho",
+    "mapa_estrutura",
+    "objetivos_aprendizagem",
+    "fontes",
+    "assets",
+    "conteudo",
+    "exercicios",
+    "gabaritos",
+    "referencias",
+    "auditoria"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "2.0"
+    },
+    "document_type": {
+      "type": "string",
+      "const": "apostila_subject"
+    },
+    "cabecalho": {
+      "$ref": "#/$defs/cabecalho"
+    },
+    "mapa_estrutura": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/itemEstrutura"
+      }
+    },
+    "objetivos_aprendizagem": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/objetivo"
+      }
+    },
+    "fontes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/fonte"
+      }
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/asset"
+      }
+    },
+    "conteudo": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/secaoConteudo"
+      }
+    },
+    "exercicios": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/questao"
+      }
+    },
+    "gabaritos": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/gabarito"
+      }
+    },
+    "referencias": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/referencia"
+      }
+    },
+    "auditoria": {
+      "$ref": "#/$defs/auditoria"
+    }
+  },
+  "additionalProperties": false,
+
+  "$defs": {
+    "cabecalho": {
+      "type": "object",
+      "required": [
+        "id_materia",
+        "codigo_materia",
+        "materia",
+        "titulo_sugerido",
+        "subtitulo_sugerido",
+        "nivel",
+        "idioma",
+        "perfil_epistemologico",
+        "data_pesquisa",
+        "data_corte",
+        "versao_conteudo",
+        "descricao",
+        "palavras_chave",
+        "pre_requisitos",
+        "escopo_incluido",
+        "escopo_excluido",
+        "estrutura_resumida",
+        "origem"
+      ],
+      "properties": {
+        "id_materia": {
+          "type": "string",
+          "minLength": 1
+        },
+        "codigo_materia": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^\\d{3,}$"
+        },
+        "materia": {
+          "type": "string",
+          "minLength": 1
+        },
+        "titulo_sugerido": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subtitulo_sugerido": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "nivel": {
+          "type": "string",
+          "enum": [
+            "fundamental",
+            "medio",
+            "tecnico",
+            "superior",
+            "pos_graduacao",
+            "misto"
+          ]
+        },
+        "idioma": {
+          "type": "string",
+          "const": "pt-BR"
+        },
+        "perfil_epistemologico": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "data_pesquisa": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "data_corte": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "versao_conteudo": {
+          "type": "string",
+          "minLength": 1
+        },
+        "descricao": {
+          "type": "string"
+        },
+        "palavras_chave": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pre_requisitos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "escopo_incluido": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "escopo_excluido": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "estrutura_resumida": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/itemEstruturaResumida"
+          }
+        },
+        "origem": {
+          "$ref": "#/$defs/origem"
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "origem": {
+      "type": "object",
+      "required": [
+        "tipo",
+        "titulo_original",
+        "arquivo_original",
+        "observacao"
+      ],
+      "properties": {
+        "tipo": {
+          "type": "string",
+          "enum": [
+            "conversao",
+            "autoral",
+            "misto"
+          ]
+        },
+        "titulo_original": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "arquivo_original": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "observacao": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "tipoEstrutura": {
+      "type": "string",
+      "enum": [
+        "parte",
+        "capitulo",
+        "secao",
+        "subsecao",
+        "subsubsecao"
+      ]
+    },
+
+    "itemEstruturaResumida": {
+      "type": "object",
+      "required": [
+        "id",
+        "parent_id",
+        "ordem",
+        "nivel",
+        "tipo",
+        "titulo"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ordem": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "nivel": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tipo": {
+          "$ref": "#/$defs/tipoEstrutura"
+        },
+        "titulo": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "itemEstrutura": {
+      "type": "object",
+      "required": [
+        "id",
+        "parent_id",
+        "ordem",
+        "nivel",
+        "tipo",
+        "titulo",
+        "descricao",
+        "objetivos_ids",
+        "topicos_cobertos",
+        "tipos_de_conteudo_previstos",
+        "importancia",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ordem": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "nivel": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tipo": {
+          "$ref": "#/$defs/tipoEstrutura"
+        },
+        "titulo": {
+          "type": "string",
+          "minLength": 1
+        },
+        "descricao": {
+          "type": "string"
+        },
+        "objetivos_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "topicos_cobertos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tipos_de_conteudo_previstos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "importancia": {
+          "type": "string",
+          "enum": [
+            "fundamental",
+            "central",
+            "complementar",
+            "avancado"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "gerado",
+            "parcial",
+            "pendente"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "objetivo": {
+      "type": "object",
+      "required": [
+        "id",
+        "ordem",
+        "descricao",
+        "nivel_cognitivo",
+        "importancia",
+        "topicos_relacionados"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ordem": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "descricao": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nivel_cognitivo": {
+          "type": "string",
+          "enum": [
+            "recordar",
+            "compreender",
+            "aplicar",
+            "analisar",
+            "avaliar",
+            "resolver",
+            "interpretar",
+            "integrar"
+          ]
+        },
+        "importancia": {
+          "type": "string",
+          "enum": [
+            "fundamental",
+            "central",
+            "complementar",
+            "avancado"
+          ]
+        },
+        "topicos_relacionados": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "fonte": {
+      "type": "object",
+      "required": [
+        "id",
+        "ordem",
+        "tipo",
+        "titulo",
+        "autor_entidade",
+        "ano",
+        "url",
+        "arquivo",
+        "data_acesso",
+        "versao",
+        "classificacao",
+        "observacao"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ordem": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tipo": {
+          "type": "string",
+          "enum": [
+            "arquivo_fornecido",
+            "legislacao",
+            "fonte_oficial_web",
+            "artigo_cientifico",
+            "livro",
+            "manual",
+            "norma_tecnica",
+            "jurisprudencia",
+            "prova_concurso",
+            "edital",
+            "base_dados",
+            "documentacao_tecnica",
+            "outra"
+          ]
+        },
+        "titulo": {
+          "type": "string"
+        },
+        "autor_entidade": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ano": {
+          "type": [
+            "integer",
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "arquivo": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "data_acesso": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "versao": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "classificacao": {
+          "type": "string",
+          "enum": [
+            "primaria",
+            "secundaria",
+            "terciaria",
+            "referencia"
+          ]
+        },
+        "observacao": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "asset": {
+      "type": "object",
+      "required": [
+        "id",
+        "ordem",
+        "tipo",
+        "titulo",
+        "arquivo",
+        "mime_type",
+        "texto_alternativo",
+        "descricao_visual",
+        "source_locator",
+        "required"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ordem": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tipo": {
+          "type": "string",
+          "enum": [
+            "imagem",
+            "grafico",
+            "mapa",
+            "diagrama",
+            "figura",
+            "outro"
+          ]
+        },
+        "titulo": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "arquivo": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mime_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "texto_alternativo": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "descricao_visual": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_locator": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "required": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "sourceRef": {
+      "type": "object",
+      "required": [
+        "source_id",
+        "locator",
+        "tipo_uso"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "locator": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tipo_uso": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "renderHint": {
+      "type": "object",
+      "properties": {
+        "keep_together": {
+          "type": "boolean"
+        },
+        "page_break_before": {
+          "type": "boolean"
+        },
+        "largura_preferida": {
+          "type": "string",
+          "enum": [
+            "normal",
+            "larga",
+            "pagina_inteira"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "secaoConteudo": {
+      "type": "object",
+      "required": [
+        "section_id",
+        "ordem",
+        "blocos"
+      ],
+      "properties": {
+        "section_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ordem": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "blocos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/bloco"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "bloco": {
+      "type": "object",
+      "required": [
+        "id",
+        "ordem",
+        "tipo",
+        "visibilidade",
+        "conteudo",
+        "source_refs",
+        "objetivos_ids",
+        "tags"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ordem": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tipo": {
+          "type": "string",
+          "enum": [
+            "titulo",
+            "subtitulo",
+            "paragrafo",
+            "conceito_chave",
+            "definicao",
+            "observacao",
+            "atencao",
+            "cuidado",
+            "erro_comum",
+            "para_memorizar",
+            "raciocinio",
+            "exemplo",
+            "contraexemplo",
+            "exemplo_resolvido",
+            "estudo_de_caso",
+            "analise_guiada",
+            "micropratica",
+            "lista",
+            "tabela",
+            "formula",
+            "equacao",
+            "codigo",
+            "citacao",
+            "linha_do_tempo",
+            "fluxograma",
+            "diagrama",
+            "mapa",
+            "grafico",
+            "figura",
+            "imagem",
+            "mecanismo",
+            "legenda",
+            "comentario_editorial",
+            "separador_logico"
+          ]
+        },
+        "visibilidade": {
+          "type": "string",
+          "enum": [
+            "aluno",
+            "editorial",
+            "metadado"
+          ]
+        },
+        "conteudo": {
+          "type": "object"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceRef"
+          }
+        },
+        "objetivos_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "render_hint": {
+          "$ref": "#/$defs/renderHint"
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "enunciado": {
+      "type": "object",
+      "required": [
+        "texto",
+        "recursos"
+      ],
+      "properties": {
+        "texto": {
+          "type": "string"
+        },
+        "recursos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "alternativa": {
+      "type": "object",
+      "required": [
+        "id",
+        "ordem",
+        "texto"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ordem": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "texto": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "questao": {
+      "type": "object",
+      "required": [
+        "id",
+        "ordem",
+        "tipo",
+        "dificuldade",
+        "nivel_cognitivo",
+        "objetivos_ids",
+        "section_refs",
+        "enunciado",
+        "alternativas",
+        "source_refs",
+        "tags"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ordem": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tipo": {
+          "type": "string",
+          "enum": [
+            "multipla_escolha",
+            "certo_errado",
+            "associacao",
+            "analise_afirmacoes",
+            "problema",
+            "estudo_de_caso",
+            "interpretacao",
+            "calculo",
+            "resposta_curta"
+          ]
+        },
+        "dificuldade": {
+          "type": "string",
+          "enum": [
+            "fundamentacao",
+            "basica",
+            "intermediaria",
+            "nivel_concurso",
+            "avancada",
+            "desafio"
+          ]
+        },
+        "nivel_cognitivo": {
+          "type": "string",
+          "enum": [
+            "recordar",
+            "compreender",
+            "aplicar",
+            "analisar",
+            "avaliar",
+            "resolver",
+            "interpretar",
+            "integrar"
+          ]
+        },
+        "objetivos_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "section_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "enunciado": {
+          "$ref": "#/$defs/enunciado"
+        },
+        "alternativas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/alternativa"
+          }
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceRef"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "analiseAlternativa": {
+      "type": "object",
+      "required": [
+        "alternativa_id",
+        "correta",
+        "comentario"
+      ],
+      "properties": {
+        "alternativa_id": {
+          "type": "string"
+        },
+        "correta": {
+          "type": "boolean"
+        },
+        "comentario": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "gabarito": {
+      "type": "object",
+      "required": [
+        "question_id",
+        "resposta",
+        "comentario",
+        "fundamento",
+        "resolucao",
+        "analise_alternativas",
+        "erro_provavel",
+        "revisar_section_refs",
+        "source_refs"
+      ],
+      "properties": {
+        "question_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resposta": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "comentario": {
+          "type": "string"
+        },
+        "fundamento": {
+          "type": "string"
+        },
+        "resolucao": {
+          "type": "string"
+        },
+        "analise_alternativas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/analiseAlternativa"
+          }
+        },
+        "erro_provavel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "revisar_section_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceRef"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "referencia": {
+      "type": "object",
+      "required": [
+        "id",
+        "ordem",
+        "tipo",
+        "autor",
+        "autor_entidade",
+        "titulo",
+        "subtitulo",
+        "edicao",
+        "local",
+        "editora",
+        "ano",
+        "doi",
+        "url",
+        "data_acesso",
+        "norma_abnt_formatada"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ordem": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tipo": {
+          "type": "string"
+        },
+        "autor": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "autor_entidade": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "titulo": {
+          "type": "string"
+        },
+        "subtitulo": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "edicao": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "local": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "editora": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ano": {
+          "type": [
+            "integer",
+            "string",
+            "null"
+          ]
+        },
+        "doi": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "data_acesso": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "norma_abnt_formatada": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "alerta": {
+      "type": "object",
+      "required": [
+        "codigo",
+        "descricao",
+        "gravidade"
+      ],
+      "properties": {
+        "codigo": {
+          "type": "string"
+        },
+        "descricao": {
+          "type": "string"
+        },
+        "gravidade": {
+          "type": "string",
+          "enum": [
+            "informativo",
+            "aviso",
+            "critico"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "auditoria": {
+      "type": "object",
+      "required": [
+        "json_valido",
+        "estrutura_completa",
+        "ids_unicos",
+        "referencias_ids_validas",
+        "mapa_conteudo_consistente",
+        "objetivos_cobertos",
+        "questoes_auditadas",
+        "gabaritos_auditados",
+        "fontes_verificadas",
+        "auditoria_antirrepeticao",
+        "conteudo_revisado",
+        "conversao_integral",
+        "alertas"
+      ],
+      "properties": {
+        "json_valido": {
+          "type": "boolean"
+        },
+        "estrutura_completa": {
+          "type": "boolean"
+        },
+        "ids_unicos": {
+          "type": "boolean"
+        },
+        "referencias_ids_validas": {
+          "type": "boolean"
+        },
+        "mapa_conteudo_consistente": {
+          "type": "boolean"
+        },
+        "objetivos_cobertos": {
+          "type": "boolean"
+        },
+        "questoes_auditadas": {
+          "type": "boolean"
+        },
+        "gabaritos_auditados": {
+          "type": "boolean"
+        },
+        "fontes_verificadas": {
+          "type": "boolean"
+        },
+        "auditoria_antirrepeticao": {
+          "type": "boolean"
+        },
+        "conteudo_revisado": {
+          "type": "boolean"
+        },
+        "conversao_integral": {
+          "type": "boolean"
+        },
+        "alertas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/alerta"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

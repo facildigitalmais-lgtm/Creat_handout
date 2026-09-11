@@ -1,0 +1,1990 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <meta
+        name="color-scheme"
+        content="light"
+    >
+
+    <title>
+        {{ app_name }}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/static/css/workspace.css"
+    >
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="topbar">
+            <div class="brand">
+                <div
+                    class="brand__mark"
+                    aria-hidden="true"
+                >
+                    FD+
+                </div>
+
+                <div class="brand__text">
+                    <strong>
+                        Fácil Digital+
+                    </strong>
+
+                    <span>
+                        Montador de Apostilas
+                    </span>
+                </div>
+            </div>
+
+            <nav
+                class="topbar__actions"
+                aria-label="Ações principais"
+            >
+                <button
+                    type="button"
+                    class="toolbar-button"
+                    id="new-project-button"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path d="M12 5v14M5 12h14" />
+                    </svg>
+
+                    <span>
+                        Novo
+                    </span>
+                </button>
+
+                <button
+                    type="button"
+                    class="toolbar-button"
+                    id="open-projects-button"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path d="M3 6h7l2 2h9v11H3z" />
+                    </svg>
+
+                    <span>
+                        Projetos
+                    </span>
+                </button>
+
+                <button
+                    type="button"
+                    class="toolbar-button toolbar-button--primary"
+                    id="save-project-button"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path d="M5 4h12l2 2v14H5z" />
+                        <path d="M8 4v6h8V4" />
+                        <path d="M8 16h8" />
+                    </svg>
+
+                    <span>
+                        Salvar
+                    </span>
+                </button>
+
+                <button
+                    type="button"
+                    class="toolbar-button toolbar-button--accent"
+                    id="copy-prompt-button"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M8 7V5.8A2.8 2.8 0 0 1 10.8 3h7.4A2.8 2.8 0 0 1 21 5.8v7.4a2.8 2.8 0 0 1-2.8 2.8H17"
+                        />
+                        <rect
+                            x="3"
+                            y="8"
+                            width="13"
+                            height="13"
+                            rx="2.8"
+                        />
+                    </svg>
+
+                    <span>
+                        Prompt JSON
+                    </span>
+                </button>
+
+                <button
+                    type="button"
+                    class="toolbar-button"
+                    id="reload-library"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M20 11a8.1 8.1 0 0 0-14.7-4.7L3 9"
+                        />
+                        <path
+                            d="M3 4v5h5"
+                        />
+                        <path
+                            d="M4 13a8.1 8.1 0 0 0 14.7 4.7L21 15"
+                        />
+                        <path
+                            d="M21 20v-5h-5"
+                        />
+                    </svg>
+
+                    <span>
+                        Recarregar biblioteca
+                    </span>
+                </button>
+            </nav>
+        </header>
+
+        <aside class="sidebar">
+            <div class="sidebar__intro">
+                <span class="sidebar__eyebrow">
+                    NOVA APOSTILA
+                </span>
+
+                <h1>
+                    Projeto editorial
+                </h1>
+
+                <p>
+                    Configure o documento e selecione as matérias
+                    que farão parte da apostila.
+                </p>
+            </div>
+
+            <nav
+                class="stepper"
+                aria-label="Etapas do projeto"
+            >
+                <button
+                    type="button"
+                    class="stepper__item is-active"
+                    data-step-target="1"
+                >
+                    <span class="stepper__number">
+                        1
+                    </span>
+
+                    <span class="stepper__text">
+                        <strong>
+                            Informações
+                        </strong>
+
+                        <small>
+                            Concurso e cargo
+                        </small>
+                    </span>
+                </button>
+
+                <button
+                    type="button"
+                    class="stepper__item"
+                    data-step-target="2"
+                >
+                    <span class="stepper__number">
+                        2
+                    </span>
+
+                    <span class="stepper__text">
+                        <strong>
+                            Capa
+                        </strong>
+
+                        <small>
+                            Arte principal
+                        </small>
+                    </span>
+                </button>
+
+                <button
+                    type="button"
+                    class="stepper__item"
+                    data-step-target="3"
+                >
+                    <span class="stepper__number">
+                        3
+                    </span>
+
+                    <span class="stepper__text">
+                        <strong>
+                            Matérias
+                        </strong>
+
+                        <small>
+                            Conteúdo da apostila
+                        </small>
+                    </span>
+                </button>
+
+                <button
+                    type="button"
+                    class="stepper__item"
+                    data-step-target="4"
+                >
+                    <span class="stepper__number">
+                        4
+                    </span>
+
+                    <span class="stepper__text">
+                        <strong>
+                            Editoração
+                        </strong>
+
+                        <small>
+                            Organização do conteúdo
+                        </small>
+                    </span>
+                </button>
+
+                <button
+                    type="button"
+                    class="stepper__item"
+                    data-step-target="5"
+                >
+                    <span class="stepper__number">
+                        5
+                    </span>
+
+                    <span class="stepper__text">
+                        <strong>
+                            Revisão
+                        </strong>
+
+                        <small>
+                            Conferência do projeto
+                        </small>
+                    </span>
+                </button>
+            </nav>
+
+            <div class="library-summary">
+                <div class="library-summary__header">
+                    <span>
+                        Biblioteca
+                    </span>
+
+                    <span
+                        class="status-dot"
+                        aria-hidden="true"
+                    ></span>
+                </div>
+
+                <dl>
+                    <div>
+                        <dt>
+                            Matérias
+                        </dt>
+
+                        <dd>
+                            {{ catalogo.estatisticas.materias }}
+                        </dd>
+                    </div>
+
+                    <div>
+                        <dt>
+                            Válidas
+                        </dt>
+
+                        <dd class="text-success">
+                            {{ catalogo.estatisticas.validos }}
+                        </dd>
+                    </div>
+
+                    <div>
+                        <dt>
+                            Com erro
+                        </dt>
+
+                        <dd
+                            class="{% if catalogo.estatisticas.invalidos %}text-danger{% endif %}"
+                        >
+                            {{ catalogo.estatisticas.invalidos }}
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="sidebar__footer">
+                <span>
+                    {{ editor.nome }}
+                </span>
+
+                <small>
+                    v{{ app_version }}
+                </small>
+            </div>
+        </aside>
+
+        <main class="workspace">
+            <form
+                id="project-form"
+                autocomplete="off"
+            >
+                <!-- ETAPA 1 -->
+                <section
+                    class="workspace-step is-active"
+                    data-step="1"
+                >
+                    <header class="page-heading">
+                        <div>
+                            <span class="page-heading__eyebrow">
+                                ETAPA 1 DE 5
+                            </span>
+
+                            <h2>
+                                Informações da apostila
+                            </h2>
+
+                            <p>
+                                Estes dados serão usados na folha de rosto,
+                                cabeçalhos e elementos editoriais.
+                            </p>
+                        </div>
+
+                        <span
+                            class="draft-status"
+                            id="draft-status"
+                        >
+                            Rascunho local
+                        </span>
+                    </header>
+
+                    <div class="content-grid content-grid--wide">
+                        <article class="card">
+                            <div class="card__heading">
+                                <div class="card__icon">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M4 4h16v16H4z"
+                                        />
+                                        <path
+                                            d="M8 8h8M8 12h8M8 16h5"
+                                        />
+                                    </svg>
+                                </div>
+
+                                <div>
+                                    <h3>
+                                        Identificação
+                                    </h3>
+
+                                    <p>
+                                        Informações principais do material.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid">
+                                <label class="field field--full">
+                                    <span class="field__label">
+                                        Nome da apostila
+                                        <b aria-hidden="true">*</b>
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        name="titulo"
+                                        id="titulo"
+                                        placeholder="Ex.: Apostila SEDUC-PA 2026"
+                                        required
+                                    >
+                                </label>
+
+                                <label class="field field--full">
+                                    <span class="field__label">
+                                        Concurso
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        name="concurso"
+                                        id="concurso"
+                                        placeholder="Ex.: Secretaria de Estado de Educação do Pará"
+                                    >
+                                </label>
+
+                                <label class="field">
+                                    <span class="field__label">
+                                        Órgão
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        name="orgao"
+                                        id="orgao"
+                                        placeholder="Ex.: SEDUC-PA"
+                                    >
+                                </label>
+
+                                <label class="field">
+                                    <span class="field__label">
+                                        Banca
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        name="banca"
+                                        id="banca"
+                                        placeholder="Ex.: FGV"
+                                    >
+                                </label>
+
+                                <label class="field field--full">
+                                    <span class="field__label">
+                                        Cargo
+                                        <b aria-hidden="true">*</b>
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        name="cargo"
+                                        id="cargo"
+                                        placeholder="Ex.: Professor de Educação Especial — AEE"
+                                        required
+                                    >
+                                </label>
+
+                                <label class="field">
+                                    <span class="field__label">
+                                        Ano
+                                    </span>
+
+                                    <input
+                                        type="number"
+                                        name="ano"
+                                        id="ano"
+                                        min="2000"
+                                        max="2200"
+                                        placeholder="2026"
+                                    >
+                                </label>
+
+                                <label class="field">
+                                    <span class="field__label">
+                                        Edição
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        name="edicao"
+                                        id="edicao"
+                                        placeholder="1ª edição"
+                                    >
+                                </label>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__heading">
+                                <div class="card__icon">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M4 5h16v14H4z"
+                                        />
+                                        <path
+                                            d="M8 9h8M8 13h6"
+                                        />
+                                    </svg>
+                                </div>
+
+                                <div>
+                                    <h3>
+                                        Página de rosto
+                                    </h3>
+
+                                    <p>
+                                        Textos complementares e dados editoriais.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-grid">
+                                <label class="field">
+                                    <span class="field__label">
+                                        Editora
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        name="editora"
+                                        id="editora"
+                                        value="{{ editor.nome }}"
+                                    >
+                                </label>
+
+                                <label class="field">
+                                    <span class="field__label">
+                                        Site
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        name="site"
+                                        id="site"
+                                        value="{{ editor.site }}"
+                                    >
+                                </label>
+
+                                <label class="field field--full">
+                                    <span class="field__label">
+                                        Texto da página de rosto
+                                    </span>
+
+                                    <textarea
+                                        name="pagina_rosto"
+                                        id="pagina-rosto"
+                                        rows="5"
+                                        placeholder="Apresentação editorial opcional..."
+                                    ></textarea>
+                                </label>
+
+                                <label class="field field--full">
+                                    <span class="field__label">
+                                        Aviso legal / direitos autorais
+                                    </span>
+
+                                    <textarea
+                                        name="aviso_legal"
+                                        id="aviso-legal"
+                                        rows="4"
+                                        placeholder="Avisos de autoria, independência editorial e direitos reservados..."
+                                    ></textarea>
+                                </label>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- ETAPA 2 -->
+                <section
+                    class="workspace-step"
+                    data-step="2"
+                    hidden
+                >
+                    <header class="page-heading">
+                        <div>
+                            <span class="page-heading__eyebrow">
+                                ETAPA 2 DE 5
+                            </span>
+
+                            <h2>
+                                Capa da apostila
+                            </h2>
+
+                            <p>
+                                Carregue a arte final que será usada como
+                                primeira página do documento.
+                            </p>
+                        </div>
+                    </header>
+
+                    <div class="cover-layout">
+                        <article class="card cover-uploader">
+                            <div
+                                class="cover-dropzone"
+                                id="cover-dropzone"
+                            >
+                                <input
+                                    type="file"
+                                    id="cover-input"
+                                    name="capa"
+                                    accept="image/png,image/jpeg,image/webp"
+                                    hidden
+                                >
+
+                                <div class="cover-dropzone__icon">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M4 5h16v14H4z"
+                                        />
+                                        <circle
+                                            cx="9"
+                                            cy="10"
+                                            r="2"
+                                        />
+                                        <path
+                                            d="m5 17 4-4 3 3 2-2 5 4"
+                                        />
+                                    </svg>
+                                </div>
+
+                                <h3>
+                                    Adicione a capa
+                                </h3>
+
+                                <p>
+                                    PNG, JPG, JPEG ou WEBP.
+                                </p>
+
+                                <button
+                                    type="button"
+                                    class="button button--primary"
+                                    id="select-cover-button"
+                                >
+                                    Escolher imagem
+                                </button>
+
+                                <small>
+                                    Você também pode arrastar uma imagem
+                                    para esta área.
+                                </small>
+                            </div>
+
+                            <div class="cover-options">
+                                <span class="section-label">
+                                    Ajuste da capa
+                                </span>
+
+                                <label class="radio-option">
+                                    <input
+                                        type="radio"
+                                        name="cover_mode"
+                                        value="cover"
+                                        checked
+                                    >
+
+                                    <span>
+                                        <strong>
+                                            Preencher página
+                                        </strong>
+
+                                        <small>
+                                            Pode cortar pequenas bordas.
+                                        </small>
+                                    </span>
+                                </label>
+
+                                <label class="radio-option">
+                                    <input
+                                        type="radio"
+                                        name="cover_mode"
+                                        value="contain"
+                                    >
+
+                                    <span>
+                                        <strong>
+                                            Ajustar inteira
+                                        </strong>
+
+                                        <small>
+                                            Mantém toda a imagem visível.
+                                        </small>
+                                    </span>
+                                </label>
+                            </div>
+                        </article>
+
+                        <article class="card cover-preview-card">
+                            <div class="cover-preview-card__header">
+                                <div>
+                                    <span class="section-label">
+                                        PRÉ-VISUALIZAÇÃO
+                                    </span>
+
+                                    <h3>
+                                        Página A4
+                                    </h3>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="icon-button"
+                                    id="remove-cover-button"
+                                    title="Remover capa"
+                                    aria-label="Remover capa"
+                                    hidden
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M4 7h16"
+                                        />
+                                        <path
+                                            d="M9 7V4h6v3"
+                                        />
+                                        <path
+                                            d="m9 11 .5 7m5-7-.5 7"
+                                        />
+                                        <path
+                                            d="M6 7l1 14h10l1-14"
+                                        />
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div
+                                class="cover-preview"
+                                id="cover-preview"
+                            >
+                                <div
+                                    class="cover-preview__empty"
+                                    id="cover-preview-empty"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M6 3h9l3 3v15H6z"
+                                        />
+                                        <path
+                                            d="M15 3v4h4"
+                                        />
+                                    </svg>
+
+                                    <span>
+                                        Nenhuma capa selecionada
+                                    </span>
+                                </div>
+
+                                <img
+                                    id="cover-preview-image"
+                                    alt="Prévia da capa selecionada"
+                                    hidden
+                                >
+                            </div>
+
+                            <div
+                                class="cover-file-info"
+                                id="cover-file-info"
+                                hidden
+                            >
+                                <strong id="cover-file-name"></strong>
+
+                                <span id="cover-file-size"></span>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- ETAPA 3 -->
+                <section
+                    class="workspace-step"
+                    data-step="3"
+                    hidden
+                >
+                    <header class="page-heading page-heading--library">
+                        <div>
+                            <span class="page-heading__eyebrow">
+                                ETAPA 3 DE 5
+                            </span>
+
+                            <h2>
+                                Matérias da apostila
+                            </h2>
+
+                            <p>
+                                Selecione as matérias completas e organize
+                                a ordem em que aparecerão no documento.
+                            </p>
+                        </div>
+
+                        <div class="heading-stat">
+                            <strong id="selected-count-heading">
+                                0
+                            </strong>
+
+                            <span>
+                                selecionadas
+                            </span>
+                        </div>
+                    </header>
+
+                    <div class="subjects-layout">
+                        <article class="card library-panel">
+                            <div class="library-toolbar">
+                                <label class="search-box">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+                                        <circle
+                                            cx="11"
+                                            cy="11"
+                                            r="7"
+                                        />
+                                        <path
+                                            d="m20 20-4-4"
+                                        />
+                                    </svg>
+
+                                    <input
+                                        type="search"
+                                        id="subject-search"
+                                        placeholder="Buscar matéria..."
+                                    >
+                                </label>
+
+                                <button
+                                    type="button"
+                                    class="button button--ghost button--small"
+                                    id="select-all-subjects"
+                                >
+                                    Selecionar válidas
+                                </button>
+                            </div>
+
+                            <div
+                                class="subject-list"
+                                id="subject-list"
+                            >
+                                {% if materias %}
+                                    {% for materia in materias %}
+                                        <article
+                                            class="subject-card {% if not materia.valido %}subject-card--invalid{% endif %}"
+                                            data-subject-id="{{ materia.id_materia or '' }}"
+                                            data-subject-name="{{ materia.materia }}"
+                                            data-subject-code="{{ materia.codigo_materia or '' }}"
+                                            data-subject-valid="{{ 'true' if materia.valido else 'false' }}"
+                                        >
+                                            <div class="subject-card__select">
+                                                <label class="custom-checkbox">
+                                                    <input
+                                                        type="checkbox"
+                                                        class="subject-checkbox"
+                                                        value="{{ materia.id_materia or '' }}"
+                                                        {% if not materia.valido or not materia.id_materia %}disabled{% endif %}
+                                                    >
+
+                                                    <span
+                                                        class="custom-checkbox__mark"
+                                                        aria-hidden="true"
+                                                    ></span>
+                                                </label>
+                                            </div>
+
+                                            <div class="subject-card__body">
+                                                <div class="subject-card__title-row">
+                                                    <div>
+                                                        {% if materia.codigo_materia %}
+                                                            <span class="subject-code">
+                                                                {{ materia.codigo_materia }}
+                                                            </span>
+                                                        {% endif %}
+
+                                                        <h3>
+                                                            {{ materia.materia }}
+                                                        </h3>
+                                                    </div>
+
+                                                    {% if materia.valido %}
+                                                        <span class="validation-badge validation-badge--success">
+                                                            Válida
+                                                        </span>
+                                                    {% else %}
+                                                        <span class="validation-badge validation-badge--danger">
+                                                            Erro
+                                                        </span>
+                                                    {% endif %}
+                                                </div>
+
+                                                {% if materia.descricao %}
+                                                    <p class="subject-card__description">
+                                                        {{ materia.descricao }}
+                                                    </p>
+                                                {% endif %}
+
+                                                <div class="subject-card__meta">
+                                                    <span>
+                                                        <strong>
+                                                            {{ materia.total_topicos }}
+                                                        </strong>
+                                                        tópicos
+                                                    </span>
+
+                                                    <span>
+                                                        <strong>
+                                                            {{ materia.total_secoes }}
+                                                        </strong>
+                                                        seções
+                                                    </span>
+
+                                                    <span>
+                                                        <strong>
+                                                            {{ materia.total_exercicios }}
+                                                        </strong>
+                                                        exercícios
+                                                    </span>
+                                                </div>
+
+                                                {% if materia.topicos %}
+                                                    <details class="subject-topics">
+                                                        <summary>
+                                                            Visualizar estrutura
+                                                        </summary>
+
+                                                        <ul>
+                                                            {% for topico in materia.topicos %}
+                                                                <li>
+                                                                    {{ topico }}
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </details>
+                                                {% endif %}
+
+                                                {% if materia.erros %}
+                                                    <details class="subject-errors">
+                                                        <summary>
+                                                            {{ materia.erros|length }}
+                                                            problema(s) de validação
+                                                        </summary>
+
+                                                        <ul>
+                                                            {% for erro in materia.erros %}
+                                                                <li>
+                                                                    {{ erro }}
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </details>
+                                                {% endif %}
+                                            </div>
+                                        </article>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="empty-state">
+                                        <div class="empty-state__icon">
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                aria-hidden="true"
+                                            >
+                                                <path
+                                                    d="M4 5h16v14H4z"
+                                                />
+                                                <path
+                                                    d="M8 9h8M8 13h6"
+                                                />
+                                            </svg>
+                                        </div>
+
+                                        <h3>
+                                            Biblioteca vazia
+                                        </h3>
+
+                                        <p>
+                                            Adicione arquivos JSON de matérias
+                                            na pasta <code>biblioteca/</code>.
+                                        </p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </article>
+
+                        <aside class="card selected-panel">
+                            <div class="selected-panel__header">
+                                <div>
+                                    <span class="section-label">
+                                        MINHA APOSTILA
+                                    </span>
+
+                                    <h3>
+                                        Ordem das matérias
+                                    </h3>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="text-button text-button--danger"
+                                    id="clear-subjects"
+                                >
+                                    Limpar
+                                </button>
+                            </div>
+
+                            <p class="selected-panel__hint">
+                                Arraste para reordenar ou use as setas.
+                            </p>
+
+                            <div
+                                class="selected-subjects"
+                                id="selected-subjects"
+                            >
+                                <div
+                                    class="selected-empty"
+                                    id="selected-empty"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M5 6h14M5 12h14M5 18h14"
+                                        />
+                                    </svg>
+
+                                    <strong>
+                                        Nenhuma matéria selecionada
+                                    </strong>
+
+                                    <span>
+                                        Marque as matérias ao lado
+                                        para montar a apostila.
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="selected-total">
+                                <span>
+                                    Total
+                                </span>
+
+                                <strong>
+                                    <span id="selected-count">
+                                        0
+                                    </span>
+                                    matéria(s)
+                                </strong>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+                <!-- ETAPA 4 -->
+                <section
+                    class="workspace-step"
+                    data-step="4"
+                    hidden
+                >
+                    <header class="page-heading">
+                        <div>
+                            <span class="page-heading__eyebrow">
+                                ETAPA 4 DE 5
+                            </span>
+
+                            <h2>
+                                Configuração editorial
+                            </h2>
+
+                            <p>
+                                Defina como os elementos da apostila serão
+                                organizados no documento final.
+                            </p>
+                        </div>
+                    </header>
+
+                    <div class="settings-grid">
+                        <article class="card settings-card">
+                            <div class="settings-card__title">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M4 5h16v14H4z"
+                                    />
+                                    <path
+                                        d="M8 9h8M8 13h8M8 17h5"
+                                    />
+                                </svg>
+
+                                <div>
+                                    <h3>
+                                        Exercícios
+                                    </h3>
+
+                                    <p>
+                                        Posicionamento das questões.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <label class="radio-card">
+                                <input
+                                    type="radio"
+                                    name="exercises_position"
+                                    value="after_subject"
+                                    checked
+                                >
+
+                                <span>
+                                    <strong>
+                                        Ao final de cada matéria
+                                    </strong>
+
+                                    <small>
+                                        Mantém teoria e prática próximas.
+                                    </small>
+                                </span>
+                            </label>
+
+                            <label class="radio-card">
+                                <input
+                                    type="radio"
+                                    name="exercises_position"
+                                    value="end_document"
+                                >
+
+                                <span>
+                                    <strong>
+                                        Ao final da apostila
+                                    </strong>
+
+                                    <small>
+                                        Reúne todas as questões em uma seção.
+                                    </small>
+                                </span>
+                            </label>
+                        </article>
+
+                        <article class="card settings-card">
+                            <div class="settings-card__title">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="9"
+                                    />
+                                    <path
+                                        d="m8 12 2.5 2.5L16 9"
+                                    />
+                                </svg>
+
+                                <div>
+                                    <h3>
+                                        Gabaritos
+                                    </h3>
+
+                                    <p>
+                                        Organização das respostas comentadas.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <label class="radio-card">
+                                <input
+                                    type="radio"
+                                    name="answers_position"
+                                    value="after_subject"
+                                >
+
+                                <span>
+                                    <strong>
+                                        Ao final de cada matéria
+                                    </strong>
+
+                                    <small>
+                                        Feedback imediatamente após as questões.
+                                    </small>
+                                </span>
+                            </label>
+
+                            <label class="radio-card">
+                                <input
+                                    type="radio"
+                                    name="answers_position"
+                                    value="end_document"
+                                    checked
+                                >
+
+                                <span>
+                                    <strong>
+                                        Ao final da apostila
+                                    </strong>
+
+                                    <small>
+                                        Evita revelar respostas durante o estudo.
+                                    </small>
+                                </span>
+                            </label>
+                        </article>
+
+                        <article class="card settings-card">
+                            <div class="settings-card__title">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M5 4h14v16H5z"
+                                    />
+                                    <path
+                                        d="M8 8h8M8 12h8M8 16h5"
+                                    />
+                                </svg>
+
+                                <div>
+                                    <h3>
+                                        Referências
+                                    </h3>
+
+                                    <p>
+                                        Tratamento das fontes bibliográficas.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <label class="radio-card">
+                                <input
+                                    type="radio"
+                                    name="references_position"
+                                    value="after_subject"
+                                >
+
+                                <span>
+                                    <strong>
+                                        Ao final de cada matéria
+                                    </strong>
+
+                                    <small>
+                                        Referências permanecem separadas.
+                                    </small>
+                                </span>
+                            </label>
+
+                            <label class="radio-card">
+                                <input
+                                    type="radio"
+                                    name="references_position"
+                                    value="end_document"
+                                    checked
+                                >
+
+                                <span>
+                                    <strong>
+                                        Consolidar ao final
+                                    </strong>
+
+                                    <small>
+                                        Remove duplicações entre matérias.
+                                    </small>
+                                </span>
+                            </label>
+                        </article>
+
+                        <article class="card settings-card">
+                            <div class="settings-card__title">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M6 3h12v18H6z"
+                                    />
+                                    <path
+                                        d="M9 7h6M9 11h6M9 15h4"
+                                    />
+                                </svg>
+
+                                <div>
+                                    <h3>
+                                        Paginação
+                                    </h3>
+
+                                    <p>
+                                        Regras de abertura das matérias.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <label class="switch-option">
+                                <input
+                                    type="checkbox"
+                                    name="subject_new_page"
+                                    id="subject-new-page"
+                                    checked
+                                >
+
+                                <span class="switch">
+                                    <span></span>
+                                </span>
+
+                                <span>
+                                    <strong>
+                                        Nova página por matéria
+                                    </strong>
+
+                                    <small>
+                                        Cada matéria começa em página própria.
+                                    </small>
+                                </span>
+                            </label>
+                        </article>
+
+                        <article class="card settings-card settings-card--wide">
+                            <div class="settings-card__title">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="M5 4h14v16H5z"
+                                    />
+                                    <path
+                                        d="M8 8h8M8 12h8M8 16h8"
+                                    />
+                                </svg>
+
+                                <div>
+                                    <h3>
+                                        Sumário
+                                    </h3>
+
+                                    <p>
+                                        Escolha a profundidade exibida.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="checkbox-grid">
+                                <label class="check-option">
+                                    <input
+                                        type="checkbox"
+                                        name="toc_level_1"
+                                        checked
+                                        disabled
+                                    >
+
+                                    <span>
+                                        Matérias
+                                    </span>
+                                </label>
+
+                                <label class="check-option">
+                                    <input
+                                        type="checkbox"
+                                        name="toc_level_2"
+                                        checked
+                                    >
+
+                                    <span>
+                                        Tópicos
+                                    </span>
+                                </label>
+
+                                <label class="check-option">
+                                    <input
+                                        type="checkbox"
+                                        name="toc_level_3"
+                                        checked
+                                    >
+
+                                    <span>
+                                        Subtópicos
+                                    </span>
+                                </label>
+
+                                <label class="check-option">
+                                    <input
+                                        type="checkbox"
+                                        name="toc_level_4"
+                                    >
+
+                                    <span>
+                                        Terceiro nível
+                                    </span>
+                                </label>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- ETAPA 5 -->
+                <section
+                    class="workspace-step"
+                    data-step="5"
+                    hidden
+                >
+                    <header class="page-heading">
+                        <div>
+                            <span class="page-heading__eyebrow">
+                                ETAPA 5 DE 5
+                            </span>
+
+                            <h2>
+                                Revisão do projeto
+                            </h2>
+
+                            <p>
+                                Confira a estrutura antes de gerar a prévia
+                                diagramada.
+                            </p>
+                        </div>
+                    </header>
+
+                    <div class="review-grid">
+                        <article class="card review-main">
+                            <div class="review-project-header">
+                                <div
+                                    class="review-cover"
+                                    id="review-cover"
+                                >
+                                    <span>
+                                        Sem capa
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <span class="section-label">
+                                        PROJETO
+                                    </span>
+
+                                    <h3 id="review-title">
+                                        Apostila sem título
+                                    </h3>
+
+                                    <p id="review-subtitle">
+                                        Informe concurso e cargo.
+                                    </p>
+
+                                    <div class="review-tags">
+                                        <span id="review-bank">
+                                            Banca não informada
+                                        </span>
+
+                                        <span id="review-year">
+                                            Ano não informado
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="review-section">
+                                <div class="review-section__heading">
+                                    <h4>
+                                        Matérias selecionadas
+                                    </h4>
+
+                                    <span id="review-subject-count">
+                                        0 matérias
+                                    </span>
+                                </div>
+
+                                <ol
+                                    class="review-subject-list"
+                                    id="review-subject-list"
+                                >
+                                    <li class="review-empty">
+                                        Nenhuma matéria selecionada.
+                                    </li>
+                                </ol>
+                            </div>
+
+                            <hr>
+
+                            <div class="review-section">
+                                <h4>
+                                    Configuração editorial
+                                </h4>
+
+                                <dl class="review-settings">
+                                    <div>
+                                        <dt>
+                                            Exercícios
+                                        </dt>
+
+                                        <dd id="review-exercises">
+                                            —
+                                        </dd>
+                                    </div>
+
+                                    <div>
+                                        <dt>
+                                            Gabaritos
+                                        </dt>
+
+                                        <dd id="review-answers">
+                                            —
+                                        </dd>
+                                    </div>
+
+                                    <div>
+                                        <dt>
+                                            Referências
+                                        </dt>
+
+                                        <dd id="review-references">
+                                            —
+                                        </dd>
+                                    </div>
+
+                                    <div>
+                                        <dt>
+                                            Início das matérias
+                                        </dt>
+
+                                        <dd id="review-new-page">
+                                            —
+                                        </dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        </article>
+
+                        <aside class="card review-status-card">
+                            <span class="section-label">
+                                VERIFICAÇÃO
+                            </span>
+
+                            <h3>
+                                Pronto para a próxima fase
+                            </h3>
+
+                            <ul class="review-checklist">
+                                <li id="check-title">
+                                    <span class="check-icon"></span>
+                                    Nome da apostila
+                                </li>
+
+                                <li id="check-cargo">
+                                    <span class="check-icon"></span>
+                                    Cargo
+                                </li>
+
+                                <li id="check-subjects">
+                                    <span class="check-icon"></span>
+                                    Pelo menos uma matéria
+                                </li>
+
+                                <li id="check-library">
+                                    <span class="check-icon"></span>
+                                    Matérias sem erros de validação
+                                </li>
+                            </ul>
+
+                            <div class="review-next">
+                                <strong>
+                                    Próxima implementação
+                                </strong>
+
+                                <p>
+                                    Salvamento do projeto e geração da
+                                    prévia HTML/PDF paginada.
+                                </p>
+                            </div>
+
+                            <div class="pdf-actions">
+                                <button
+                                    type="button"
+                                    class="button button--primary button--full"
+                                    id="generate-preview-button"
+                                >
+                                    Gerar prévia PDF
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="button button--ghost button--full"
+                                    id="open-pdf-button"
+                                    hidden
+                                >
+                                    Visualizar PDF
+                                </button>
+
+                                <a
+                                    class="button button--ghost button--full"
+                                    id="download-pdf-button"
+                                    href="#"
+                                    hidden
+                                >
+                                    Baixar PDF
+                                </a>
+
+                                <button
+                                    type="button"
+                                    class="button button--ghost button--full"
+                                    id="open-audit-button"
+                                    hidden
+                                >
+                                    Inspecionar páginas
+                                </button>
+                            </div>
+
+                            <div
+                                class="pdf-status"
+                                id="pdf-status"
+                            >
+                                <strong>
+                                    PDF ainda não gerado
+                                </strong>
+
+                                <span>
+                                    O arquivo será composto em A4,
+                                    validado e terá as páginas contabilizadas.
+                                </span>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+                <footer class="workspace-footer">
+                    <button
+                        type="button"
+                        class="button button--ghost"
+                        id="previous-step"
+                        hidden
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="m15 18-6-6 6-6"
+                            />
+                        </svg>
+
+                        Voltar
+                    </button>
+
+                    <div class="workspace-footer__spacer"></div>
+
+                    <span
+                        class="step-indicator"
+                        id="step-indicator"
+                    >
+                        Etapa 1 de 5
+                    </span>
+
+                    <button
+                        type="button"
+                        class="button button--primary"
+                        id="next-step"
+                    >
+                        Continuar
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+                            <path
+                                d="m9 6 6 6-6 6"
+                            />
+                        </svg>
+                    </button>
+                </footer>
+            </form>
+        </main>
+    </div>
+
+    <!-- MODAL PROJETOS -->
+    <div
+        class="modal-backdrop"
+        id="projects-modal"
+        hidden
+    >
+        <section
+            class="modal projects-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="projects-modal-title"
+        >
+            <header class="modal__header">
+                <div>
+                    <span class="page-heading__eyebrow">
+                        PROJETOS SALVOS
+                    </span>
+
+                    <h2 id="projects-modal-title">
+                        Minhas apostilas
+                    </h2>
+
+                    <p>
+                        Abra um projeto existente ou exclua
+                        projetos que não são mais necessários.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="icon-button"
+                    id="close-projects-modal"
+                    aria-label="Fechar"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M6 6l12 12M18 6 6 18"
+                        />
+                    </svg>
+                </button>
+            </header>
+
+            <div
+                class="projects-list"
+                id="projects-list"
+            >
+                <div class="projects-loading">
+                    Carregando projetos...
+                </div>
+            </div>
+
+            <footer class="modal__footer">
+                <span
+                    class="modal__meta"
+                    id="projects-total"
+                >
+                    0 projetos
+                </span>
+
+                <div>
+                    <button
+                        type="button"
+                        class="button button--ghost"
+                        id="refresh-projects-button"
+                    >
+                        Atualizar lista
+                    </button>
+
+                    <button
+                        type="button"
+                        class="button button--primary"
+                        id="projects-new-button"
+                    >
+                        Novo projeto
+                    </button>
+                </div>
+            </footer>
+        </section>
+    </div>
+
+    <!-- MODAL AUDITORIA DO PDF -->
+    <div
+        class="modal-backdrop"
+        id="audit-modal"
+        hidden
+    >
+        <section
+            class="modal audit-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="audit-modal-title"
+        >
+            <header class="modal__header">
+                <div>
+                    <span class="page-heading__eyebrow">
+                        AUDITORIA VISUAL
+                    </span>
+
+                    <h2 id="audit-modal-title">
+                        Inspeção das páginas
+                    </h2>
+
+                    <p>
+                        Miniaturas renderizadas do PDF final e
+                        verificações automáticas de composição.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="icon-button"
+                    id="close-audit-modal"
+                    aria-label="Fechar auditoria"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M6 6l12 12M18 6 6 18"
+                        />
+                    </svg>
+                </button>
+            </header>
+
+            <div class="audit-toolbar">
+                <div
+                    class="audit-summary"
+                    id="audit-summary"
+                >
+                    Carregando auditoria...
+                </div>
+
+                <div class="audit-filters">
+                    <button
+                        type="button"
+                        class="audit-filter is-active"
+                        data-audit-filter="all"
+                    >
+                        Todas
+                    </button>
+
+                    <button
+                        type="button"
+                        class="audit-filter"
+                        data-audit-filter="atencao"
+                    >
+                        Atenção
+                    </button>
+
+                    <button
+                        type="button"
+                        class="audit-filter"
+                        data-audit-filter="erro"
+                    >
+                        Erros
+                    </button>
+                </div>
+            </div>
+
+            <div
+                class="audit-grid"
+                id="audit-grid"
+            >
+                <div class="audit-loading">
+                    Preparando miniaturas...
+                </div>
+            </div>
+
+            <footer class="modal__footer">
+                <span
+                    class="modal__meta"
+                    id="audit-footer-status"
+                >
+                    —
+                </span>
+
+                <div>
+                    <button
+                        type="button"
+                        class="button button--ghost"
+                        id="reaudit-pdf-button"
+                    >
+                        Auditar novamente
+                    </button>
+
+                    <button
+                        type="button"
+                        class="button button--primary"
+                        id="audit-open-pdf-button"
+                    >
+                        Abrir PDF
+                    </button>
+                </div>
+            </footer>
+        </section>
+    </div>
+
+    <!-- MODAL PROMPT -->
+    <div
+        class="modal-backdrop"
+        id="prompt-modal"
+        hidden
+    >
+        <section
+            class="modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="prompt-modal-title"
+        >
+            <header class="modal__header">
+                <div>
+                    <span class="page-heading__eyebrow">
+                        CONVERSOR DE MATÉRIA
+                    </span>
+
+                    <h2 id="prompt-modal-title">
+                        Prompt JSON
+                    </h2>
+
+                    <p>
+                        Cole este prompt em uma nova conversa junto
+                        da apostila que deseja converter.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="icon-button"
+                    id="close-prompt-modal"
+                    aria-label="Fechar"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M6 6l12 12M18 6 6 18"
+                        />
+                    </svg>
+                </button>
+            </header>
+
+            <textarea
+                id="prompt-text"
+                class="prompt-text"
+                readonly
+                aria-label="Prompt para conversão"
+            ></textarea>
+
+            <footer class="modal__footer">
+                <span
+                    id="prompt-size"
+                    class="modal__meta"
+                ></span>
+
+                <div>
+                    <button
+                        type="button"
+                        class="button button--ghost"
+                        id="select-prompt-button"
+                    >
+                        Selecionar texto
+                    </button>
+
+                    <button
+                        type="button"
+                        class="button button--primary"
+                        id="modal-copy-prompt"
+                    >
+                        Copiar prompt
+                    </button>
+                </div>
+            </footer>
+        </section>
+    </div>
+
+    <!-- TOAST -->
+    <div
+        class="toast-region"
+        id="toast-region"
+        aria-live="polite"
+        aria-atomic="true"
+    ></div>
+
+    <script
+        src="/static/js/workspace.js"
+        defer
+    ></script>
+</body>
+</html>

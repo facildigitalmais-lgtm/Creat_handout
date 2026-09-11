@@ -1,0 +1,299 @@
+{% if block.template_kind == "text" %}
+
+    {% if block.tipo == "titulo" %}
+        <h4 class="content-heading">
+            {{ block.texto or block.titulo }}
+        </h4>
+
+    {% elif block.tipo == "subtitulo" %}
+        <h5 class="content-subheading">
+            {{ block.texto or block.titulo }}
+        </h5>
+
+    {% elif block.tipo == "citacao" %}
+        <blockquote class="content-quote">
+            {{ block.texto }}
+        </blockquote>
+
+    {% elif block.tipo == "legenda" %}
+        <p class="content-caption">
+            {{ block.texto }}
+        </p>
+
+    {% else %}
+        {% if block.titulo %}
+            <h5 class="inline-heading">
+                {{ block.titulo }}
+            </h5>
+        {% endif %}
+
+        {% if block.texto %}
+            <p class="content-paragraph">
+                {{ block.texto }}
+            </p>
+        {% endif %}
+    {% endif %}
+
+
+{% elif block.template_kind == "box" %}
+
+    <aside class="didactic-box didactic-box--{{ block.box_class }}">
+        <div class="didactic-box__label">
+            {{ block.box_label }}
+        </div>
+
+        {% if block.texto %}
+            <div class="didactic-box__text">
+                {{ block.texto }}
+            </div>
+        {% endif %}
+
+        {% if block.detalhes %}
+            <dl class="detail-list">
+                {% for detail in block.detalhes %}
+                    <div>
+                        <dt>
+                            {{ detail.label }}
+                        </dt>
+
+                        <dd>
+                            {{ detail.value }}
+                        </dd>
+                    </div>
+                {% endfor %}
+            </dl>
+        {% endif %}
+    </aside>
+
+
+{% elif block.template_kind == "list" %}
+
+    <div class="content-list">
+        {% if block.titulo %}
+            <h5>
+                {{ block.titulo }}
+            </h5>
+        {% endif %}
+
+        {% if block.ordenada %}
+            <ol>
+                {% for item in block.itens %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ol>
+        {% else %}
+            <ul>
+                {% for item in block.itens %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+
+{% elif block.template_kind == "table" %}
+
+    <div class="table-block">
+        {% if block.titulo %}
+            <div class="table-block__title">
+                {{ block.titulo }}
+            </div>
+        {% endif %}
+
+        <div class="table-scroll">
+            <table>
+                {% if block.cabecalho %}
+                    <thead>
+                        <tr>
+                            {% for heading in block.cabecalho %}
+                                <th>
+                                    {{ heading }}
+                                </th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                {% endif %}
+
+                <tbody>
+                    {% for row in block.linhas %}
+                        <tr>
+                            {% for cell in row %}
+                                <td>
+                                    {{ cell }}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if block.nota %}
+            <div class="table-block__note">
+                {{ block.nota }}
+            </div>
+        {% endif %}
+    </div>
+
+
+{% elif block.template_kind == "formula" %}
+
+    <div class="formula-block">
+        {% if block.titulo %}
+            <div class="formula-block__title">
+                {{ block.titulo }}
+            </div>
+        {% endif %}
+
+        {% if block.latex %}
+            <div class="formula-block__formula">
+                {{ block.latex }}
+            </div>
+        {% elif block.texto_linear %}
+            <div class="formula-block__formula">
+                {{ block.texto_linear }}
+            </div>
+        {% endif %}
+
+        {% if block.descricao %}
+            <p>
+                {{ block.descricao }}
+            </p>
+        {% endif %}
+
+        {% if block.variaveis %}
+            <dl class="formula-variables">
+                {% for variable in block.variaveis %}
+                    {% if variable is mapping %}
+                        <div>
+                            <dt>
+                                {{ variable.simbolo or variable.nome or "Variável" }}
+                            </dt>
+
+                            <dd>
+                                {{ variable.descricao or variable.significado or "" }}
+                            </dd>
+                        </div>
+                    {% else %}
+                        <div>
+                            <dd>{{ variable }}</dd>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </dl>
+        {% endif %}
+
+        {% if block.unidades %}
+            <div class="formula-block__units">
+                Unidade(s): {{ block.unidades }}
+            </div>
+        {% endif %}
+    </div>
+
+
+{% elif block.template_kind == "code" %}
+
+    <div class="code-block">
+        {% if block.titulo %}
+            <div class="code-block__title">
+                {{ block.titulo }}
+            </div>
+        {% endif %}
+
+        {% if block.linguagem %}
+            <span class="code-block__language">
+                {{ block.linguagem }}
+            </span>
+        {% endif %}
+
+        <pre><code>{{ block.codigo }}</code></pre>
+    </div>
+
+
+{% elif block.template_kind == "visual" %}
+
+    <figure class="visual-block">
+        <div class="visual-block__placeholder">
+            <strong>
+                {{ block.titulo or "Recurso visual" }}
+            </strong>
+
+            {% if block.asset_ref %}
+                <span>
+                    Asset: {{ block.asset_ref }}
+                </span>
+            {% endif %}
+
+            {% if block.arquivo %}
+                <span>
+                    Arquivo: {{ block.arquivo }}
+                </span>
+            {% endif %}
+
+            {% if block.required and not block.arquivo %}
+                <span class="visual-block__warning">
+                    Recurso visual obrigatório ainda não anexado.
+                </span>
+            {% endif %}
+        </div>
+
+        {% if block.descricao_visual %}
+            <figcaption>
+                {{ block.descricao_visual }}
+            </figcaption>
+        {% elif block.texto_alternativo %}
+            <figcaption>
+                {{ block.texto_alternativo }}
+            </figcaption>
+        {% endif %}
+    </figure>
+
+
+{% elif block.template_kind == "separator" %}
+
+    <hr class="logical-separator">
+
+
+{% elif block.template_kind == "editorial" %}
+
+    {% if show_editorial_notes %}
+        <aside class="editorial-note">
+            <strong>
+                Nota editorial
+            </strong>
+
+            <span>
+                {{ block.texto }}
+            </span>
+        </aside>
+    {% endif %}
+
+
+{% else %}
+
+    <div class="generic-block">
+        {% if block.titulo %}
+            <h5>
+                {{ block.titulo }}
+            </h5>
+        {% endif %}
+
+        {% if block.texto %}
+            <p>
+                {{ block.texto }}
+            </p>
+        {% endif %}
+
+        {% if block.detalhes %}
+            <dl class="detail-list">
+                {% for detail in block.detalhes %}
+                    <div>
+                        <dt>{{ detail.label }}</dt>
+                        <dd>{{ detail.value }}</dd>
+                    </div>
+                {% endfor %}
+            </dl>
+        {% endif %}
+    </div>
+
+{% endif %}
