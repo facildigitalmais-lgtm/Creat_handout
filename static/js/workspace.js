@@ -1934,6 +1934,97 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function sleep(milliseconds) {
+        return new Promise((resolve) => {
+            window.setTimeout(
+                resolve,
+                milliseconds
+            );
+        });
+    }
+
+
+    async function waitForPdfGeneration(
+        projectId
+    ) {
+        const timeoutAt =
+            Date.now()
+            + (30 * 60 * 1000);
+
+        while (Date.now() < timeoutAt) {
+            const response = await fetch(
+                `/api/projetos/${projectId}/pdf/status`,
+                {
+                    headers: {
+                        Accept: "application/json",
+                    },
+                    cache: "no-store",
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(
+                    await responseError(
+                        response
+                    )
+                );
+            }
+
+            const data =
+                await response.json();
+
+            const status =
+                data.status || "idle";
+
+            if (
+                status === "queued"
+                || status === "generating_pdf"
+            ) {
+                pdfStatus.innerHTML = `
+                    <strong>Gerando PDF...</strong>
+                    <span>
+                        ${
+                            data.message
+                            || "Compondo a apostila."
+                        }
+                    </span>
+                `;
+            }
+
+            if (status === "auditing") {
+                pdfStatus.innerHTML = `
+                    <strong>PDF criado — auditando...</strong>
+                    <span>
+                        ${
+                            data.message
+                            || "Verificando o documento."
+                        }
+                    </span>
+                `;
+            }
+
+            if (status === "ready") {
+                return data;
+            }
+
+            if (status === "error") {
+                throw new Error(
+                    data.error
+                    || data.message
+                    || "Falha na geração do PDF."
+                );
+            }
+
+            await sleep(2000);
+        }
+
+        throw new Error(
+            "A geração excedeu o tempo máximo "
+            + "de acompanhamento."
+        );
+    }
+
+
     async function generatePreview() {
         generatePreviewButton.disabled = true;
 

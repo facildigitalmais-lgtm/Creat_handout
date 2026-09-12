@@ -62,10 +62,10 @@ class PDFService:
     Gera e valida o PDF editorial.
 
     Pipeline:
-
         projeto
         -> documento editorial intermediário
-        -> Jinja HTML para impressão
+        -> primeira paginação para calcular o sumário
+        -> Jinja HTML final para impressão
         -> WeasyPrint
         -> PDF temporário
         -> validação com pypdf
@@ -115,6 +115,10 @@ class PDFService:
             self._prepare_cover(
                 project_id=project_id,
                 document=document,
+            )
+
+            self._populate_toc_pages(
+                document
             )
 
             html_text = (
@@ -274,6 +278,115 @@ class PDFService:
             .resolve()
             .as_uri()
         )
+
+    def _populate_toc_pages(
+        self,
+        document: dict[str, Any],
+    ) -> None:
+        toc = document.get(
+            "sumario"
+        )
+
+        if not isinstance(
+            toc,
+            list,
+        ):
+            return
+
+        if not toc:
+            return
+
+        html_text = self._render_html(
+            document
+        )
+
+        try:
+            rendered_document = HTML(
+                string=html_text,
+                base_url=str(
+                    PROJECT_ROOT
+                ),
+            ).render(
+                stylesheets=[
+                    CSS(
+                        filename=str(
+                            PDF_CSS_FILE
+                        )
+                    )
+                ],
+            )
+
+        except Exception as error:
+            raise PDFGenerationError(
+                "Não foi possível calcular "
+                "as páginas do sumário."
+            ) from error
+
+        anchor_pages: dict[
+            str,
+            int,
+        ] = {}
+
+        for page_number, page in enumerate(
+            rendered_document.pages,
+            start=1,
+        ):
+            anchors = getattr(
+                page,
+                "anchors",
+                {},
+            )
+
+            for anchor in anchors:
+                anchor_pages.setdefault(
+                    anchor,
+                    page_number,
+                )
+
+        missing_anchors: list[str] = []
+
+        for item in toc:
+            if not isinstance(
+                item,
+                dict,
+            ):
+                continue
+
+            anchor = str(
+                item.get(
+                    "anchor"
+                )
+                or ""
+            ).strip()
+
+            if not anchor:
+                continue
+
+            page_number = (
+                anchor_pages.get(
+                    anchor
+                )
+            )
+
+            if page_number is None:
+                missing_anchors.append(
+                    anchor
+                )
+                continue
+
+            item["pagina"] = (
+                page_number
+            )
+
+        if missing_anchors:
+            raise PDFGenerationError(
+                "Não foi possível localizar "
+                "todas as páginas do sumário. "
+                "Âncoras ausentes: "
+                + ", ".join(
+                    missing_anchors[:10]
+                )
+            )
 
     def _render_html(
         self,

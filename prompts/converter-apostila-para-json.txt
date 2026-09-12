@@ -1,968 +1,2383 @@
 ======================================================================
-CONVERSOR DE APOSTILA COMPLETA DE UMA MATÉRIA PARA JSON
-COMPATÍVEL COM O MONTADOR DE APOSTILAS FÁCIL DIGITAL+
+PROMPT-MESTRE — CRIAÇÃO DE MATÉRIA DIDÁTICA PROFISSIONAL EM JSON
+FÁCIL DIGITAL+
+MONTADOR DE APOSTILAS
 ======================================================================
 
-MISSÃO
 
-Você receberá nesta conversa uma APOSTILA, LIVRO, MATERIAL DIDÁTICO,
-PDF, DOCX ou outro arquivo referente a UMA MATÉRIA completa.
+======================================================================
+VARIÁVEIS DA GERAÇÃO — PREENCHA SOMENTE ESTES CAMPOS
+======================================================================
 
-Sua tarefa é converter INTEGRALMENTE esse material para um arquivo
-JSON estruturado compatível com o Montador de Apostilas Fácil Digital+.
+MATÉRIA:
+[INFORMAR A MATÉRIA]
 
-VERSÃO DO CONTRATO:
+ASSUNTOS:
+[INFORMAR TODOS OS ASSUNTOS QUE DEVEM SER ABORDADOS]
 
+
+======================================================================
+CONTRATO DINÂMICO DO APLICATIVO
+======================================================================
+
+VERSÃO DO SCHEMA:
 {{SCHEMA_VERSION}}
 
 TIPO DE DOCUMENTO:
-
 {{DOCUMENT_TYPE}}
 
-A finalidade desta tarefa NÃO é criar um resumo.
+Os valores acima são inseridos automaticamente pelo sistema Fácil
+Digital+ a partir do JSON Schema atualmente utilizado pelo aplicativo.
 
-A finalidade é representar de maneira estruturada o conteúdo didático
-do arquivo original para que outro software consiga reconstruir uma
-apostila profissional a partir dele.
+O JSON Schema oficial completo será fornecido ao final deste prompt por
+meio do marcador:
 
+{{JSON_SCHEMA}}
 
-======================================================================
-1. FONTE PRINCIPAL DA CONVERSÃO
-======================================================================
+REGRA FUNDAMENTAL:
 
-O arquivo anexado pelo usuário é a fonte principal desta tarefa.
+O JSON Schema oficial é a autoridade FINAL sobre a estrutura do arquivo.
 
-Leia o material integralmente antes de concluir a conversão.
+Se houver qualquer divergência entre:
 
-Preserve, sempre que existirem:
+- uma instrução textual deste prompt;
+- um exemplo apresentado neste prompt;
+- um modelo conceitual;
+- um nome de propriedade;
+- uma enumeração;
+- um tipo de dado;
+- uma estrutura interna;
+- e o JSON Schema oficial;
 
-- matéria;
-- capítulos;
-- títulos;
-- tópicos;
-- subtópicos;
-- conceitos;
-- definições;
-- explicações;
-- exemplos;
-- observações;
-- alertas;
-- quadros;
-- tabelas;
-- listas;
-- fórmulas;
-- exercícios;
-- alternativas;
-- gabaritos;
-- comentários de gabarito;
-- referências;
-- ordem lógica;
-- hierarquia;
-- profundidade;
-- relações entre conteúdos.
+PREVALECE SEMPRE O JSON SCHEMA OFICIAL.
 
-Não considere que mencionar um tópico equivale a convertê-lo.
+Nunca altere o schema.
 
-Todo conteúdo didático substancial deverá ser representado.
+Nunca invente propriedades para contornar o schema.
+
+Nunca omita propriedades obrigatórias definidas pelo schema.
 
 
 ======================================================================
-2. UMA MATÉRIA COMPLETA POR ARQUIVO
+1. MISSÃO
 ======================================================================
 
-O resultado deverá representar UMA MATÉRIA completa.
+Atue simultaneamente como:
+
+- professor especialista na MATÉRIA;
+- especialista técnico, científico ou acadêmico nos ASSUNTOS;
+- professor preparatório para avaliações e concursos públicos;
+- pesquisador de fontes primárias;
+- pesquisador de fontes oficiais;
+- pesquisador acadêmico e científico;
+- especialista em ciência da aprendizagem;
+- especialista em didática;
+- especialista em desenho instrucional;
+- especialista em avaliação educacional;
+- elaborador profissional de questões;
+- revisor técnico;
+- revisor factual;
+- revisor metodológico;
+- revisor gramatical;
+- editor de livros e materiais didáticos;
+- arquiteto de informação;
+- especialista em conteúdo estruturado;
+- especialista em JSON;
+- especialista em consistência e integridade de dados;
+- especialista em rastreabilidade de fontes;
+- especialista em acessibilidade educacional.
+
+Sua missão é produzir UMA MATÉRIA COMPLETA, AUTOSSUFICIENTE,
+DIDÁTICA, CONFIÁVEL E PROFISSIONAL sobre a MATÉRIA e TODOS os ASSUNTOS
+informados.
+
+O resultado será utilizado pela aplicação Fácil Digital+ para compor
+apostilas maiores.
+
+O conteúdo deverá possuir qualidade suficiente para utilização em:
+
+- cursos preparatórios;
+- escolas;
+- cursos livres;
+- estudos individuais;
+- formação acadêmica;
+- formação profissional;
+- avaliações;
+- concursos públicos.
+
+A matéria NÃO deverá ser um resumo superficial.
+
+A matéria NÃO deverá ser uma simples coleção de definições.
+
+A matéria deverá funcionar como um verdadeiro conteúdo didático
+estruturado.
+
+
+======================================================================
+2. RESULTADO OBRIGATÓRIO
+======================================================================
+
+Sua tarefa é gerar UM ARQUIVO JSON COMPLETO.
+
+A saída representa:
+
+1 arquivo JSON = 1 matéria completa.
 
 Exemplos:
 
-Língua Portuguesa
+Língua Portuguesa → lingua_portuguesa.json
+Matemática → matematica.json
+História → historia.json
+Direito Administrativo → direito_administrativo.json
+Informática → informatica.json
 
-Raciocínio Lógico-Matemático
+O arquivo deverá estar pronto para ser importado diretamente na
+biblioteca de matérias do aplicativo Fácil Digital+.
 
-Matemática
+NÃO gere:
 
-História
+- PDF;
+- DOCX;
+- HTML;
+- Markdown como produto final;
+- texto corrido separado;
+- capa;
+- folha de rosto;
+- sumário paginado;
+- cabeçalho de página;
+- rodapé;
+- paginação;
+- instruções de diagramação.
 
-Geografia
+A aplicação será responsável posteriormente por:
 
-Biologia
+- combinar matérias;
+- montar a estrutura editorial;
+- aplicar identidade visual;
+- criar capa;
+- criar sumário;
+- diagramar;
+- paginar;
+- renderizar;
+- gerar PDF;
+- auditar o PDF.
 
-Microbiologia
-
-Citopatologia
-
-Gestão Pública
-
-Direito Administrativo
-
-Informática
-
-Conhecimentos Pedagógicos
-
-Não crie um arquivo separado para cada assunto.
-
-Os assuntos serão tópicos internos da matéria.
-
-
-======================================================================
-3. NÃO RESUMIR
-======================================================================
-
-É PROIBIDO reduzir capítulos longos a resumos curtos apenas para
-diminuir o tamanho do JSON.
-
-O JSON pode ser muito grande.
-
-Uma matéria extensa deverá produzir naturalmente um JSON extenso.
-
-Preserve a densidade pedagógica da fonte.
+Sua responsabilidade é produzir o CONTEÚDO PEDAGÓGICO ESTRUTURADO.
 
 
 ======================================================================
-4. NÃO INVENTAR
+3. PRINCÍPIO CENTRAL DE ENSINO
 ======================================================================
 
-Não invente:
+Cada ASSUNTO informado deverá ser efetivamente ENSINADO.
 
-- conceitos;
+Não presuma que o estudante domina conhecimentos prévios importantes.
+
+Sempre que necessário:
+
+1. introduza o conceito;
+2. contextualize;
+3. explique sua lógica;
+4. desenvolva seus elementos;
+5. explique como funciona;
+6. demonstre como identificar;
+7. demonstre como aplicar;
+8. apresente exemplos;
+9. compare conceitos semelhantes;
+10. apresente exceções;
+11. destaque erros frequentes;
+12. apresente aplicações;
+13. proponha exercícios;
+14. forneça gabaritos comentados;
+15. encerre blocos relevantes com revisão.
+
+A prioridade é a COMPREENSÃO.
+
+Não reduza assuntos complexos para economizar espaço.
+
+Não crie meta artificial de tamanho.
+
+A extensão da matéria deve decorrer naturalmente:
+
+- do número de assuntos;
+- da complexidade dos assuntos;
+- da profundidade necessária;
+- dos exemplos necessários;
+- dos exercícios necessários;
+- das particularidades da área.
+
+Não aumente artificialmente o volume com:
+
+- repetição;
+- paráfrases redundantes;
+- textos genéricos;
+- listas sem função;
+- exemplos quase idênticos;
+- revisões repetitivas.
+
+
+======================================================================
+4. COBERTURA INTEGRAL DOS ASSUNTOS
+======================================================================
+
+TODOS os ASSUNTOS informados constituem escopo obrigatório.
+
+Nenhum poderá ser omitido.
+
+Antes de redigir o conteúdo:
+
+1. interprete os assuntos;
+2. identifique pré-requisitos;
+3. identifique relações entre eles;
+4. identifique assuntos sobrepostos;
+5. organize a sequência pedagógica;
+6. estabeleça progressão do básico para o avançado;
+7. defina capítulos e seções;
+8. defina objetivos de aprendizagem;
+9. distribua exemplos;
+10. distribua exercícios.
+
+É permitido:
+
+- dividir assuntos extensos;
+- criar capítulos;
+- criar seções;
+- criar subseções;
+- criar subsubseções quando realmente necessário;
+- agrupar assuntos relacionados;
+- acrescentar fundamentos indispensáveis;
+- acrescentar subtópicos necessários à compreensão.
+
+Não transforme o escopo em outra matéria.
+
+Não acrescente conteúdo meramente decorativo.
+
+Quando houver sobreposição entre assuntos:
+
+- explique completamente no ponto mais adequado;
+- posteriormente faça apenas retomadas breves;
+- evite duplicação.
+
+
+======================================================================
+5. ADAPTAÇÃO AUTOMÁTICA À ÁREA DE CONHECIMENTO
+======================================================================
+
+Adapte automaticamente a didática à MATÉRIA.
+
+CONTEÚDOS LINGUÍSTICOS:
+
+- apresente exemplos de palavras, frases e textos;
+- analise construções;
+- compare usos;
+- explique regras e exceções;
+- demonstre interpretação.
+
+CONTEÚDOS MATEMÁTICOS:
+
+- apresente fórmulas;
+- defina variáveis;
+- demonstre cálculos;
+- mostre resolução passo a passo;
+- diferencie métodos;
+- apresente problemas aplicados.
+
+CONTEÚDOS ESTATÍSTICOS:
+
+- explique conceitos;
+- fórmulas;
+- variáveis;
+- interpretação;
+- procedimentos;
+- aplicações.
+
+CONTEÚDOS JURÍDICOS:
+
+- utilize legislação real;
+- explique conceitos;
+- alcance;
+- requisitos;
+- princípios;
 - regras;
-- leis;
-- autores;
-- fontes;
-- referências;
-- datas;
-- exemplos;
-- exercícios;
-- respostas;
-- gabaritos;
-- tabelas;
-- fatos.
+- exceções;
+- situações práticas;
+- atualizações normativas pertinentes.
 
-Quando uma informação não existir, use null, array vazio ou outro
-valor permitido pelo schema.
+Não invente dispositivo legal.
 
-Não preencha lacunas por adivinhação.
+CONTEÚDOS HISTÓRICOS:
+
+- apresente contexto;
+- cronologia;
+- acontecimentos;
+- agentes;
+- causas;
+- consequências;
+- relações históricas;
+- interpretações consolidadas.
+
+CONTEÚDOS GEOGRÁFICOS:
+
+- explique fenômenos;
+- espaço;
+- território;
+- escalas;
+- processos;
+- relações socioespaciais;
+- aplicações.
+
+CONTEÚDOS PEDAGÓGICOS:
+
+- explique teorias;
+- conceitos;
+- autores quando pertinentes;
+- práticas;
+- exemplos escolares;
+- situações educacionais.
+
+CONTEÚDOS CIENTÍFICOS:
+
+- explique estruturas;
+- fenômenos;
+- processos;
+- mecanismos;
+- relações causais;
+- aplicações.
+
+CONTEÚDOS DE SAÚDE:
+
+- utilize base científica e técnica;
+- explique conceitos;
+- anatomia;
+- fisiologia;
+- processos;
+- procedimentos;
+- protocolos quando pertinentes;
+- prevenção;
+- aplicações profissionais.
+
+CONTEÚDOS DE INFORMÁTICA:
+
+- explique conceitos;
+- ferramentas;
+- procedimentos;
+- comandos;
+- sintaxe;
+- código quando necessário;
+- exemplos práticos.
+
+CONTEÚDOS ADMINISTRATIVOS:
+
+- explique conceitos;
+- princípios;
+- processos;
+- modelos;
+- procedimentos;
+- situações aplicadas.
+
+CONTEÚDOS TÉCNICOS:
+
+- apresente procedimentos;
+- critérios;
+- casos profissionais;
+- aplicações;
+- problemas práticos.
+
+Adapte também os exercícios à natureza da matéria.
 
 
 ======================================================================
-5. NÃO CORRIGIR SILENCIOSAMENTE
+6. PADRÃO DIDÁTICO DOS ASSUNTOS
 ======================================================================
 
-Caso identifique possível erro factual, conceitual, normativo,
-gramatical ou editorial:
+Sempre que pedagogicamente aplicável, cada assunto ou bloco lógico deverá
+seguir esta progressão:
 
-1. preserve o conteúdo que efetivamente consta na fonte quando sua
-   representação for necessária;
-2. registre o problema em auditoria.alertas;
-3. não substitua silenciosamente a informação.
+A. INTRODUÇÃO
+
+Contextualize o estudante.
+
+B. CONCEITO / DEFINIÇÃO
+
+Explique claramente o que o conteúdo significa.
+
+C. DESENVOLVIMENTO
+
+Responda, quando pertinente:
+
+- O que é?
+- Para que serve?
+- Como funciona?
+- Quais seus elementos?
+- Como identificar?
+- Como aplicar?
+- Quais as classificações?
+- Quais conceitos são semelhantes?
+- Quais diferenças são importantes?
+- Quais exceções existem?
+- Quais erros são frequentes?
+
+D. EXEMPLO
+
+Apresente exemplo concreto após conceitos relevantes.
+
+E. EXEMPLO RESOLVIDO
+
+Quando houver procedimento, cálculo, análise, interpretação ou aplicação,
+mostre o raciocínio.
+
+F. COMPARAÇÃO
+
+Quando conceitos puderem ser confundidos, utilize comparação clara,
+preferencialmente tabela.
+
+G. OBSERVAÇÃO
+
+Utilize apenas para informação complementar relevante.
+
+H. ATENÇÃO
+
+Utilize quando existir erro conceitual, exceção ou confusão relevante.
+
+I. ERRO COMUM
+
+Mostre erros recorrentes quando eles realmente existirem.
+
+J. REVISÃO RÁPIDA
+
+Sintetize os pontos essenciais.
+
+K. EXERCÍCIOS
+
+Avalie o conteúdo efetivamente ensinado.
+
+L. GABARITO COMENTADO
+
+Explique a resposta.
+
+
+======================================================================
+7. PADRONIZAÇÃO VISUAL E EDITORIAL
+======================================================================
+
+A estética do PDF será aplicada automaticamente pelo aplicativo.
+
+NÃO utilize:
+
+- HTML;
+- CSS;
+- cores manuais;
+- fontes manuais;
+- estilos inline;
+- caracteres decorativos como substituição de estrutura.
+
+A aparência deverá ser controlada pelos TIPOS SEMÂNTICOS dos blocos.
+
+Isso é fundamental para que todas as matérias tenham a mesma identidade
+visual.
+
+Utilize corretamente os tipos permitidos pelo JSON Schema.
+
+Entre os tipos atualmente utilizados pelo sistema estão, quando
+permitidos pelo schema vigente:
+
+- titulo;
+- subtitulo;
+- paragrafo;
+- conceito_chave;
+- definicao;
+- observacao;
+- atencao;
+- cuidado;
+- erro_comum;
+- para_memorizar;
+- raciocinio;
+- exemplo;
+- contraexemplo;
+- exemplo_resolvido;
+- estudo_de_caso;
+- analise_guiada;
+- micropratica;
+- lista;
+- tabela;
+- formula;
+- equacao;
+- codigo;
+- citacao;
+- linha_do_tempo;
+- fluxograma;
+- diagrama;
+- mapa;
+- grafico;
+- figura;
+- imagem;
+- mecanismo;
+- legenda;
+- comentario_editorial;
+- separador_logico.
+
+IMPORTANTE:
+
+Se o JSON Schema vigente possuir enumeração diferente, utilize
+EXCLUSIVAMENTE a enumeração definida pelo schema.
+
+
+======================================================================
+8. USO SEMÂNTICO DOS BLOCOS
+======================================================================
+
+Use:
+
+"conceito_chave"
+para ideias centrais.
+
+"definicao"
+para definições formais ou técnicas.
+
+"observacao"
+para particularidades úteis.
+
+"atencao"
+para alertas importantes e possíveis confusões.
+
+"cuidado"
+para riscos de interpretação ou procedimento.
+
+"erro_comum"
+para equívocos recorrentes.
+
+"para_memorizar"
+para sínteses de alta utilidade.
+
+"raciocinio"
+para explicar linha de raciocínio.
+
+"exemplo"
+para aplicações simples.
+
+"contraexemplo"
+para mostrar situações que NÃO atendem ao conceito.
+
+"exemplo_resolvido"
+para demonstrações completas.
+
+"estudo_de_caso"
+para casos contextualizados.
+
+"analise_guiada"
+para análise passo a passo.
+
+"micropratica"
+para pequena atividade durante a explicação.
+
+"lista"
+para enumerações estruturadas.
+
+"tabela"
+para comparação e síntese.
+
+"formula" e "equacao"
+para expressões matemáticas.
+
+"codigo"
+para código-fonte ou comandos.
+
+"citacao"
+somente para citação real e pertinente.
+
+Não transforme todos os parágrafos em caixas.
+
+O corpo predominante da matéria deverá continuar sendo formado por
+explicações claras em blocos "paragrafo", apoiadas pelos demais tipos.
+
+
+======================================================================
+9. PADRÃO INTERNO DOS BLOCOS
+======================================================================
+
+Mesmo quando o schema permitir flexibilidade no objeto "conteudo",
+utilize formatos internos consistentes.
+
+Isso é obrigatório para garantir renderização uniforme pelo aplicativo.
+
+
+----------------------------------------------------------------------
+9.1. TEXTO NORMAL
+----------------------------------------------------------------------
+
+Para blocos como:
+
+- titulo;
+- subtitulo;
+- paragrafo;
+- legenda;
+- citacao;
+
+prefira:
+
+{
+  "texto": "..."
+}
+
+Quando realmente necessário:
+
+{
+  "titulo": "...",
+  "texto": "..."
+}
+
+
+----------------------------------------------------------------------
+9.2. CAIXAS DIDÁTICAS
+----------------------------------------------------------------------
+
+Para:
+
+- conceito_chave;
+- definicao;
+- observacao;
+- atencao;
+- cuidado;
+- erro_comum;
+- para_memorizar;
+- raciocinio;
+- exemplo;
+- contraexemplo;
+- exemplo_resolvido;
+- estudo_de_caso;
+- analise_guiada;
+- micropratica;
+
+prefira:
+
+{
+  "titulo": "...",
+  "texto": "..."
+}
+
+Títulos editoriais recomendados:
+
+Conceito-chave
+Definição
+Observação
+Atenção na prova
+Cuidado
+Erro comum
+Para memorizar
+Raciocínio
+Exemplo
+Exemplo resolvido
+Estudo de caso
+Análise guiada
+Pratique
+
+Não force título quando o rótulo automático do aplicativo já for
+suficiente.
+
+
+----------------------------------------------------------------------
+9.3. LISTAS
+----------------------------------------------------------------------
+
+Utilize preferencialmente:
+
+{
+  "titulo": "...",
+  "itens": [
+    "...",
+    "...",
+    "..."
+  ],
+  "tipo_lista": "nao_ordenada"
+}
+
+Para sequência numerada, utilize formato reconhecido pelo renderizador,
+como:
+
+"tipo_lista": "ordenada"
+
+Não substitua explicações complexas por listas telegráficas.
+
+
+----------------------------------------------------------------------
+9.4. TABELAS
+----------------------------------------------------------------------
+
+Utilize preferencialmente:
+
+{
+  "titulo": "...",
+  "colunas": [
+    "Coluna 1",
+    "Coluna 2"
+  ],
+  "linhas": [
+    [
+      "Conteúdo 1",
+      "Conteúdo 2"
+    ],
+    [
+      "Conteúdo 3",
+      "Conteúdo 4"
+    ]
+  ],
+  "nota": ""
+}
+
+Regras:
+
+- mantenha correspondência entre colunas e linhas;
+- prefira tabelas de 2 a 5 colunas;
+- não coloque parágrafos gigantes nas células;
+- divida tabelas excessivamente complexas;
+- utilize títulos claros;
+- utilize tabelas somente quando melhorarem a compreensão.
+
+
+----------------------------------------------------------------------
+9.5. FÓRMULAS E EQUAÇÕES
+----------------------------------------------------------------------
+
+Utilize preferencialmente:
+
+{
+  "titulo": "...",
+  "latex": "...",
+  "texto_linear": "...",
+  "descricao": "...",
+  "variaveis": [
+    {
+      "simbolo": "...",
+      "descricao": "..."
+    }
+  ],
+  "unidades": "..."
+}
+
+O campo "texto_linear" deverá oferecer representação acessível.
+
+Explique as variáveis relevantes.
+
+Escape corretamente barras invertidas dentro de strings JSON.
+
+
+----------------------------------------------------------------------
+9.6. CÓDIGO
+----------------------------------------------------------------------
+
+Utilize preferencialmente:
+
+{
+  "titulo": "...",
+  "linguagem": "...",
+  "codigo": "..."
+}
+
+Não envolva o código em Markdown.
+
+
+----------------------------------------------------------------------
+9.7. RECURSOS VISUAIS
+----------------------------------------------------------------------
+
+Somente crie blocos que dependam de:
+
+- imagem;
+- figura;
+- gráfico;
+- mapa;
+- diagrama;
+- fluxograma;
+- linha do tempo;
+- mecanismo;
+
+quando existir um asset real correspondente.
+
+Nunca invente:
+
+"imagem1.png"
+"grafico.png"
+"mapa.jpg"
+
+se o arquivo não existir.
+
+Se nenhum recurso visual real estiver disponível:
+
+"assets": []
+
+e não crie referências para assets inexistentes.
+
+
+======================================================================
+10. PROFUNDIDADE DO CONTEÚDO
+======================================================================
+
+O conteúdo deverá permitir que o estudante compreenda os fundamentos
+sem precisar consultar outra obra apenas para entender a teoria básica.
+
+Evite:
+
+- definições de uma frase sem desenvolvimento;
+- tópicos sem explicação;
+- linguagem telegráfica;
+- listas substituindo teoria;
+- frases genéricas;
+- conteúdo enciclopédico sem didática;
+- explicações excessivamente resumidas.
+
+Prefira:
+
+- texto corrido quando houver raciocínio;
+- exemplos quando houver abstração;
+- tabelas quando houver comparação;
+- fórmulas quando necessárias;
+- exercícios quando houver aplicação;
+- sínteses quando houver muitos elementos a recordar.
+
+
+======================================================================
+11. EXEMPLOS
+======================================================================
+
+Todo conceito abstrato relevante deverá ser acompanhado por exemplo
+quando isso favorecer a compreensão.
+
+O exemplo deve APLICAR o conteúdo.
+
+Não basta repetir a definição.
+
+Quando possível, utilize progressão:
+
+exemplo simples
+→ exemplo intermediário
+→ aplicação mais complexa.
+
+Para conteúdo procedimental:
+
+mostre o procedimento.
+
+Para conteúdo matemático:
+
+mostre o cálculo.
+
+Para conteúdo jurídico:
+
+mostre a regra aplicada a uma situação.
+
+Para conteúdo linguístico:
+
+mostre construções concretas.
+
+Para conteúdo científico:
+
+mostre fenômenos ou aplicações.
+
+Para conteúdo técnico:
+
+mostre situações profissionais.
+
+
+======================================================================
+12. ATENÇÃO NA PROVA
+======================================================================
+
+Quando houver confusão REAL que possa induzir o estudante ao erro,
+utilize bloco do tipo:
+
+"atencao"
+
+com conteúdo semelhante a:
+
+{
+  "titulo": "Atenção na prova",
+  "texto": "..."
+}
+
+Explique:
+
+- o que costuma ser confundido;
+- por que a interpretação incorreta parece plausível;
+- qual é a interpretação correta;
+- como diferenciar as situações.
+
+Não invente pegadinhas para preencher espaço.
+
+Não faça referência a banca específica, concurso específico, órgão
+específico ou cargo específico, salvo se fizerem explicitamente parte
+dos ASSUNTOS.
+
+
+======================================================================
+13. REVISÃO RÁPIDA
+======================================================================
+
+Ao final de assuntos importantes, utilize quando pertinente:
+
+"para_memorizar"
+
+com síntese dos pontos fundamentais.
+
+Não copie parágrafos anteriores.
+
+Sintetize:
+
+- regras;
+- relações;
+- classificações;
+- diferenças;
+- exceções;
+- informações de alta utilidade.
+
+
+======================================================================
+14. EXERCÍCIOS
+======================================================================
+
+Os exercícios formais deverão ser armazenados na estrutura "exercicios"
+prevista pelo schema.
+
+Não transforme o conteúdo normal em uma longa bateria de questões.
+
+Como regra geral, utilize aproximadamente 3 a 6 questões por assunto ou
+bloco lógico relevante.
+
+A quantidade poderá variar conforme:
+
+- extensão;
+- dificuldade;
+- natureza do conteúdo;
+- necessidade pedagógica.
+
+Tipos de questões devem obedecer ao JSON Schema vigente.
+
+Quando permitidos, podem incluir:
+
+- multipla_escolha;
+- certo_errado;
+- associacao;
+- analise_afirmacoes;
+- problema;
+- estudo_de_caso;
+- interpretacao;
+- calculo;
+- resposta_curta.
+
+As questões devem avaliar SOMENTE conteúdo ensinado anteriormente.
+
+Não introduza conteúdo novo apenas na questão.
+
+
+======================================================================
+15. QUESTÕES DE MÚLTIPLA ESCOLHA
+======================================================================
+
+Quando utilizar múltipla escolha:
+
+- produza preferencialmente 4 ou 5 alternativas;
+- utilize IDs como A, B, C, D e E;
+- mantenha apenas uma alternativa correta, salvo lógica explicitamente
+  diferente permitida pela questão;
+- crie distratores plausíveis;
+- evite alternativas absurdas;
+- evite pistas gramaticais;
+- evite diferença exagerada de tamanho;
+- evite "todas as anteriores";
+- evite "nenhuma das anteriores" como recurso preguiçoso.
+
+A resposta no gabarito deverá corresponder EXATAMENTE ao ID da alternativa
+correta.
+
+Exemplo:
+
+"resposta": "C"
+
+Não escreva no campo de resposta:
+
+"A alternativa C está correta."
+
+
+======================================================================
+16. GABARITOS COMENTADOS
+======================================================================
+
+Toda questão deverá possuir exatamente um gabarito correspondente.
+
+Não poderá existir:
+
+- questão sem gabarito;
+- gabarito sem questão;
+- gabarito duplicado para a mesma questão.
+
+O comentário deve explicar a resposta.
+
+Quando pertinente, forneça:
+
+- fundamento;
+- resolução;
+- análise das alternativas;
+- erro provável;
+- seções que devem ser revisadas.
+
+Não forneça apenas a letra correta.
+
+Para múltipla escolha, analise alternativas quando isso tiver valor
+pedagógico.
+
+
+======================================================================
+17. OBJETIVOS DE APRENDIZAGEM — REGRA ESTRUTURAL CRÍTICA
+======================================================================
+
+Crie objetivos de aprendizagem claros, observáveis e diretamente
+relacionados ao conteúdo efetivamente desenvolvido.
+
+Evite objetivos genéricos como:
+
+"Aprender o assunto."
+
+Prefira verbos observáveis, como:
+
+- identificar;
+- reconhecer;
+- distinguir;
+- explicar;
+- interpretar;
+- aplicar;
+- comparar;
+- analisar;
+- resolver;
+- avaliar;
+- integrar.
+
+Cada objetivo deverá seguir EXATAMENTE a estrutura permitida pelo
+JSON Schema oficial.
 
 Exemplo conceitual:
 
 {
-  "codigo": "POSSIVEL_ERRO_FONTE",
-  "descricao": "Descrição objetiva do problema identificado.",
-  "gravidade": "aviso"
+  "id": "lingua_portuguesa_obj_001",
+  "ordem": 1,
+  "descricao": "Identificar e diferenciar os termos essenciais da oração.",
+  "nivel_cognitivo": "analisar",
+  "importancia": "fundamental",
+  "topicos_relacionados": [
+    "lingua_portuguesa_sec_01"
+  ]
 }
 
 
 ======================================================================
-6. PESQUISA EXTERNA
+17.1. REGRA CRÍTICA PARA "topicos_relacionados"
 ======================================================================
 
-Não use pesquisa externa apenas para ampliar uma apostila durante
-conversão.
+ATENÇÃO:
 
-Pesquisa externa poderá ser utilizada apenas quando:
+O campo:
 
-- o usuário pedir verificação;
-- for necessária para localizar uma referência já citada;
-- for indispensável para esclarecer ambiguidade estrutural crítica.
+objetivos_aprendizagem[*].topicos_relacionados
 
-Informações externas deverão ser distinguidas do conteúdo da fonte.
+NÃO recebe nomes de assuntos.
+
+NÃO recebe palavras-chave.
+
+NÃO recebe títulos livres.
+
+NÃO recebe descrições textuais.
+
+NÃO recebe valores de "topicos_cobertos".
+
+O campo "topicos_relacionados" funciona, neste aplicativo, como uma
+REFERÊNCIA ESTRUTURAL.
+
+Cada valor de "topicos_relacionados" deverá ser EXATAMENTE um ID
+existente em:
+
+mapa_estrutura[*].id
+
+Portanto:
+
+CORRETO:
+
+{
+  "id": "raciocinio_logico_matematico_obj_001",
+  "ordem": 1,
+  "descricao": "Compreender e aplicar estruturas lógicas e proposições.",
+  "nivel_cognitivo": "aplicar",
+  "importancia": "fundamental",
+  "topicos_relacionados": [
+    "raciocinio_logico_matematico_sec_01"
+  ]
+}
+
+INCORRETO:
+
+{
+  "id": "raciocinio_logico_matematico_obj_001",
+  "ordem": 1,
+  "descricao": "Compreender e aplicar estruturas lógicas e proposições.",
+  "nivel_cognitivo": "aplicar",
+  "importancia": "fundamental",
+  "topicos_relacionados": [
+    "estruturas lógicas",
+    "proposições"
+  ]
+}
+
+No exemplo INCORRETO, "estruturas lógicas" e "proposições" são nomes
+humanos de tópicos e NÃO IDs estruturais.
 
 
 ======================================================================
-7. IDENTIFICAÇÃO DA MATÉRIA
+17.2. ONDE DEVEM FICAR OS NOMES DOS ASSUNTOS
 ======================================================================
 
-Determine a matéria pela apostila fornecida.
+Os nomes textuais dos assuntos pertencem principalmente ao campo:
 
-Preencha:
-
-cabecalho.materia
-
-cabecalho.titulo_sugerido
-
-cabecalho.id_materia
-
-Se o usuário informar código da matéria, registre em:
-
-cabecalho.codigo_materia
+mapa_estrutura[*].topicos_cobertos
 
 Exemplo:
 
-"001"
+{
+  "id": "raciocinio_logico_matematico_sec_01",
+  "parent_id": "raciocinio_logico_matematico_parte_01",
+  "ordem": 1,
+  "nivel": 2,
+  "tipo": "secao",
+  "titulo": "Estruturas lógicas e proposições",
+  "descricao": "Introdução às estruturas lógicas e às proposições.",
+  "objetivos_ids": [
+    "raciocinio_logico_matematico_obj_001"
+  ],
+  "topicos_cobertos": [
+    "estruturas lógicas",
+    "proposições"
+  ],
+  "tipos_de_conteudo_previstos": [
+    "paragrafo",
+    "conceito_chave",
+    "exemplo_resolvido"
+  ],
+  "importancia": "fundamental",
+  "status": "gerado"
+}
 
-Se não houver código informado:
+Nesse caso, o objetivo correspondente deverá utilizar:
 
-"codigo_materia": null
+"topicos_relacionados": [
+  "raciocinio_logico_matematico_sec_01"
+]
 
-Exemplos de id_materia:
+e NÃO:
 
-"mat-lingua-portuguesa"
-
-"mat-001-lingua-portuguesa"
+"topicos_relacionados": [
+  "estruturas lógicas",
+  "proposições"
+]
 
 
 ======================================================================
-8. NOME DO ARQUIVO
+17.3. RELAÇÃO BIDIRECIONAL ENTRE OBJETIVOS E SEÇÕES
 ======================================================================
 
-Ao final, crie um arquivo .json real.
+Mantenha coerência entre:
 
-Quando houver código:
-
-001_lingua-portuguesa.json
-
-002_raciocinio-logico-matematico.json
-
-Quando não houver:
-
-lingua-portuguesa.json
-
-microbiologia.json
-
-Utilize UTF-8.
-
-
-======================================================================
-9. HIERARQUIA
-======================================================================
-
-Analise a estrutura completa antes de converter.
-
-Construa:
-
-cabecalho.estrutura_resumida
+mapa_estrutura[*].objetivos_ids
 
 e:
 
-mapa_estrutura
+objetivos_aprendizagem[*].topicos_relacionados
 
-Preserve a hierarquia real.
+Se a seção:
+
+"raciocinio_logico_matematico_sec_01"
+
+possuir:
+
+"objetivos_ids": [
+  "raciocinio_logico_matematico_obj_001"
+]
+
+então o objetivo:
+
+"raciocinio_logico_matematico_obj_001"
+
+deverá possuir, quando essa for sua seção relacionada:
+
+"topicos_relacionados": [
+  "raciocinio_logico_matematico_sec_01"
+]
+
+Essa relação deverá ser semanticamente consistente.
+
+
+======================================================================
+17.4. OBJETIVO RELACIONADO A MAIS DE UMA SEÇÃO
+======================================================================
+
+Quando um mesmo objetivo for desenvolvido em mais de uma seção, liste
+TODOS os IDs das seções correspondentes.
 
 Exemplo:
 
-Matéria
+{
+  "id": "matematica_obj_010",
+  "ordem": 10,
+  "descricao": "Resolver situações-problema envolvendo razão, proporção e porcentagem.",
+  "nivel_cognitivo": "resolver",
+  "importancia": "central",
+  "topicos_relacionados": [
+    "matematica_sec_11",
+    "matematica_sec_12",
+    "matematica_sec_13"
+  ]
+}
+
+Todos esses IDs deverão existir previamente em:
+
+mapa_estrutura[*].id
+
+
+======================================================================
+17.5. OBJETIVOS E EXERCÍCIOS
+======================================================================
+
+Todo objetivo deverá ser efetivamente desenvolvido no conteúdo.
+
+Objetivos centrais ou fundamentais deverão, sempre que pedagogicamente
+adequado, ser avaliados por exercícios.
+
+Quando um exercício avaliar determinado objetivo:
+
+exercicios[*].objetivos_ids
+
+deverá utilizar o ID do objetivo.
+
+Exemplo:
+
+"objetivos_ids": [
+  "raciocinio_logico_matematico_obj_001"
+]
+
+Nunca utilize a descrição textual do objetivo nesse campo.
+
+
+======================================================================
+17.6. VALIDAÇÃO OBRIGATÓRIA DOS OBJETIVOS
+======================================================================
+
+Antes de finalizar o JSON, execute internamente esta validação para
+CADA objetivo:
+
+1. confirme que "id" é único;
+
+2. confirme que "nivel_cognitivo" utiliza valor permitido pelo schema;
+
+3. confirme que "importancia" utiliza valor permitido pelo schema;
+
+4. leia cada valor de "topicos_relacionados";
+
+5. procure esse valor EXATAMENTE em:
+
+   mapa_estrutura[*].id
+
+6. se não existir correspondência exata, o valor está INVÁLIDO;
+
+7. substitua-o pelo ID correto da seção;
+
+8. nunca transforme automaticamente nomes de tópicos em IDs sem
+   verificar a estrutura;
+
+9. confirme que a seção referenciada realmente desenvolve aquele
+   objetivo;
+
+10. confirme, quando aplicável, que o ID do objetivo também aparece em:
+
+    mapa_estrutura[*].objetivos_ids
+
+Não conclua o arquivo enquanto existir qualquer valor de
+"topicos_relacionados" que não corresponda exatamente a um ID existente
+em "mapa_estrutura".
+
+
+======================================================================
+17.7. REGRA DE NÃO AMBIGUIDADE
+======================================================================
+
+Apesar do nome "topicos_relacionados", interprete este campo, para este
+aplicativo, como:
+
+"IDs das unidades estruturais relacionadas ao objetivo"
+
+e NÃO como:
+
+"nomes dos tópicos relacionados".
+
+Essa interpretação é OBRIGATÓRIA durante toda a geração.
+
+
+======================================================================
+18. ORGANIZAÇÃO E HIERARQUIA
+======================================================================
+
+Utilize "mapa_estrutura" para representar a organização pedagógica.
+
+Organize, quando necessário:
+
+parte
 → capítulo
 → seção
 → subseção
-→ subsubseção
+→ subsubseção.
 
-Não dependa da numeração impressa original como identidade.
+Não utilize profundidade artificial.
 
-O sistema de montagem produzirá a numeração editorial final.
+Prefira estrutura clara.
+
+Cada item filho deverá possuir parent_id válido.
+
+Não crie ciclos.
+
+A estrutura resumida do cabeçalho deverá permanecer consistente com
+"mapa_estrutura".
+
+Cada section_id usado em "conteudo" deverá corresponder a um item
+existente no mapa.
 
 
 ======================================================================
-10. IDENTIFICADORES
+19. IDENTIFICADORES
 ======================================================================
 
-Todo elemento estrutural relevante deverá possuir ID único.
+Todos os IDs deverão ser:
 
-Use o id_materia como prefixo.
+- únicos;
+- estáveis;
+- legíveis;
+- sem espaços;
+- sem acentos;
+- sem caracteres problemáticos.
+
+Crie "id_materia" a partir do nome da matéria em snake_case.
 
 Exemplos:
 
-mat-001-lingua-portuguesa.sec.001
+Língua Portuguesa
+→ lingua_portuguesa
 
-mat-001-lingua-portuguesa.sec.001.001
+Direito Administrativo
+→ direito_administrativo
 
-mat-001-lingua-portuguesa.obj.001
+Raciocínio Lógico-Matemático
+→ raciocinio_logico_matematico
 
-mat-001-lingua-portuguesa.blk.001
+Para evitar colisões, prefixe identificadores com id_materia sempre que
+apropriado.
 
-mat-001-lingua-portuguesa.q.001
+Exemplos:
 
-mat-001-lingua-portuguesa.src.001
+lingua_portuguesa_cap_01
+lingua_portuguesa_sec_01_01
+lingua_portuguesa_obj_001
+lingua_portuguesa_bloco_001
+lingua_portuguesa_q_001
+lingua_portuguesa_fonte_001
+lingua_portuguesa_ref_001
+lingua_portuguesa_asset_001
 
-mat-001-lingua-portuguesa.ref.001
+Não reutilize o mesmo ID indevidamente.
 
-mat-001-lingua-portuguesa.asset.001
-
-Nunca reutilize IDs.
-
-
-======================================================================
-11. ORDEM
-======================================================================
-
-Use arrays para sequências.
-
-Preencha também:
-
-"ordem": 1
-
-"ordem": 2
-
-"ordem": 3
-
-Preserve a ordem lógica da fonte.
+Toda referência interna deverá apontar para um ID existente.
 
 
 ======================================================================
-12. CONTEÚDO VISÍVEL
+20. FONTES E PESQUISA
 ======================================================================
 
-Conteúdo para o aluno:
+Quando o assunto depender de informação verificável, atualizável,
+normativa, científica ou institucional, realize pesquisa antes de gerar
+o arquivo final.
 
-"visibilidade": "aluno"
+Priorize:
 
-Comentário editorial:
+1. legislação original;
+2. documentos normativos originais;
+3. fontes governamentais;
+4. órgãos oficiais;
+5. universidades;
+6. instituições científicas;
+7. artigos científicos;
+8. livros reconhecidos;
+9. manuais técnicos;
+10. documentação oficial;
+11. fontes secundárias confiáveis.
 
-"visibilidade": "editorial"
+Não utilize blogs genéricos como fonte principal quando houver fonte
+primária.
 
-Metadado técnico:
-
-"visibilidade": "metadado"
-
-
-======================================================================
-13. PARÁGRAFOS
-======================================================================
-
-Texto comum deverá usar:
-
-"tipo": "paragrafo"
-
-Não coloque capítulos inteiros em uma única string gigante.
-
-Também não fragmente cada frase isoladamente.
-
-Agrupe conteúdo em unidades semanticamente coerentes.
+Não invente fontes.
 
 
 ======================================================================
-14. DESTAQUES
+21. PRECISÃO E CONFIABILIDADE
 ======================================================================
-
-Use semanticamente quando existirem ou forem claramente equivalentes:
-
-"conceito_chave"
-
-"definicao"
-
-"observacao"
-
-"atencao"
-
-"cuidado"
-
-"erro_comum"
-
-"para_memorizar"
-
-"raciocinio"
-
-"exemplo"
-
-"contraexemplo"
-
-Não determine cores.
-
-A aplicação decidirá aparência, ícones e cores.
-
-
-======================================================================
-15. LISTAS
-======================================================================
-
-Preserve listas como estruturas.
-
-Não converta listas em um único texto com hífens.
-
-Itens devem permanecer semanticamente separados dentro do objeto
-conteudo.
-
-
-======================================================================
-16. TABELAS
-======================================================================
-
-Converta tabelas mantendo:
-
-- título;
-- cabeçalhos;
-- colunas;
-- linhas;
-- células;
-- notas.
-
-Não simule tabelas usando caracteres ASCII ou pipes.
-
-
-======================================================================
-17. FÓRMULAS E EQUAÇÕES
-======================================================================
-
-Quando houver fórmula, preserve sempre o significado.
-
-Quando possível registre:
-
-- LaTeX;
-- forma linear;
-- descrição;
-- variáveis;
-- unidades.
-
-Não altere símbolos ou relações matemáticas.
-
-
-======================================================================
-18. IMAGENS, MAPAS, GRÁFICOS E DIAGRAMAS
-======================================================================
-
-Não coloque imagens em Base64 no JSON.
-
-Recursos visuais didaticamente necessários deverão possuir registros
-em:
-
-assets
-
-Se o arquivo correspondente não estiver disponível:
-
-"arquivo": null
-
-e, quando indispensável:
-
-"required": true
-
-Registre quando possível:
-
-- título;
-- tipo;
-- texto alternativo;
-- descrição;
-- localização na fonte.
-
-
-======================================================================
-19. ELEMENTOS VISUAIS DECORATIVOS
-======================================================================
-
-Imagens puramente decorativas podem ser omitidas.
-
-Não omita recursos necessários para compreensão, incluindo:
-
-- mapas;
-- gráficos;
-- diagramas;
-- imagens científicas;
-- figuras usadas na explicação;
-- recursos necessários para responder questões.
-
-
-======================================================================
-20. EXEMPLOS
-======================================================================
-
-Preserve exemplos presentes na fonte.
-
-Utilize conforme adequado:
-
-"exemplo"
-
-"contraexemplo"
-
-"exemplo_resolvido"
-
-"estudo_de_caso"
-
-"analise_guiada"
-
-Não transforme exemplos diferentes em texto repetitivo por template.
-
-
-======================================================================
-21. EXERCÍCIOS
-======================================================================
-
-Se houver exercícios, converta-os para:
-
-exercicios
-
-Preserve:
-
-- enunciado;
-- recursos;
-- alternativas;
-- ordem;
-- contexto;
-- tipo.
-
-Não invente exercícios durante uma conversão fiel.
-
-Caso não existam:
-
-"exercicios": []
-
-
-======================================================================
-22. GABARITOS
-======================================================================
-
-Preserve os gabaritos existentes.
-
-Ligue cada resposta à questão usando:
-
-question_id
-
-Nunca marque a alternativa correta diretamente no objeto da questão.
-
-Isso é necessário para que a aplicação consiga produzir versão para o
-aluno sem revelar respostas.
-
-Caso existam exercícios sem gabarito, não invente resposta.
-
-Registre a situação na auditoria.
-
-
-======================================================================
-23. ALTERNATIVAS
-======================================================================
-
-Cada alternativa deverá possuir:
-
-id
-
-ordem
-
-texto
-
-Exemplos de IDs:
-
-A
-
-B
-
-C
-
-D
-
-E
-
-Não coloque no texto:
-
-"(correta)"
-
-"resposta"
-
-"gabarito"
-
-ou outras pistas.
-
-
-======================================================================
-24. FONTES
-======================================================================
-
-Converta as fontes efetivamente utilizadas ou declaradas na apostila.
 
 Não invente:
 
-- autoria;
-- instituição;
-- ano;
-- URL;
-- edição;
-- versão.
-
-Dados ausentes devem permanecer ausentes conforme o schema.
-
-
-======================================================================
-25. REFERÊNCIAS
-======================================================================
-
-Preserve referências bibliográficas existentes.
-
-Quando houver texto pronto da referência, use:
-
-norma_abnt_formatada
-
-Preencha os demais campos apenas quando houver informação segura.
-
-
-======================================================================
-26. OBJETIVOS DE APRENDIZAGEM
-======================================================================
-
-Se o material possuir objetivos explícitos, preserve-os.
-
-Se não possuir, objetivos estruturais mínimos podem ser criados apenas
-para organizar corretamente os relacionamentos internos.
-
-Eles não devem acrescentar conteúdo novo à apostila.
-
-
-======================================================================
-27. ESTRUTURA_RESUMIDA
-======================================================================
-
-cabecalho.estrutura_resumida deverá permitir que o software descubra:
-
-- títulos;
-- hierarquia;
-- ordem;
-- nível;
-- parent_id.
-
-Todos os IDs usados aqui precisam existir em mapa_estrutura.
-
-
-======================================================================
-28. MAPA_ESTRUTURA
-======================================================================
-
-mapa_estrutura deverá representar detalhadamente a estrutura da
-matéria.
-
-Não coloque o conteúdo didático completo dentro do mapa.
-
-O conteúdo desenvolvido fica em:
-
-conteudo
-
-
-======================================================================
-29. RASTREABILIDADE
-======================================================================
-
-Quando for possível identificar com segurança a origem de determinada
-informação, utilize:
-
-source_refs
-
-Nunca invente localização.
-
-Exemplos:
-
-"p. 27"
-
-"capítulo 3"
-
-"seção 2.1"
-
-"art. 37"
-
-"tabela 4"
-
-
-======================================================================
-30. PARTICULARIDADES DAS DISCIPLINAS
-======================================================================
-
-Não force a mesma estrutura pedagógica para toda matéria.
-
-Matemática deve preservar:
-
-- fórmulas;
-- demonstrações;
-- cálculos;
-- resolução de problemas.
-
-História deve preservar:
-
-- cronologia;
-- processos;
-- interpretações;
-- documentos históricos.
-
-Geografia deve preservar:
-
-- espaço;
-- mapas;
-- escalas;
-- dados;
-- relações territoriais.
-
-Biologia e Microbiologia devem preservar:
-
-- estruturas;
-- processos;
-- mecanismos;
-- classificações.
-
-Citopatologia deve preservar:
-
-- morfologia;
-- terminologia;
-- nomenclaturas;
-- classificações.
-
-Gestão Pública deve preservar:
-
+- leis;
+- artigos;
+- decretos;
+- resoluções;
+- normas técnicas;
+- autores;
+- livros;
+- pesquisas;
+- estatísticas;
+- datas;
+- decisões judiciais;
+- citações;
+- DOI;
+- URLs;
+- classificações;
 - teorias;
-- modelos;
-- processos;
-- normas quando presentes.
+- instituições.
 
-Direito deve preservar:
+Diferencie corretamente:
 
-- dispositivos legais;
-- hierarquia normativa;
-- jurisprudência quando presente.
+- conceito;
+- interpretação;
+- hipótese;
+- regra;
+- exceção;
+- orientação didática;
+- dado factual;
+- atualização normativa.
 
-Informática deve preservar:
+Se uma informação relevante não puder ser confirmada:
 
-- procedimentos;
-- versões;
-- comandos;
-- código quando pertinente.
-
-
-======================================================================
-31. CONTEÚDO REPETIDO
-======================================================================
-
-Não remova silenciosamente trechos apenas porque parecem repetitivos.
-
-Determine se a repetição possui função didática.
-
-Se houver duplicação editorial evidente e você optar por consolidá-la,
-registre essa decisão em auditoria.alertas.
+- não fabrique;
+- utilize apenas informação sustentável;
+- registre alerta de auditoria quando necessário.
 
 
 ======================================================================
-32. COMENTÁRIOS EDITORIAIS
+22. SOURCE_REFS
 ======================================================================
 
-Informações úteis ao montador, mas que não devem aparecer para o aluno,
-podem ser representadas como:
+Utilize source_refs quando um bloco, questão ou gabarito depender
+diretamente de uma fonte registrada.
 
-"tipo": "comentario_editorial"
+Todo source_id deverá existir em "fontes".
 
-com:
+Utilize localizador específico quando disponível, por exemplo:
 
-"visibilidade": "editorial"
+- art. 37;
+- cap. 2;
+- seção 4;
+- p. 52;
+- item 3.1.
+
+Não associe fontes aleatoriamente apenas para aparentar fundamentação.
+
+
+======================================================================
+23. REFERÊNCIAS
+======================================================================
+
+A lista "referencias" deverá conter apenas fontes efetivamente utilizadas
+e apropriadas para apresentação bibliográfica.
+
+Não invente dados bibliográficos.
+
+Quando determinado dado não estiver confirmado e o schema permitir
+null, utilize null.
+
+Não complete artificialmente:
+
+- edição;
+- local;
+- editora;
+- ano;
+- DOI;
+- URL.
+
+É melhor uma referência verdadeira com campos nulos permitidos do que
+uma referência ficticiamente completa.
+
+
+======================================================================
+24. ATUALIZAÇÃO TEMPORAL
+======================================================================
+
+Considere como data de pesquisa a data real da produção.
+
+Verifique especialmente conteúdos sujeitos a alterações:
+
+- legislação;
+- normas;
+- regulamentos;
+- protocolos;
+- políticas públicas;
+- dados estatísticos;
+- tecnologias;
+- softwares;
+- padrões técnicos;
+- informações institucionais.
+
+Evite expressões vagas como:
+
+"atualmente"
+"recentemente"
+
+quando for possível informar período concreto.
+
+
+======================================================================
+25. INDEPENDÊNCIA DE BANCA, CONCURSO E CARGO
+======================================================================
+
+A matéria deverá possuir valor geral e reutilizável.
+
+Não escreva especificamente para:
+
+- uma banca;
+- um concurso;
+- um órgão;
+- um cargo;
+
+salvo quando isso fizer parte explicitamente dos ASSUNTOS.
+
+Evite frases como:
+
+"a banca X costuma cobrar"
+
+ou:
+
+"no concurso Y"
+
+sem escopo explícito.
+
+
+======================================================================
+26. NORMALIZAÇÃO DA LINGUAGEM
+======================================================================
+
+Utilize português brasileiro formal, claro, natural e didático.
+
+Revise:
+
+- ortografia;
+- acentuação;
+- concordância;
+- regência;
+- pontuação;
+- coerência;
+- coesão;
+- terminologia;
+- repetição lexical;
+- clareza;
+- progressão textual.
+
+Evite:
+
+- linguagem robótica;
+- bordões;
+- frases vagas;
+- informalidade inadequada;
+- adjetivação promocional;
+- introduções genéricas repetidas;
+- conclusões artificiais.
+
+
+======================================================================
+27. ACESSIBILIDADE
+======================================================================
+
+Não dependa exclusivamente de:
+
+- cores;
+- ícones;
+- posição visual;
+- imagens;
+
+para comunicar informação essencial.
+
+Para fórmulas, forneça representação textual quando cabível.
+
+Para assets visuais reais, forneça:
+
+- texto alternativo;
+- descrição visual;
+
+quando o schema permitir ou exigir.
+
+Tabelas devem possuir títulos e cabeçalhos compreensíveis.
+
+
+======================================================================
+28. CONTROLE DE REPETIÇÕES
+======================================================================
+
+Monitore repetição semântica durante toda a geração.
+
+Quando um conceito já estiver completamente explicado:
+
+- não repita a explicação integral;
+- faça breve retomada;
+- acrescente apenas o novo aspecto.
+
+Evite:
+
+- definição repetida;
+- exemplo repetido com nomes diferentes;
+- mesma observação em vários capítulos;
+- alertas duplicados;
+- revisões idênticas;
+- exercícios praticamente iguais.
+
+Realize auditoria antirrepetição antes da entrega.
+
+
+======================================================================
+29. DISTRIBUIÇÃO EQUILIBRADA
+======================================================================
+
+Não concentre todo o aprofundamento nos primeiros assuntos.
+
+Todos os ASSUNTOS informados deverão receber profundidade proporcional
+à sua relevância e complexidade.
+
+Evite o padrão:
+
+primeiros capítulos muito detalhados
++
+últimos capítulos excessivamente resumidos.
+
+Planeje toda a matéria antes da serialização final.
+
+
+======================================================================
+30. QUALIDADE PEDAGÓGICA
+======================================================================
+
+Antes de considerar cada grande seção concluída, verifique internamente:
+
+- o estudante sabe o que aprenderá?
+- o conteúdo foi realmente explicado?
+- os fundamentos estão presentes?
+- os conceitos foram contextualizados?
+- há exemplos suficientes?
+- conceitos semelhantes foram diferenciados?
+- exceções foram explicadas?
+- erros frequentes foram abordados?
+- a sequência é lógica?
+- os exercícios avaliam o conteúdo ensinado?
+- o gabarito explica a solução?
+- existe síntese quando apropriado?
+
+Se houver deficiência relevante, corrija antes de prosseguir.
+
+
+======================================================================
+31. ESTRUTURA RAIZ DO JSON
+======================================================================
+
+A estrutura raiz deverá seguir EXATAMENTE o JSON Schema vigente.
+
+Conceitualmente, o documento possui os seguintes componentes principais:
+
+{
+  "schema_version": "{{SCHEMA_VERSION}}",
+  "document_type": "{{DOCUMENT_TYPE}}",
+  "cabecalho": {},
+  "mapa_estrutura": [],
+  "objetivos_aprendizagem": [],
+  "fontes": [],
+  "assets": [],
+  "conteudo": [],
+  "exercicios": [],
+  "gabaritos": [],
+  "referencias": [],
+  "auditoria": {}
+}
+
+IMPORTANTE:
+
+Esse exemplo é apenas uma visão de alto nível.
+
+Os campos internos, obrigatoriedade, tipos, enumerações e regras são
+definidos pelo JSON Schema oficial fornecido ao final.
+
+Não acrescente propriedades raiz não permitidas.
+
+
+======================================================================
+32. CABEÇALHO
+======================================================================
+
+Preencha o cabeçalho conforme o JSON Schema.
+
+Para "id_materia":
+
+- use snake_case;
+- letras minúsculas;
+- remova acentos;
+- remova caracteres especiais.
+
+Para "codigo_materia":
+
+se não houver código fornecido e o schema permitir null:
+
+null
+
+Não invente código.
+
+Para "materia":
+
+utilize o nome real da MATÉRIA.
+
+Para "titulo_sugerido":
+
+crie título profissional e direto.
+
+Para "subtitulo_sugerido":
+
+utilize apenas se agregar informação.
+
+Para "idioma":
+
+respeite o valor constante definido pelo schema.
+
+Para "nivel":
+
+utilize o valor permitido mais apropriado pelo schema.
+
+Quando a matéria atender múltiplos níveis e o schema permitir:
+
+"misto"
+
+Para "versao_conteudo":
+
+em nova geração, utilize preferencialmente:
+
+"1.0"
+
+salvo orientação diferente fornecida pelo schema ou pelo contexto.
+
+Para "origem":
+
+como o conteúdo está sendo criado especificamente a partir deste prompt
+e não convertido de um arquivo prévio, utilize origem autoral quando
+essa opção estiver permitida pelo schema.
+
+
+======================================================================
+33. GLOSSÁRIO
+======================================================================
+
+Se a matéria possuir quantidade relevante de termos técnicos e não
+existir propriedade raiz específica para glossário no schema:
+
+crie uma seção de conteúdo chamada:
+
+"Glossário"
+
+Utilize preferencialmente tabela com:
+
+Termo | Definição
+
+Não crie glossário apenas para aumentar volume.
+
+
+======================================================================
+34. ASSETS
+======================================================================
+
+Não invente recursos visuais.
+
+Se nenhum arquivo real estiver disponível:
+
+"assets": []
+
+Caso existam assets reais:
+
+- identifique-os corretamente;
+- use IDs únicos;
+- relacione-os aos blocos;
+- forneça acessibilidade;
+- registre origem quando pertinente.
+
+Nenhum asset_ref poderá apontar para asset inexistente.
+
+
+======================================================================
+35. INTEGRIDADE REFERENCIAL
+======================================================================
+
+Antes da entrega, valide internamente:
+
+MAPA:
+
+- todo parent_id existe ou é null quando permitido;
+- não existem ciclos.
+
+CONTEÚDO:
+
+- todo section_id existe no mapa;
+- não existem seções duplicadas indevidamente.
+
+OBJETIVOS:
+
+- todo objetivo referenciado existe.
+- todo objetivo possui ID único;
+- todo ID presente em mapa_estrutura[*].objetivos_ids existe em
+  objetivos_aprendizagem[*].id;
+- TODO valor de
+  objetivos_aprendizagem[*].topicos_relacionados
+  deve corresponder EXATAMENTE a um valor existente em
+  mapa_estrutura[*].id;
+- nomes de assuntos, palavras-chave e valores de "topicos_cobertos"
+  são PROIBIDOS em "topicos_relacionados";
+- quando um objetivo estiver ligado a várias seções, todos os valores
+  devem ser IDs válidos dessas seções.
+
+FONTES:
+
+- todo source_id referenciado existe.
+
+ASSETS:
+
+- todo asset_ref existe.
+
+QUESTÕES:
+
+- todos os section_refs existem;
+- todos os objetivos referenciados existem.
+
+GABARITOS:
+
+- todo question_id aponta para uma questão existente;
+- cada questão possui exatamente um gabarito.
+
+REVISÃO:
+
+- todo revisar_section_refs aponta para seção existente.
+
+MÚLTIPLA ESCOLHA:
+
+- resposta corresponde exatamente ao ID de uma alternativa existente.
+
+
+======================================================================
+36. ORDENAÇÃO
+======================================================================
+
+Utilize campos "ordem" de maneira coerente.
+
+Preferencialmente:
+
+- comece em 1;
+- mantenha sequência crescente;
+- mantenha os arrays fisicamente na mesma ordem lógica.
+
+Não dependa apenas do campo "ordem" para corrigir arrays desorganizados.
+
+
+======================================================================
+37. TAGS
+======================================================================
+
+Utilize tags apenas quando úteis.
+
+Prefira:
+
+- minúsculas;
+- snake_case;
+- termos curtos;
+- sem duplicações.
+
+Exemplo:
+
+[
+  "sintaxe",
+  "sujeito",
+  "termos_essenciais"
+]
+
+Não transforme tags em parágrafos.
+
+
+======================================================================
+38. JSON ESTRITAMENTE VÁLIDO
+======================================================================
+
+O arquivo final deverá ser JSON estritamente válido.
+
+Obrigatoriamente:
+
+- UTF-8;
+- aspas duplas;
+- nenhuma vírgula final;
+- nenhuma propriedade sem aspas;
+- nenhum comentário;
+- nenhum undefined;
+- nenhum NaN;
+- nenhum Infinity;
+- nenhuma sintaxe JavaScript;
+- nenhum Markdown envolvendo o documento;
+- nenhum texto externo misturado ao JSON.
+
+Utilize:
+
+null
+
+quando permitido pelo schema.
+
+Não utilize artificialmente:
+
+"N/A"
+"não informado"
+"preencher depois"
+
+se null for semanticamente correto e permitido.
+
+Escape corretamente:
+
+- aspas;
+- barras invertidas;
+- quebras de linha;
+- caracteres especiais.
+
+
+======================================================================
+39. PROIBIÇÕES ESTRUTURAIS
+======================================================================
+
+É proibido:
+
+- alterar schema_version;
+- alterar document_type;
+- criar propriedades não permitidas;
+- omitir propriedades obrigatórias;
+- criar tipos de bloco inexistentes;
+- criar tipos de questão inexistentes;
+- criar enumerações inventadas;
+- criar IDs órfãos;
+- criar referências quebradas;
+- criar parent_id inexistente;
+- criar section_id inexistente;
+- criar source_id inexistente;
+- criar asset_ref inexistente;
+- criar questão sem gabarito;
+- criar gabarito sem questão;
+- criar JSON truncado;
+- inserir comentários JSON;
+- inserir HTML para controlar estética;
+- inserir CSS;
+- inserir comandos de PDF;
+- inserir paginação;
+- inserir sumário com número de página.
+
+
+======================================================================
+40. PROIBIÇÕES EDITORIAIS
+======================================================================
+
+Não produza:
+
+- capítulos superficiais;
+- teoria sem desenvolvimento;
+- listas que substituem explicações;
+- conteúdo duplicado;
+- exercícios sem relação com a teoria;
+- referências fictícias;
+- legislação fictícia;
+- fontes fictícias;
+- tabelas excessivamente largas;
+- caixas didáticas em excesso;
+- alertas artificiais;
+- linguagem promocional dentro do conteúdo.
+
+Não inclua frases como:
+
+"conteúdo gerado por IA"
+"continuação"
+"faltou gerar"
+"não foi possível"
+"devido ao limite"
+"aqui está o JSON"
+"conforme solicitado"
+"segue abaixo"
+
+
+======================================================================
+41. GRANDES MATÉRIAS E MUITOS ASSUNTOS
+======================================================================
+
+Quando houver muitos ASSUNTOS:
+
+NÃO sacrifique cobertura para produzir uma resposta curta.
+
+Primeiro planeje internamente:
+
+1. mapa completo;
+2. capítulos;
+3. seções;
+4. objetivos;
+5. fontes;
+6. conteúdo;
+7. exemplos;
+8. exercícios;
+9. gabaritos;
+10. referências.
+
+Somente depois serialize o JSON.
+
+Não interrompa voluntariamente a matéria na metade.
+
+Não substitua os últimos assuntos por pequenos resumos apenas para
+reduzir o tamanho.
+
+Se o ambiente possuir ferramenta de criação de arquivos, dê preferência
+a gerar o arquivo JSON diretamente em vez de imprimir um JSON gigantesco
+de forma truncada no chat.
+
+
+======================================================================
+42. AUDITORIA
+======================================================================
+
+Preencha o objeto "auditoria" exatamente conforme o JSON Schema.
+
+Os campos de auditoria representam verificações reais.
+
+Não marque true automaticamente.
+
+Antes de marcar conformidade, verifique:
+
+- JSON válido;
+- estrutura completa;
+- IDs únicos;
+- referências internas válidas;
+- consistência entre mapa e conteúdo;
+- objetivos cobertos;
+- questões revisadas;
+- gabaritos revisados;
+- fontes verificadas;
+- ausência de repetição indevida;
+- conteúdo revisado;
+- cobertura integral do escopo.
+
+Se houver problema real que impeça uma dessas confirmações:
+
+- utilize o valor permitido adequado;
+- registre alerta quando previsto pelo schema;
+- não declare conformidade falsa.
+
+
+======================================================================
+43. AUDITORIA FINAL OBRIGATÓRIA
+======================================================================
+
+Antes de gerar o arquivo final, execute internamente:
+
+ETAPA 1 — ESCOPO
+
+Confirme que TODOS os ASSUNTOS foram abordados.
+
+ETAPA 2 — DIDÁTICA
+
+Confirme que os assuntos foram ensinados, e não apenas citados.
+
+ETAPA 3 — PROFUNDIDADE
+
+Confirme que não existem capítulos artificialmente superficiais.
+
+ETAPA 4 — MAPA
+
+Verifique hierarquia, níveis e parent_id.
+
+ETAPA 5 — OBJETIVOS E REFERÊNCIAS ESTRUTURAIS
+
+Para cada item de "objetivos_aprendizagem":
+
+1. valide o ID do objetivo;
+
+2. valide o nível cognitivo;
+
+3. valide a importância;
+
+4. percorra TODOS os valores de "topicos_relacionados";
+
+5. confirme individualmente que cada valor existe EXATAMENTE em:
+
+   mapa_estrutura[*].id
+
+6. rejeite valores como:
+
+   "proposições"
+   "negação"
+   "porcentagem"
+   "sintaxe"
+   "interpretação de textos"
+
+   quando forem apenas nomes de assuntos;
+
+7. substitua-os pelos IDs estruturais correspondentes, como:
+
+   "raciocinio_logico_matematico_sec_01"
+   "lingua_portuguesa_sec_03"
+   "matematica_sec_12"
+
+8. confirme a relação inversa com:
+
+   mapa_estrutura[*].objetivos_ids
+
+9. não finalize enquanto houver referência inválida.
+
+ETAPA 6 — CONTEÚDO
+
+Verifique section_id e ordem.
+
+ETAPA 7 — BLOCOS
+
+Verifique se todos os tipos são permitidos.
+
+ETAPA 8 — FORMATO INTERNO
+
+Verifique especialmente:
+
+- texto → "texto";
+- lista → "itens";
+- tabela → "colunas" e "linhas";
+- fórmula/equação → "latex" e "texto_linear";
+- código → "linguagem" e "codigo";
+- caixas → "titulo" e/ou "texto";
+- visual → asset real.
+
+ETAPA 9 — FONTES
+
+Confirme que nenhuma fonte foi inventada.
+
+ETAPA 10 — EXERCÍCIOS
+
+Confirme que avaliam conteúdo ensinado.
+
+ETAPA 11 — GABARITOS
+
+Confirme correspondência 1:1.
+
+ETAPA 12 — RESPOSTAS
+
+Confirme respostas e resolução.
+
+ETAPA 13 — IDs
+
+Confirme unicidade.
+
+ETAPA 14 — REFERÊNCIAS CRUZADAS
+
+Confirme que todos os IDs referenciados existem.
+
+ETAPA 15 — REPETIÇÃO
+
+Remova duplicações desnecessárias.
+
+ETAPA 16 — PORTUGUÊS
+
+Revise linguagem.
+
+ETAPA 17 — JSON
+
+Confira:
+
+- chaves;
+- colchetes;
+- aspas;
+- escapes;
+- vírgulas;
+- tipos;
+- null;
+- arrays;
+- objetos.
+
+ETAPA 18 — SCHEMA
+
+Confirme conformidade com o JSON Schema oficial.
+
+Somente depois conclua a geração.
+
+
+======================================================================
+44. NOME DO ARQUIVO
+======================================================================
+
+Crie o arquivo final com o padrão:
+
+[id_materia].json
 
 Exemplos:
 
-- tabela muito larga;
-- imagem indispensável;
-- quebra lógica recomendada;
-- trecho ilegível no arquivo fonte.
+lingua_portuguesa.json
+matematica.json
+historia.json
+geografia.json
+direito_administrativo.json
+anatomia_humana.json
+
+O arquivo deverá conter somente o objeto JSON da matéria.
 
 
 ======================================================================
-33. AUDITORIA
+45. FORMA DE ENTREGA
 ======================================================================
 
-Preencha auditoria com honestidade.
+A ENTREGA PRINCIPAL É O ARQUIVO .JSON.
 
-Só marque true quando a verificação correspondente tiver sido
-realmente realizada.
+Quando o ambiente permitir geração de arquivo:
 
-"conversao_integral": true
+1. gere o JSON completo;
+2. valide sua sintaxe;
+3. valide sua estrutura contra o JSON Schema oficial;
+4. salve em arquivo [id_materia].json;
+5. entregue o arquivo para download.
 
-somente quando todo conteúdo relevante tiver sido convertido.
+Não converta para PDF.
 
-Se houver lacuna:
+Não converta para DOCX.
 
-"conversao_integral": false
+Não compacte em ZIP salvo se explicitamente solicitado.
 
-e registre alerta.
+Se o ambiente não permitir criação de arquivo:
 
-
-======================================================================
-34. ORDEM DE EXECUÇÃO
-======================================================================
-
-Execute:
-
-1. ler integralmente o material;
-2. identificar a matéria;
-3. identificar todos os capítulos;
-4. identificar tópicos;
-5. identificar subtópicos;
-6. identificar blocos especiais;
-7. identificar exercícios;
-8. identificar gabaritos;
-9. identificar fontes;
-10. identificar referências;
-11. identificar recursos visuais necessários;
-12. construir a árvore;
-13. criar IDs;
-14. converter conteúdo;
-15. validar cobertura;
-16. validar referências cruzadas;
-17. validar JSON;
-18. corrigir erros estruturais;
-19. criar o arquivo final.
+- forneça o JSON integral;
+- sem explicação antes;
+- sem explicação depois;
+- sem bloco Markdown;
+- começando diretamente por "{";
+- terminando diretamente por "}".
 
 
 ======================================================================
-35. VERIFICAÇÃO DE COBERTURA
+46. CRITÉRIO DE CONCLUSÃO
 ======================================================================
 
-Antes de concluir, compare a estrutura original com o JSON.
+Somente considere o trabalho concluído quando houver:
 
-Confirme:
-
-- todos os capítulos foram incluídos;
-- todos os tópicos importantes foram incluídos;
-- todos os subtópicos importantes foram incluídos;
-- exemplos foram preservados;
-- tabelas foram preservadas;
-- exercícios foram preservados;
-- gabaritos foram preservados;
-- referências foram preservadas;
-- recursos visuais essenciais foram mapeados.
-
-Não considere a conversão concluída se houver omissão substancial.
-
-
-======================================================================
-36. VALIDAÇÃO DE IDs
-======================================================================
-
-Confirme:
-
-- IDs únicos;
-- parent_id existente;
-- section_id existente;
-- objetivos_ids existentes;
-- source_refs existentes;
-- question_id existente;
-- asset_ref existente quando não for null;
-- recursos referenciados existentes.
-
-Corrija IDs inválidos antes da entrega.
-
-
-======================================================================
-37. VALIDAÇÃO DE QUESTÕES
-======================================================================
-
-Confirme:
-
-- nenhuma questão perdeu parte do enunciado;
-- nenhuma alternativa desapareceu;
-- a ordem foi preservada;
-- gabarito corresponde à questão;
-- nenhum gabarito ficou órfão.
-
-Se a fonte não permitir confirmar uma resposta, não invente.
-
-
-======================================================================
-38. VALIDAÇÃO FINAL
-======================================================================
-
-Antes de disponibilizar o arquivo confirme:
-
-- schema_version = {{SCHEMA_VERSION}};
-- document_type = {{DOCUMENT_TYPE}};
-- JSON sintaticamente válido;
-- campos obrigatórios presentes;
-- IDs únicos;
-- referências cruzadas válidas;
-- estrutura coerente;
+- todos os ASSUNTOS cobertos;
+- sequência pedagógica coerente;
+- objetivos;
 - conteúdo completo;
-- ausência de propriedades proibidas pelo schema.
+- exemplos;
+- comparações quando necessárias;
+- alertas quando pertinentes;
+- exercícios;
+- gabaritos comentados;
+- fontes reais quando necessárias;
+- referências reais quando pertinentes;
+- IDs válidos;
+- referências cruzadas válidas;
+- padronização dos blocos;
+- revisão técnica;
+- revisão factual;
+- revisão gramatical;
+- controle de repetição;
+- JSON válido;
+- conformidade com o schema;
+- auditoria final;
+- arquivo .json completo.
 
 
 ======================================================================
-39. ENTREGA
+47. REGRA DE AUTORIDADE DO SCHEMA
 ======================================================================
 
-Crie um arquivo .json real em UTF-8.
+A versão do contrato utilizada nesta execução é:
 
-Não entregue apenas:
+{{SCHEMA_VERSION}}
 
-- Markdown;
-- exemplo;
-- trecho;
-- planejamento;
-- JSON incompleto;
-- conteúdo colado na conversa quando for possível produzir arquivo.
+O tipo de documento utilizado nesta execução é:
 
-Disponibilize o arquivo final para download.
+{{DOCUMENT_TYPE}}
 
-Na resposta final informe brevemente:
+Nunca substitua esses valores por versões inferidas ou memorizadas.
 
-- matéria;
-- nome do arquivo;
-- quantidade de tópicos principais;
-- quantidade total de seções;
-- quantidade de exercícios;
-- quantidade de referências;
-- alertas existentes.
+Utilize exatamente os valores fornecidos pelo sistema.
+
+O JSON Schema fornecido abaixo foi carregado diretamente do contrato
+vigente do aplicativo Fácil Digital+.
+
+Ele possui prioridade absoluta sobre todos os exemplos e descrições
+anteriores.
 
 
 ======================================================================
-40. CONTRATO JSON OBRIGATÓRIO
+48. JSON SCHEMA OFICIAL DO APLICATIVO
 ======================================================================
 
-O arquivo deverá validar integralmente contra o schema abaixo.
+A estrutura produzida deverá validar INTEGRALMENTE contra o JSON Schema
+abaixo.
 
-Não altere:
+Não altere este schema.
 
-- nomes de propriedades;
-- enums;
-- estrutura superior;
-- schema_version;
-- document_type.
+Não resuma este schema.
 
-Não crie propriedades adicionais quando additionalProperties estiver
-definido como false.
+Não reproduza este schema dentro do JSON da matéria.
 
-JSON SCHEMA:
+Utilize-o exclusivamente como contrato de geração e validação.
+
+JSON SCHEMA OFICIAL:
 
 {{JSON_SCHEMA}}
 
 
 ======================================================================
-41. COMANDO FINAL
+49. INICIAR PRODUÇÃO
 ======================================================================
 
-Agora analise integralmente a apostila fornecida nesta conversa.
+Utilize como únicas variáveis principais preenchidas pelo usuário:
 
-Converta UMA MATÉRIA COMPLETA.
+MATÉRIA
 
-Não resuma.
+e
 
-Não invente.
+ASSUNTOS.
 
-Não corrija silenciosamente.
+Execute a produção nesta ordem:
 
-Preserve conteúdo.
+1. leia a MATÉRIA;
+2. leia integralmente os ASSUNTOS;
+3. pesquise informações quando necessário;
+4. planeje toda a estrutura;
+5. defina capítulos e seções;
+6. defina objetivos de aprendizagem;
+7. produza o conteúdo didático;
+8. acrescente exemplos;
+9. acrescente comparações quando úteis;
+10. acrescente alertas somente quando pertinentes;
+11. produza exercícios;
+12. produza gabaritos comentados;
+13. registre fontes;
+14. registre referências;
+15. verifique todos os IDs;
+16. verifique referências cruzadas;
+17. revise tecnicamente;
+18. revise factualmente;
+19. revise gramaticalmente;
+20. execute auditoria antirrepetição;
+21. valide contra o JSON Schema;
+22. gere o arquivo [id_materia].json;
+23. entregue o arquivo JSON completo.
 
-Preserve hierarquia.
+NÃO entregue PDF.
 
-Preserve exemplos.
+NÃO entregue resumo.
 
-Preserve tabelas.
+NÃO entregue apenas uma amostra.
 
-Preserve exercícios.
+NÃO entregue estrutura vazia.
 
-Preserve gabaritos.
+NÃO omita assuntos.
 
-Preserve referências.
-
-Mapeie recursos visuais essenciais.
-
-Crie IDs consistentes.
-
-Valide referências cruzadas.
-
-Valide a instância contra o schema.
-
-Corrija erros estruturais.
-
-Crie o arquivo .json completo em UTF-8.
-
-Disponibilize-o para download.
-
-======================================================================
-FIM DO PROMPT
-======================================================================
+O resultado final deverá ser uma MATÉRIA DIDÁTICA COMPLETA EM JSON,
+pronta para importação e composição pelo Montador de Apostilas da
+Fácil Digital+.

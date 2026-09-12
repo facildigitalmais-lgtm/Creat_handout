@@ -175,6 +175,10 @@
                     <span class="toc__title">
                         {{ item.titulo }}
                     </span>
+
+                    <span class="toc__page">
+                        {{ item.pagina or "" }}
+                    </span>
                 </a>
             {% endfor %}
         </nav>
@@ -282,19 +286,6 @@
                     {% for block in section.blocos %}
                         {% include "print/components/block.html" %}
                     {% endfor %}
-
-                    {% if not section.blocos %}
-                        <aside class="empty-section">
-                            <strong>
-                                Seção sem conteúdo visível.
-                            </strong>
-
-                            <span>
-                                O tópico está presente no mapa da matéria,
-                                mas não possui bloco destinado ao aluno.
-                            </span>
-                        </aside>
-                    {% endif %}
                 </div>
             </section>
         {% endfor %}

@@ -2320,6 +2320,82 @@ code {
     line-height: 1.45;
 }
 
+.pdf-progress {
+    position: relative;
+
+    width: 100%;
+    height: 8px;
+
+    overflow: hidden;
+
+    margin-top: 0.55rem;
+
+    border-radius: 999px;
+
+    background:
+        #dce3ec;
+}
+
+.pdf-progress__bar {
+    position: relative;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        var(--primary);
+
+    transition:
+        width 350ms ease;
+}
+
+.pdf-progress__bar.is-active {
+    overflow: hidden;
+}
+
+.pdf-progress__bar.is-active::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(
+                255,
+                255,
+                255,
+                0.48
+            ),
+            transparent
+        );
+
+    transform:
+        translateX(-100%);
+
+    animation:
+        pdf-progress-shimmer
+        1.4s
+        linear
+        infinite;
+}
+
+.pdf-progress.is-complete
+.pdf-progress__bar {
+    background:
+        var(--success);
+}
+
+@keyframes pdf-progress-shimmer {
+    to {
+        transform:
+            translateX(100%);
+    }
+}
+
 .pdf-status.is-ready {
     border-color: #b9e2ce;
 

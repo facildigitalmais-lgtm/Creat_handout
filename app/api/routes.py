@@ -1,6 +1,14 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, File, HTTPException, Request, UploadFile
+from threading import RLock, Thread
+
+from fastapi import (
+    APIRouter,
+    File,
+    HTTPException,
+    Request,
+    UploadFile,
+)
 from fastapi.responses import (
     FileResponse,
     HTMLResponse,
@@ -33,6 +41,98 @@ from app.services.subject_catalog import subject_catalog_service
 
 
 router = APIRouter()
+
+_pdf_jobs_lock = RLock()
+_pdf_jobs: dict[str, dict[str, object]] = {}
+
+
+def _get_pdf_job(
+    project_id: str,
+) -> dict[str, object] | None:
+    with _pdf_jobs_lock:
+        job = _pdf_jobs.get(project_id)
+
+        if job is None:
+            return None
+
+        return dict(job)
+
+
+def _set_pdf_job(
+    project_id: str,
+    **values: object,
+) -> dict[str, object]:
+    with _pdf_jobs_lock:
+        job = _pdf_jobs.setdefault(
+            project_id,
+            {
+                "project_id": project_id,
+                "status": "queued",
+                "progress": 5,
+                "message": "Geração adicionada à fila.",
+                "pdf": None,
+                "audit": None,
+                "error": None,
+            },
+        )
+
+        job.update(values)
+
+        return dict(job)
+
+
+def _run_pdf_preview_job(
+    project_id: str,
+) -> None:
+    try:
+        _set_pdf_job(
+            project_id,
+            status="generating_pdf",
+            progress=35,
+            message=(
+                "Compondo conteúdo, calculando "
+                "sumário e gerando o PDF..."
+            ),
+            error=None,
+        )
+
+        metadata = pdf_service.generate_preview(
+            project_id,
+            subject_catalog_service,
+        )
+
+        _set_pdf_job(
+            project_id,
+            status="auditing",
+            progress=88,
+            message=(
+                "PDF gerado. Executando "
+                "auditoria visual..."
+            ),
+            pdf=metadata,
+        )
+
+        audit = pdf_audit_service.audit_preview(
+            project_id
+        )
+
+        _set_pdf_job(
+            project_id,
+            status="ready",
+            progress=100,
+            message="PDF gerado e auditado.",
+            pdf=metadata,
+            audit=audit,
+            error=None,
+        )
+
+    except Exception as error:
+        _set_pdf_job(
+            project_id,
+            status="error",
+            message="Falha na geração do PDF.",
+            error=str(error),
+        )
 
 
 @router.get(
@@ -125,18 +225,15 @@ async def project_preview(
 @router.post(
     "/api/projetos/{project_id}/pdf/preview",
     name="api_gerar_pdf_preview",
+    status_code=202,
 )
 def api_gerar_pdf_preview(
     project_id: str,
 ) -> dict[str, object]:
     try:
-        metadata = pdf_service.generate_preview(
+        project_service.get_project(
             project_id,
             subject_catalog_service,
-        )
-
-        audit = pdf_audit_service.audit_preview(
-            project_id
         )
 
     except ProjectNotFoundError as error:
@@ -156,19 +253,92 @@ def api_gerar_pdf_preview(
             detail=str(error),
         ) from error
 
+    with _pdf_jobs_lock:
+        current = _pdf_jobs.get(
+            project_id
+        )
+
+        if (
+            current
+            and current.get("status")
+            in {
+                "queued",
+                "generating_pdf",
+                "auditing",
+            }
+        ):
+            return {
+                "ok": True,
+                "started": False,
+                "job": dict(current),
+            }
+
+        job = {
+            "project_id": project_id,
+            "status": "queued",
+            "progress": 5,
+            "message": (
+                "Geração adicionada à fila."
+            ),
+            "pdf": None,
+            "audit": None,
+            "error": None,
+        }
+
+        _pdf_jobs[project_id] = job
+
+    worker = Thread(
+        target=_run_pdf_preview_job,
+        args=(project_id,),
+        name=f"pdf-preview-{project_id}",
+        daemon=True,
+    )
+    worker.start()
+
     return {
         "ok": True,
-        "pdf": metadata,
-        "audit": audit,
-        "view_url": (
+        "started": True,
+        "job": dict(job),
+    }
+
+
+@router.get(
+    "/api/projetos/{project_id}/pdf/status",
+    name="api_status_pdf_preview",
+)
+def api_status_pdf_preview(
+    project_id: str,
+) -> dict[str, object]:
+    job = _get_pdf_job(
+        project_id
+    )
+
+    if job is None:
+        return {
+            "ok": True,
+            "status": "idle",
+            "message": (
+                "Nenhuma geração de PDF "
+                "está em andamento."
+            ),
+        }
+
+    response: dict[str, object] = {
+        "ok": True,
+        **job,
+    }
+
+    if job.get("status") == "ready":
+        response["view_url"] = (
             f"/api/projetos/"
             f"{project_id}/pdf/preview"
-        ),
-        "download_url": (
+        )
+        response["download_url"] = (
             f"/api/projetos/"
             f"{project_id}/pdf/download"
-        ),
-    }
+        )
+
+    return response
 
 
 @router.get(
