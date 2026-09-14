@@ -1238,13 +1238,22 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 19mm;
-    height: 19mm;
-    border-radius: 4mm;
-    background: var(--primary);
-    color: white;
-    font-size: 11pt;
-    font-weight: 900;
+
+    width: 28mm;
+    height: 28mm;
+
+    overflow: hidden;
+
+    border-radius: 6mm;
+}
+
+.end-page__mark img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
 }
 
 .end-page__brand {
