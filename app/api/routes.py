@@ -16,6 +16,7 @@ from fastapi.responses import (
     PlainTextResponse,
 )
 
+from app.core.paths import STATIC_DIR
 from app.core.settings import get_settings
 from app.core.templates import templates
 from app.models.project import ProjectPayload
@@ -44,6 +45,30 @@ router = APIRouter()
 
 _pdf_jobs_lock = RLock()
 _pdf_jobs: dict[str, dict[str, object]] = {}
+
+
+def _workspace_asset_version() -> str:
+    asset_paths = (
+        STATIC_DIR
+        / "css"
+        / "workspace.css",
+        STATIC_DIR
+        / "js"
+        / "workspace.js",
+    )
+
+    mtimes = [
+        path.stat().st_mtime_ns
+        for path in asset_paths
+        if path.exists()
+    ]
+
+    return str(
+        max(
+            mtimes,
+            default=0,
+        )
+    )
 
 
 def _get_pdf_job(
@@ -85,13 +110,24 @@ def _run_pdf_preview_job(
     project_id: str,
 ) -> None:
     try:
+        def report_pdf_progress(
+            progress: int,
+            message: str,
+        ) -> None:
+            _set_pdf_job(
+                project_id,
+                status="generating_pdf",
+                progress=progress,
+                message=message,
+                error=None,
+            )
+
         _set_pdf_job(
             project_id,
             status="generating_pdf",
-            progress=35,
+            progress=10,
             message=(
-                "Compondo conteúdo, calculando "
-                "sumário e gerando o PDF..."
+                "Montando o documento editorial..."
             ),
             error=None,
         )
@@ -99,21 +135,40 @@ def _run_pdf_preview_job(
         metadata = pdf_service.generate_preview(
             project_id,
             subject_catalog_service,
+            progress_callback=(
+                report_pdf_progress
+            ),
         )
+
+        def report_audit_progress(
+            progress: int,
+            message: str,
+        ) -> None:
+            _set_pdf_job(
+                project_id,
+                status="auditing",
+                progress=progress,
+                message=message,
+                pdf=metadata,
+                error=None,
+            )
 
         _set_pdf_job(
             project_id,
             status="auditing",
-            progress=88,
+            progress=85,
             message=(
-                "PDF gerado. Executando "
-                "auditoria visual..."
+                "PDF criado. Iniciando "
+                "auditoria das páginas..."
             ),
             pdf=metadata,
         )
 
         audit = pdf_audit_service.audit_preview(
-            project_id
+            project_id,
+            progress_callback=(
+                report_audit_progress
+            ),
         )
 
         _set_pdf_job(
@@ -153,6 +208,9 @@ async def home(
         context={
             "app_name": settings.app_name,
             "app_version": settings.app_version,
+            "asset_version": (
+                _workspace_asset_version()
+            ),
             "editor": settings.editor,
             "catalogo": snapshot,
             "materias": materias,
@@ -463,7 +521,10 @@ def api_executar_auditoria_pdf(
 ) -> dict[str, object]:
     try:
         audit = pdf_audit_service.audit_preview(
-            project_id
+            project_id,
+            progress_callback=(
+                report_audit_progress
+            ),
         )
 
     except ProjectNotFoundError as error:

@@ -6,7 +6,7 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 from threading import RLock
-from typing import Any
+from typing import Any, Callable, Callable
 
 from pypdf import PdfReader
 from weasyprint import CSS, HTML
@@ -83,6 +83,13 @@ class PDFService:
             SubjectCatalogService
             | None
         ) = None,
+        progress_callback: (
+            Callable[
+                [int, str],
+                None,
+            ]
+            | None
+        ) = None,
     ) -> dict[str, Any]:
         catalog = (
             catalog
@@ -97,6 +104,12 @@ class PDFService:
             )
 
         with self._lock:
+            if progress_callback is not None:
+                progress_callback(
+                    10,
+                    "Montando o documento editorial...",
+                )
+
             document = (
                 editorial_service
                 .build_document(
@@ -104,6 +117,13 @@ class PDFService:
                     catalog,
                 )
             )
+
+            if progress_callback is not None:
+                progress_callback(
+                    20,
+                    "Preparando capa e recursos "
+                    "do documento...",
+                )
 
             project_directory = (
                 project_service
@@ -117,15 +137,43 @@ class PDFService:
                 document=document,
             )
 
+            if progress_callback is not None:
+                progress_callback(
+                    30,
+                    "Calculando paginação, "
+                    "sumário e total de páginas...",
+                )
+
             self._populate_toc_pages(
                 document
             )
+
+            if progress_callback is not None:
+                progress_callback(
+                    45,
+                    "Paginação inicial concluída. "
+                    "Preparando documento final...",
+                )
 
             html_text = (
                 self._render_html(
                     document
                 )
             )
+
+            if progress_callback is not None:
+                progress_callback(
+                    55,
+                    "Renderizando o documento "
+                    "definitivo...",
+                )
+
+            if progress_callback is not None:
+                progress_callback(
+                    55,
+                    "Renderizando o documento "
+                    "definitivo...",
+                )
 
             final_path = (
                 project_directory
@@ -141,16 +189,103 @@ class PDFService:
             )
 
             try:
+                if progress_callback is not None:
+                    progress_callback(
+                        65,
+                        "Compondo as páginas "
+                        "do PDF...",
+                    )
+
                 self._write_pdf(
                     html_text=html_text,
                     target=temp_path,
                 )
+
+                if progress_callback is not None:
+                    progress_callback(
+                        75,
+                        "PDF composto. Validando "
+                        "estrutura e paginação...",
+                    )
 
                 validation = (
                     self._validate_pdf(
                         temp_path
                     )
                 )
+
+                expected_pages = int(
+                    document.get(
+                        "pdf_total_pages"
+                    )
+                    or 0
+                )
+
+                if (
+                    expected_pages
+                    and validation["paginas"]
+                    != expected_pages
+                ):
+                    if (
+                        progress_callback
+                        is not None
+                    ):
+                        progress_callback(
+                            78,
+                            "Ajustando a paginação "
+                            "final do documento...",
+                        )
+
+                    document[
+                        "pdf_total_pages"
+                    ] = validation[
+                        "paginas"
+                    ]
+
+                    self._populate_toc_pages(
+                        document
+                    )
+
+                    html_text = (
+                        self._render_html(
+                            document
+                        )
+                    )
+
+                    self._write_pdf(
+                        html_text=html_text,
+                        target=temp_path,
+                    )
+
+                    validation = (
+                        self._validate_pdf(
+                            temp_path
+                        )
+                    )
+
+                final_expected_pages = int(
+                    document.get(
+                        "pdf_total_pages"
+                    )
+                    or 0
+                )
+
+                if (
+                    final_expected_pages
+                    and validation["paginas"]
+                    != final_expected_pages
+                ):
+                    raise PDFGenerationError(
+                        "A paginação final do PDF "
+                        "não estabilizou."
+                    )
+
+                if progress_callback is not None:
+                    progress_callback(
+                        80,
+                        "PDF validado. Preparando "
+                        "arquivo para auditoria...",
+                    )
 
                 temp_path.replace(
                     final_path
@@ -321,6 +456,18 @@ class PDFService:
                 "Não foi possível calcular "
                 "as páginas do sumário."
             ) from error
+
+        document[
+            "pdf_total_pages"
+        ] = len(
+            rendered_document.pages
+        )
+
+        document[
+            "pdf_total_pages"
+        ] = len(
+            rendered_document.pages
+        )
 
         anchor_pages: dict[
             str,

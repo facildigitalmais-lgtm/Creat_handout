@@ -257,7 +257,6 @@ document.addEventListener("DOMContentLoaded", () => {
             edicao: getFieldValue("edicao"),
             editora: getFieldValue("editora"),
             site: getFieldValue("site"),
-            pagina_rosto: getFieldValue("pagina_rosto"),
             aviso_legal: getFieldValue("aviso_legal"),
             cover_mode: getFieldValue("cover_mode"),
             exercises_position: getFieldValue("exercises_position"),
@@ -583,7 +582,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 edicao: getFieldValue("edicao").trim(),
                 editora: getFieldValue("editora").trim(),
                 site: getFieldValue("site").trim(),
-                pagina_rosto: getFieldValue("pagina_rosto"),
                 aviso_legal: getFieldValue("aviso_legal"),
             },
             materias: state.selectedSubjects.map(
@@ -2248,16 +2246,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     projectId
                 );
 
-            if (
-                !data.view_url
-                || !data.download_url
-            ) {
-                throw new Error(
-                    "O backend concluiu a geração, "
-                    + "mas não informou as URLs "
-                    + "do PDF."
+            const encodedProjectId =
+                encodeURIComponent(
+                    projectId
                 );
-            }
+
+            const viewUrl =
+                `/api/projetos/${encodedProjectId}/pdf/preview`;
+
+            const downloadUrl =
+                `/api/projetos/${encodedProjectId}/pdf/download`;
 
             const metadata =
                 data.pdf || {};
@@ -2281,10 +2279,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
             openPdfButton.dataset.url =
-                data.view_url;
+                viewUrl;
 
             downloadPdfButton.href =
-                data.download_url;
+                downloadUrl;
 
             openPdfButton.hidden = false;
             downloadPdfButton.hidden = false;
@@ -2404,7 +2402,17 @@ document.addEventListener("DOMContentLoaded", () => {
             const url =
                 openPdfButton.dataset.url;
 
-            if (!url) {
+            if (
+                !url
+                || url === "undefined"
+                || url === "null"
+            ) {
+                showToast(
+                    "O PDF ainda não está "
+                    + "disponível para visualização.",
+                    "error"
+                );
+
                 return;
             }
 
@@ -2413,6 +2421,58 @@ document.addEventListener("DOMContentLoaded", () => {
                 "_blank",
                 "noopener"
             );
+        }
+    );
+
+    downloadPdfButton.addEventListener(
+        "click",
+        (event) => {
+            const url =
+                downloadPdfButton
+                    .getAttribute(
+                        "href"
+                    );
+
+            if (
+                !url
+                || url === "#"
+                || url === "undefined"
+                || url === "null"
+            ) {
+                event.preventDefault();
+
+                showToast(
+                    "O PDF ainda não está "
+                    + "disponível para download.",
+                    "error"
+                );
+            }
+        }
+    );
+
+    downloadPdfButton.addEventListener(
+        "click",
+        (event) => {
+            const url =
+                downloadPdfButton
+                    .getAttribute(
+                        "href"
+                    );
+
+            if (
+                !url
+                || url === "#"
+                || url === "undefined"
+                || url === "null"
+            ) {
+                event.preventDefault();
+
+                showToast(
+                    "O PDF ainda não está "
+                    + "disponível para download.",
+                    "error"
+                );
+            }
         }
     );
 
@@ -2450,8 +2510,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            const projectId =
+                encodeURIComponent(
+                    state.projectId
+                );
+
             window.open(
-                `/api/projetos/${state.projectId}/pdf/preview`,
+                `/api/projetos/${projectId}/pdf/preview`,
                 "_blank",
                 "noopener"
             );

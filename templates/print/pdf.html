@@ -26,7 +26,7 @@
 
         <div class="title-page__body">
             <div class="title-page__eyebrow">
-                APOSTILA DE ESTUDO
+                APOSTILA PREPARATÓRIA
             </div>
 
             <h1>
@@ -111,7 +111,7 @@
         </footer>
     </section>
 
-    {% if documento.dados.pagina_rosto or documento.dados.aviso_legal %}
+    {% if false %}
         <section class="front-page">
             <header class="front-heading">
                 <span>
@@ -142,6 +142,180 @@
             {% endif %}
         </section>
     {% endif %}
+
+    <section class="front-page">
+        <header class="front-heading">
+            <span>
+                FÁCIL DIGITAL MAIS
+            </span>
+
+            <h1>
+                Apresentação
+            </h1>
+        </header>
+
+        <section class="front-document-card">
+            <div class="front-document-card__label">
+                APOSTILA PREPARATÓRIA
+            </div>
+
+            <h2>
+                {{ documento.dados.titulo }}
+            </h2>
+
+            <dl class="front-document-metadata">
+                {% if documento.dados.cargo %}
+                    <div>
+                        <dt>
+                            Cargo
+                        </dt>
+
+                        <dd>
+                            {{ documento.dados.cargo }}
+                        </dd>
+                    </div>
+                {% endif %}
+
+                {% if documento.dados.concurso %}
+                    <div>
+                        <dt>
+                            Concurso
+                        </dt>
+
+                        <dd>
+                            {{ documento.dados.concurso }}
+                        </dd>
+                    </div>
+                {% endif %}
+
+                {% if documento.dados.orgao %}
+                    <div>
+                        <dt>
+                            Instituição
+                        </dt>
+
+                        <dd>
+                            {{ documento.dados.orgao }}
+                        </dd>
+                    </div>
+                {% endif %}
+
+                {% if documento.dados.banca %}
+                    <div>
+                        <dt>
+                            Banca
+                        </dt>
+
+                        <dd>
+                            {{ documento.dados.banca }}
+                        </dd>
+                    </div>
+                {% endif %}
+
+                {% if documento.dados.edicao or documento.dados.ano %}
+                    <div>
+                        <dt>
+                            Edição / Ano
+                        </dt>
+
+                        <dd>
+                            {% if documento.dados.edicao %}
+                                {{ documento.dados.edicao }}
+                            {% endif %}
+
+                            {% if documento.dados.edicao and documento.dados.ano %}
+                                ·
+                            {% endif %}
+
+                            {% if documento.dados.ano %}
+                                {{ documento.dados.ano }}
+                            {% endif %}
+                        </dd>
+                    </div>
+                {% endif %}
+
+                <div>
+                    <dt>
+                        Marca
+                    </dt>
+
+                    <dd>
+                        {{ documento.dados.editora or "Fácil Digital Mais" }}
+
+                        {% if documento.dados.site %}
+                            · {{ documento.dados.site }}
+                        {% endif %}
+                    </dd>
+                </div>
+
+                <div>
+                    <dt>
+                        Número de páginas
+                    </dt>
+
+                    <dd>
+                        {{ documento.pdf_total_pages or "Em cálculo" }}
+                    </dd>
+                </div>
+            </dl>
+        </section>
+
+        <div class="front-copy">
+            <h2>
+                Sobre esta apostila
+            </h2>
+
+            <p>
+                Esta apostila foi organizada pela Fácil Digital Mais
+                para reunir, em um único material, os conteúdos
+                selecionados para este projeto de estudo. A proposta
+                editorial prioriza clareza, organização, sequência
+                lógica e recursos didáticos que favoreçam uma
+                preparação objetiva e consistente.
+            </p>
+
+            <p>
+                Ao longo do material, os assuntos são distribuídos
+                em unidades e tópicos organizados de forma
+                progressiva, com explicações, exemplos, destaques,
+                exercícios e elementos de revisão sempre que
+                pertinentes. O objetivo é facilitar tanto o estudo
+                contínuo quanto consultas rápidas durante o período
+                de preparação.
+            </p>
+
+            <p>
+                Antes da disponibilização da prévia, o documento
+                passa por etapas automáticas de composição,
+                paginação, validação estrutural e auditoria das
+                páginas, buscando manter consistência visual,
+                legibilidade e integridade do arquivo final.
+            </p>
+
+            <p>
+                Este material possui finalidade preparatória e
+                complementar. Editais, retificações, comunicados,
+                conteúdos programáticos e demais publicações
+                oficiais do órgão responsável ou da banca
+                examinadora prevalecem sempre em caso de atualização
+                ou divergência. Recomenda-se acompanhar regularmente
+                os canais oficiais relacionados ao concurso ou
+                processo seletivo.
+            </p>
+        </div>
+
+        {% if documento.dados.aviso_legal %}
+            <aside class="legal-box">
+                <div class="legal-box__title">
+                    Direitos autorais e aviso legal
+                </div>
+
+                <div>
+                    {{ documento.dados.aviso_legal }}
+                </div>
+            </aside>
+        {% endif %}
+    </section>
 
     <section class="toc-page">
         <header class="front-heading">

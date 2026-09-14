@@ -19,7 +19,7 @@
 
     <link
         rel="stylesheet"
-        href="/static/css/workspace.css"
+        href="/static/css/workspace.css?v={{ asset_version }}"
     >
 </head>
 
@@ -58,7 +58,7 @@
                         viewBox="0 0 24 24"
                         aria-hidden="true"
                     >
-                        <path d="M12 5v14M5 12h14" />
+                        <path d="M12 5v14M5 12h14"></path>
                     </svg>
 
                     <span>
@@ -75,7 +75,7 @@
                         viewBox="0 0 24 24"
                         aria-hidden="true"
                     >
-                        <path d="M3 6h7l2 2h9v11H3z" />
+                        <path d="M3 6h7l2 2h9v11H3z"></path>
                     </svg>
 
                     <span>
@@ -92,9 +92,9 @@
                         viewBox="0 0 24 24"
                         aria-hidden="true"
                     >
-                        <path d="M5 4h12l2 2v14H5z" />
-                        <path d="M8 4v6h8V4" />
-                        <path d="M8 16h8" />
+                        <path d="M5 4h12l2 2v14H5z"></path>
+                        <path d="M8 4v6h8V4"></path>
+                        <path d="M8 16h8"></path>
                     </svg>
 
                     <span>
@@ -113,14 +113,15 @@
                     >
                         <path
                             d="M8 7V5.8A2.8 2.8 0 0 1 10.8 3h7.4A2.8 2.8 0 0 1 21 5.8v7.4a2.8 2.8 0 0 1-2.8 2.8H17"
-                        />
+                        ></path>
+
                         <rect
                             x="3"
                             y="8"
                             width="13"
                             height="13"
                             rx="2.8"
-                        />
+                        ></rect>
                     </svg>
 
                     <span>
@@ -139,16 +140,19 @@
                     >
                         <path
                             d="M20 11a8.1 8.1 0 0 0-14.7-4.7L3 9"
-                        />
+                        ></path>
+
                         <path
                             d="M3 4v5h5"
-                        />
+                        ></path>
+
                         <path
                             d="M4 13a8.1 8.1 0 0 0 14.7 4.7L21 15"
-                        />
+                        ></path>
+
                         <path
                             d="M21 20v-5h-5"
-                        />
+                        ></path>
                     </svg>
 
                     <span>
@@ -358,8 +362,8 @@
                             </h2>
 
                             <p>
-                                Estes dados serão usados na folha de rosto,
-                                cabeçalhos e elementos editoriais.
+                                Estes dados serão usados na apresentação,
+                                cabeçalhos e demais elementos editoriais.
                             </p>
                         </div>
 
@@ -381,10 +385,11 @@
                                     >
                                         <path
                                             d="M4 4h16v16H4z"
-                                        />
+                                        ></path>
+
                                         <path
                                             d="M8 8h8M8 12h8M8 16h5"
-                                        />
+                                        ></path>
                                     </svg>
                                 </div>
 
@@ -424,7 +429,7 @@
                                         type="text"
                                         name="concurso"
                                         id="concurso"
-                                        placeholder="Ex.: Secretaria de Estado de Educação do Pará"
+                                        placeholder="Ex.: Concurso Público SEDUC-PA 2026"
                                     >
                                 </label>
 
@@ -437,7 +442,7 @@
                                         type="text"
                                         name="orgao"
                                         id="orgao"
-                                        placeholder="Ex.: SEDUC-PA"
+                                        placeholder="Ex.: Secretaria de Estado de Educação do Pará - SEDUC-PA"
                                     >
                                 </label>
 
@@ -450,7 +455,7 @@
                                         type="text"
                                         name="banca"
                                         id="banca"
-                                        placeholder="Ex.: FGV"
+                                        placeholder="Ex.: Fundação Getulio Vargas - FGV"
                                     >
                                 </label>
 
@@ -464,7 +469,7 @@
                                         type="text"
                                         name="cargo"
                                         id="cargo"
-                                        placeholder="Ex.: Professor de Educação Especial — AEE"
+                                        placeholder="Ex.: Professor Classe I - Língua Portuguesa"
                                         required
                                     >
                                 </label>
@@ -508,20 +513,23 @@
                                     >
                                         <path
                                             d="M4 5h16v14H4z"
-                                        />
+                                        ></path>
+
                                         <path
                                             d="M8 9h8M8 13h6"
-                                        />
+                                        ></path>
                                     </svg>
                                 </div>
 
                                 <div>
                                     <h3>
-                                        Página de rosto
+                                        Dados editoriais
                                     </h3>
 
                                     <p>
-                                        Textos complementares e dados editoriais.
+                                        A apresentação será criada
+                                        automaticamente. Informe apenas
+                                        os dados da marca e o aviso legal.
                                     </p>
                                 </div>
                             </div>
@@ -555,29 +563,36 @@
 
                                 <label class="field field--full">
                                     <span class="field__label">
-                                        Texto da página de rosto
-                                    </span>
-
-                                    <textarea
-                                        name="pagina_rosto"
-                                        id="pagina-rosto"
-                                        rows="5"
-                                        placeholder="Apresentação editorial opcional..."
-                                    ></textarea>
-                                </label>
-
-                                <label class="field field--full">
-                                    <span class="field__label">
                                         Aviso legal / direitos autorais
                                     </span>
 
                                     <textarea
                                         name="aviso_legal"
                                         id="aviso-legal"
-                                        rows="4"
-                                        placeholder="Avisos de autoria, independência editorial e direitos reservados..."
+                                        rows="6"
+                                        placeholder="Informe o texto de direitos autorais, restrições de reprodução e demais avisos legais."
                                     ></textarea>
                                 </label>
+
+                                <div class="field field--full">
+                                    <span class="field__label">
+                                        Apresentação
+                                    </span>
+
+                                    <div class="editorial-auto-note">
+                                        <strong>
+                                            Gerada automaticamente
+                                        </strong>
+
+                                        <p>
+                                            O PDF receberá uma apresentação
+                                            padronizada da Fácil Digital Mais
+                                            com título, cargo, concurso,
+                                            instituição, banca, edição, ano,
+                                            marca, site e número final de páginas.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </article>
                     </div>
@@ -627,15 +642,17 @@
                                     >
                                         <path
                                             d="M4 5h16v14H4z"
-                                        />
+                                        ></path>
+
                                         <circle
                                             cx="9"
                                             cy="10"
                                             r="2"
-                                        />
+                                        ></circle>
+
                                         <path
                                             d="m5 17 4-4 3 3 2-2 5 4"
-                                        />
+                                        ></path>
                                     </svg>
                                 </div>
 
@@ -731,16 +748,19 @@
                                     >
                                         <path
                                             d="M4 7h16"
-                                        />
+                                        ></path>
+
                                         <path
                                             d="M9 7V4h6v3"
-                                        />
+                                        ></path>
+
                                         <path
                                             d="m9 11 .5 7m5-7-.5 7"
-                                        />
+                                        ></path>
+
                                         <path
                                             d="M6 7l1 14h10l1-14"
-                                        />
+                                        ></path>
                                     </svg>
                                 </button>
                             </div>
@@ -759,10 +779,11 @@
                                     >
                                         <path
                                             d="M6 3h9l3 3v15H6z"
-                                        />
+                                        ></path>
+
                                         <path
                                             d="M15 3v4h4"
-                                        />
+                                        ></path>
                                     </svg>
 
                                     <span>
@@ -782,9 +803,13 @@
                                 id="cover-file-info"
                                 hidden
                             >
-                                <strong id="cover-file-name"></strong>
+                                <strong
+                                    id="cover-file-name"
+                                ></strong>
 
-                                <span id="cover-file-size"></span>
+                                <span
+                                    id="cover-file-size"
+                                ></span>
                             </div>
                         </article>
                     </div>
@@ -813,7 +838,9 @@
                         </div>
 
                         <div class="heading-stat">
-                            <strong id="selected-count-heading">
+                            <strong
+                                id="selected-count-heading"
+                            >
                                 0
                             </strong>
 
@@ -835,10 +862,11 @@
                                             cx="11"
                                             cy="11"
                                             r="7"
-                                        />
+                                        ></circle>
+
                                         <path
                                             d="m20 20-4-4"
-                                        />
+                                        ></path>
                                     </svg>
 
                                     <input
@@ -984,10 +1012,11 @@
                                             >
                                                 <path
                                                     d="M4 5h16v14H4z"
-                                                />
+                                                ></path>
+
                                                 <path
                                                     d="M8 9h8M8 13h6"
-                                                />
+                                                ></path>
                                             </svg>
                                         </div>
 
@@ -1043,7 +1072,7 @@
                                     >
                                         <path
                                             d="M5 6h14M5 12h14M5 18h14"
-                                        />
+                                        ></path>
                                     </svg>
 
                                     <strong>
@@ -1105,10 +1134,11 @@
                                 >
                                     <path
                                         d="M4 5h16v14H4z"
-                                    />
+                                    ></path>
+
                                     <path
                                         d="M8 9h8M8 13h8M8 17h5"
-                                    />
+                                    ></path>
                                 </svg>
 
                                 <div>
@@ -1170,10 +1200,11 @@
                                         cx="12"
                                         cy="12"
                                         r="9"
-                                    />
+                                    ></circle>
+
                                     <path
                                         d="m8 12 2.5 2.5L16 9"
-                                    />
+                                    ></path>
                                 </svg>
 
                                 <div>
@@ -1233,10 +1264,11 @@
                                 >
                                     <path
                                         d="M5 4h14v16H5z"
-                                    />
+                                    ></path>
+
                                     <path
                                         d="M8 8h8M8 12h8M8 16h5"
-                                    />
+                                    ></path>
                                 </svg>
 
                                 <div>
@@ -1296,10 +1328,11 @@
                                 >
                                     <path
                                         d="M6 3h12v18H6z"
-                                    />
+                                    ></path>
+
                                     <path
                                         d="M9 7h6M9 11h6M9 15h4"
-                                    />
+                                    ></path>
                                 </svg>
 
                                 <div>
@@ -1345,10 +1378,11 @@
                                 >
                                     <path
                                         d="M5 4h14v16H5z"
-                                    />
+                                    ></path>
+
                                     <path
                                         d="M8 8h8M8 12h8M8 16h8"
-                                    />
+                                    ></path>
                                 </svg>
 
                                 <div>
@@ -1432,8 +1466,8 @@
                             </h2>
 
                             <p>
-                                Confira a estrutura antes de gerar a prévia
-                                diagramada.
+                                Confira a estrutura antes de gerar
+                                a prévia diagramada.
                             </p>
                         </div>
                     </header>
@@ -1555,7 +1589,7 @@
                             </span>
 
                             <h3>
-                                Pronto para a próxima fase
+                                Pronto para gerar
                             </h3>
 
                             <ul class="review-checklist">
@@ -1582,12 +1616,13 @@
 
                             <div class="review-next">
                                 <strong>
-                                    Próxima implementação
+                                    Geração do PDF
                                 </strong>
 
                                 <p>
-                                    Salvamento do projeto e geração da
-                                    prévia HTML/PDF paginada.
+                                    O documento será processado no servidor.
+                                    Acompanhe abaixo o progresso da composição,
+                                    paginação, validação e auditoria.
                                 </p>
                             </div>
 
@@ -1638,7 +1673,8 @@
 
                                 <span>
                                     O arquivo será composto em A4,
-                                    validado e terá as páginas contabilizadas.
+                                    paginado, validado e auditado
+                                    antes de ser liberado.
                                 </span>
                             </div>
                         </aside>
@@ -1658,7 +1694,7 @@
                         >
                             <path
                                 d="m15 18-6-6 6-6"
-                            />
+                            ></path>
                         </svg>
 
                         Voltar
@@ -1686,7 +1722,7 @@
                         >
                             <path
                                 d="m9 6 6 6-6 6"
-                            />
+                            ></path>
                         </svg>
                     </button>
                 </footer>
@@ -1734,7 +1770,7 @@
                     >
                         <path
                             d="M6 6l12 12M18 6 6 18"
-                        />
+                        ></path>
                     </svg>
                 </button>
             </header>
@@ -1817,7 +1853,7 @@
                     >
                         <path
                             d="M6 6l12 12M18 6 6 18"
-                        />
+                        ></path>
                     </svg>
                 </button>
             </header>
@@ -1935,7 +1971,7 @@
                     >
                         <path
                             d="M6 6l12 12M18 6 6 18"
-                        />
+                        ></path>
                     </svg>
                 </button>
             </header>
@@ -1983,7 +2019,7 @@
     ></div>
 
     <script
-        src="/static/js/workspace.js"
+        src="/static/js/workspace.js?v={{ asset_version }}"
         defer
     ></script>
 </body>

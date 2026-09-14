@@ -9,7 +9,7 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 from threading import RLock
-from typing import Any
+from typing import Any, Callable, Callable
 
 import pypdfium2 as pdfium
 
@@ -50,6 +50,8 @@ LONG_TOKEN_LIMIT = 120
 STRUCTURAL_KEYWORDS = (
     "SUMÁRIO",
     "APOSTILA DE ESTUDO",
+    "APOSTILA PREPARATÓRIA",
+    "APOSTILA PREPARATÓRIA",
     "PARTE ",
     "EXERCÍCIOS",
     "GABARITO COMENTADO",
@@ -82,6 +84,13 @@ class PDFAuditService:
     def audit_preview(
         self,
         project_id: str,
+        progress_callback: (
+            Callable[
+                [int, str],
+                None,
+            ]
+            | None
+        ) = None,
     ) -> dict[str, Any]:
         with self._lock:
             pdf_path, pdf_metadata = (
@@ -135,6 +144,9 @@ class PDFAuditService:
                     pdf_metadata=pdf_metadata,
                     output_directory=(
                         temporary_directory
+                    ),
+                    progress_callback=(
+                        progress_callback
                     ),
                 )
 
@@ -330,6 +342,13 @@ class PDFAuditService:
         pdf_path: Path,
         pdf_metadata: dict[str, Any],
         output_directory: Path,
+        progress_callback: (
+            Callable[
+                [int, str],
+                None,
+            ]
+            | None
+        ) = None,
     ) -> dict[str, Any]:
         try:
             pdf = pdfium.PdfDocument(
@@ -389,6 +408,33 @@ class PDFAuditService:
                         page_result
                     )
 
+                    if (
+                        progress_callback
+                        is not None
+                    ):
+                        audit_progress = (
+                            85
+                            + int(
+                                (
+                                    page_number
+                                    / total_pages
+                                )
+                                * 14
+                            )
+                        )
+
+                        progress_callback(
+                            min(
+                                audit_progress,
+                                99,
+                            ),
+                            (
+                                "Auditando página "
+                                f"{page_number} "
+                                f"de {total_pages}..."
+                            ),
+                        )
+
                 finally:
                     self._close_if_possible(
                         page
@@ -397,6 +443,20 @@ class PDFAuditService:
         finally:
             self._close_if_possible(
                 pdf
+            )
+
+        if progress_callback is not None:
+            progress_callback(
+                99,
+                "Finalizando relatório "
+                "de auditoria...",
+            )
+
+        if progress_callback is not None:
+            progress_callback(
+                99,
+                "Finalizando relatório "
+                "de auditoria...",
             )
 
         summary = (
