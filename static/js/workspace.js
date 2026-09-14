@@ -1944,12 +1944,163 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    function pdfProgressValue(data) {
+        if (
+            data
+            && data.progress !== undefined
+            && data.progress !== null
+            && data.progress !== ""
+        ) {
+            const explicitProgress =
+                Number(data.progress);
+
+            if (
+                Number.isFinite(
+                    explicitProgress
+                )
+            ) {
+                return Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        explicitProgress
+                    )
+                );
+            }
+        }
+
+        const status =
+            data && data.status
+                ? data.status
+                : "queued";
+
+        if (status === "queued") {
+            return 5;
+        }
+
+        if (
+            status === "generating_pdf"
+        ) {
+            return 35;
+        }
+
+        if (status === "auditing") {
+            return 88;
+        }
+
+        if (status === "ready") {
+            return 100;
+        }
+
+        return 0;
+    }
+
+
+    function hidePdfResultControls() {
+        openPdfButton.hidden = true;
+        downloadPdfButton.hidden = true;
+        openAuditButton.hidden = true;
+
+        openPdfButton.dataset.url = "";
+        downloadPdfButton.href = "#";
+
+        state.pdfAudit = null;
+    }
+
+
+    function renderPdfGenerationProgress(
+        data
+    ) {
+        const status =
+            data && data.status
+                ? data.status
+                : "queued";
+
+        const progress =
+            pdfProgressValue(data);
+
+        let title =
+            "Preparando geração...";
+
+        if (status === "queued") {
+            title =
+                "Preparando geração...";
+        }
+
+        if (
+            status === "generating_pdf"
+        ) {
+            title =
+                "Gerando PDF...";
+        }
+
+        if (status === "auditing") {
+            title =
+                "Auditando PDF...";
+        }
+
+        if (status === "ready") {
+            title =
+                "PDF concluído";
+        }
+
+        const message =
+            data && data.message
+                ? data.message
+                : "Processando apostila.";
+
+        pdfStatus.classList.remove(
+            "is-ready",
+            "is-stale",
+            "is-error"
+        );
+
+        pdfStatus.innerHTML = `
+            <strong>
+                ${title} ${progress}%
+            </strong>
+
+            <span>
+                ${message}
+            </span>
+
+            <div
+                class="pdf-generation-progress"
+                role="progressbar"
+                aria-label="Progresso da geração do PDF"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="${progress}"
+                style="
+                    width: 100%;
+                    height: 10px;
+                    margin-top: 10px;
+                    overflow: hidden;
+                    border-radius: 999px;
+                    background: #dfe5ec;
+                "
+            >
+                <div
+                    class="pdf-generation-progress__bar"
+                    style="
+                        width: ${progress}%;
+                        height: 100%;
+                        border-radius: 999px;
+                        background: #2563eb;
+                        transition: width 350ms ease;
+                    "
+                ></div>
+            </div>
+        `;
+    }
+
+
     async function waitForPdfGeneration(
         projectId
     ) {
         const timeoutAt =
             Date.now()
-            + (30 * 60 * 1000);
+            + (45 * 60 * 1000);
 
         while (Date.now() < timeoutAt) {
             const response = await fetch(
@@ -1976,32 +2127,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const status =
                 data.status || "idle";
 
-            if (
-                status === "queued"
-                || status === "generating_pdf"
-            ) {
-                pdfStatus.innerHTML = `
-                    <strong>Gerando PDF...</strong>
-                    <span>
-                        ${
-                            data.message
-                            || "Compondo a apostila."
-                        }
-                    </span>
-                `;
-            }
-
-            if (status === "auditing") {
-                pdfStatus.innerHTML = `
-                    <strong>PDF criado — auditando...</strong>
-                    <span>
-                        ${
-                            data.message
-                            || "Verificando o documento."
-                        }
-                    </span>
-                `;
-            }
+            renderPdfGenerationProgress(
+                data
+            );
 
             if (status === "ready") {
                 return data;
@@ -2015,11 +2143,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
             }
 
-            await sleep(2000);
+            if (status === "idle") {
+                throw new Error(
+                    "O backend perdeu o estado "
+                    + "da geração do PDF."
+                );
+            }
+
+            await sleep(1500);
         }
 
         throw new Error(
-            "A geração excedeu o tempo máximo "
+            "A geração excedeu 45 minutos "
             + "de acompanhamento."
         );
     }
@@ -2034,19 +2169,15 @@ document.addEventListener("DOMContentLoaded", () => {
         generatePreviewButton.innerHTML =
             "Gerando PDF...";
 
-        pdfStatus.classList.remove(
-            "is-ready",
-            "is-stale",
-            "is-error"
-        );
+        hidePdfResultControls();
 
-        pdfStatus.innerHTML = `
-            <strong>Compondo apostila...</strong>
-            <span>
-                Aplicando paginação, sumário,
-                cabeçalhos, caixas e validação.
-            </span>
-        `;
+        renderPdfGenerationProgress({
+            status: "queued",
+            progress: 5,
+            message:
+                "Salvando o projeto e preparando "
+                + "a geração do PDF.",
+        });
 
         try {
             const project =
@@ -2065,6 +2196,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
             }
 
+            /*
+             * saveProject() atualiza os controles
+             * usando o PDF anterior, caso exista.
+             * Por isso os ocultamos novamente antes
+             * de iniciar a nova geração.
+             */
+            hidePdfResultControls();
+
+            renderPdfGenerationProgress({
+                status: "queued",
+                progress: 5,
+                message:
+                    "Solicitando a geração "
+                    + "ao servidor...",
+            });
+
             const response = await fetch(
                 `/api/projetos/${projectId}/pdf/preview`,
                 {
@@ -2077,12 +2224,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!response.ok) {
                 throw new Error(
-                    await responseError(response)
+                    await responseError(
+                        response
+                    )
+                );
+            }
+
+            const startData =
+                await response.json();
+
+            if (
+                startData.job
+                && typeof startData.job
+                    === "object"
+            ) {
+                renderPdfGenerationProgress(
+                    startData.job
                 );
             }
 
             const data =
-                await response.json();
+                await waitForPdfGeneration(
+                    projectId
+                );
+
+            if (
+                !data.view_url
+                || !data.download_url
+            ) {
+                throw new Error(
+                    "O backend concluiu a geração, "
+                    + "mas não informou as URLs "
+                    + "do PDF."
+                );
+            }
 
             const metadata =
                 data.pdf || {};
@@ -2115,56 +2290,103 @@ document.addEventListener("DOMContentLoaded", () => {
             downloadPdfButton.hidden = false;
             openAuditButton.hidden = false;
 
+            pdfStatus.classList.remove(
+                "is-stale",
+                "is-error"
+            );
+
             pdfStatus.classList.add(
                 "is-ready"
             );
 
             const auditSummaryData =
-                audit &&
-                typeof audit.resumo === "object"
+                audit
+                && typeof audit.resumo
+                    === "object"
                     ? audit.resumo
                     : {};
 
             const suspiciousPages =
                 Number(
-                    auditSummaryData.paginas_suspeitas || 0
+                    auditSummaryData
+                        .paginas_suspeitas
+                    || 0
                 );
 
             pdfStatus.innerHTML = `
-                <strong>PDF gerado e validado</strong>
+                <strong>
+                    PDF gerado e validado 100%
+                </strong>
+
                 <span>
-                    ${pages} página(s) • ${size} •
-                    ${suspiciousPages} página(s) para revisão automática
+                    ${pages} página(s) •
+                    ${size} •
+                    ${suspiciousPages}
+                    página(s) para revisão automática
                 </span>
+
+                <div
+                    class="pdf-generation-progress"
+                    role="progressbar"
+                    aria-label="Progresso da geração do PDF"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="100"
+                    style="
+                        width: 100%;
+                        height: 10px;
+                        margin-top: 10px;
+                        overflow: hidden;
+                        border-radius: 999px;
+                        background: #dfe5ec;
+                    "
+                >
+                    <div
+                        class="pdf-generation-progress__bar"
+                        style="
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 999px;
+                            background: #16a34a;
+                        "
+                    ></div>
+                </div>
             `;
 
             showToast(
-                `PDF gerado com sucesso: ${pages} página(s).`
-            );
-
-            window.open(
-                data.view_url,
-                "_blank",
-                "noopener"
+                `PDF concluído: ${pages} página(s).`
             );
 
         } catch (error) {
             console.error(error);
+
+            hidePdfResultControls();
+
+            pdfStatus.classList.remove(
+                "is-ready",
+                "is-stale"
+            );
 
             pdfStatus.classList.add(
                 "is-error"
             );
 
             pdfStatus.innerHTML = `
-                <strong>Falha na geração do PDF</strong>
+                <strong>
+                    Falha na geração do PDF
+                </strong>
+
                 <span>
-                    ${error.message || "Erro desconhecido."}
+                    ${
+                        error.message
+                        || "Erro desconhecido."
+                    }
                 </span>
             `;
 
             showToast(
-                error.message ||
-                "Não foi possível gerar o PDF.",
+                error.message
+                || "Não foi possível gerar o PDF.",
                 "error"
             );
 
